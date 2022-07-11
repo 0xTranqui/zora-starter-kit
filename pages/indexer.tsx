@@ -106,7 +106,6 @@ const Api: NextPage = () => {
   )
 
 // ========== check specific collection functionality
-  
 interface ICollectionNFTs {
   address: any
   description: any
@@ -119,6 +118,7 @@ interface ICollectionNFTs {
   nftCount: any
   salesVolume: any
 }
+
 const [collectionForm, setCollectionForm] = useState("0xCa21d4228cDCc68D4e23807E5e370C07577Dd152")
   const [collectionNFTs, setCollectionNFTs] = useState<ICollectionNFTs>({
     "address": "0xca21d4228cdcc68d4e23807e5e370c07577dd152",
@@ -155,15 +155,12 @@ const [collectionForm, setCollectionForm] = useState("0xCa21d4228cDCc68D4e23807E
 
   const collectionAggregateResponse = async (collArgs, aggArgs) => {
     const zdkResponseCollection = await (await zdk.collections(collArgs)).collections.nodes[0]
-    console.log("zdkresponsecoll", zdkResponseCollection)
     const zdkResponseAggStat = await (await zdk.collectionStatsAggregate(aggArgs)).aggregateStat
-    console.log("zdkResponseAggStat", zdkResponseAggStat)
     const mergedResponse = {
       ...zdkResponseAggStat,
       ...zdkResponseCollection
  
     }
-
     console.log("mergedResponse ", mergedResponse )
     setCollectionNFTs(mergedResponse)
   }
