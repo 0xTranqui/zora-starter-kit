@@ -111,10 +111,10 @@ const UserNFTs = ({ userAddress, nfts, collectionInfo, setCollectionCB }) => {
                     </div>
                     <div className="h-full">
                         <div className=" text-white">
-                            {"" + (collectionInfo[0].address.substring(0, 4)) + "..." + (collectionInfo[0].address.substring(collectionInfo[0].address.length - 4))}                
+                            {"" + (collectionInfo.address.substring(0, 4)) + "..." + (collectionInfo.address.substring(collectionInfo.address.length - 4))}                
                         </div>                
                         <div className=" text-white">
-                            {collectionInfo[0].name}
+                            {collectionInfo.name}
                         </div>
                         <div className=" text-white">
                             {collectionInfo.nftCount}
