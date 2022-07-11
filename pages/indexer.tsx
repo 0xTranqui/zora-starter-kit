@@ -1,16 +1,11 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { ZDK, ZDKNetwork, ZDKChain } from "@zoralabs/zdk";
 import { Networks, Strategies } from "@zoralabs/nft-hooks"
-
 import { useAccount } from 'wagmi'
-
 import { Header } from '../components/Header'
-import { Footer } from '../components/Footer'
 import UserNFTs from '../components/UserNFTs';
-
 
 const networkInfo = {
   network: ZDKNetwork.Ethereum,
@@ -23,13 +18,11 @@ const zdkArgs = {
   networks: [networkInfo], 
 } 
 
-const zdk = new ZDK(zdkArgs) // All arguments are optional  
+const zdk = new ZDK(zdkArgs) 
 
-const zdkStrategyMainnet = new Strategies.ZDKFetchStrategy(
-  Networks.MAINNET
-)
 
 const appendContractName = (arr, address) => {
+  
   // runs a check for ENS NFTs which return a name of null unless cleaned
   const ensAddress = "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85"
   if ( address === ensAddress ) {
@@ -48,8 +41,8 @@ const nftCounter = (arr, key) => {
         
     // Checking if there is any object in arr2
     // which contains the key value
-      if(arr2.some((val)=>{ return val[key] == x.token[key] })){
-          
+      if (arr2.some((val)=>{ return val[key] == x.token[key] })) {
+      
         // If yes! then increase the count by 1
         arr2.forEach((k)=>{
           if(k[key] === x.token[key]){ 
@@ -57,7 +50,8 @@ const nftCounter = (arr, key) => {
           }
       })
           
-      }else{
+      } else {
+
         // If not! Then create a new object initialize 
         // it with the present iteration key's value and 
         // set the count to 1
@@ -77,14 +71,18 @@ const nftCounter = (arr, key) => {
 }
 
 const Api: NextPage = () => {
+
+  // =========== get current wallet address functionality
+  const { address: account } = useAccount(); 
+  const currentUserAddress = account ? account : "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045" // vitalik.eth
+  console.log("currentUseraddress: ", currentUserAddress)
+
+
+  // ========== check user wallet functionality
   const [userNFTs, setUserNFTs] = useState({});
   const currentUserNFTs = userNFTs ? userNFTs: "nothing";
 
-  const { address: account } = useAccount(); 
-  const currentUserAddress = account ? account : ""
-  console.log("currentUseraddress: ", currentUserAddress)
-
-  const tokensResponse = async(args) => {
+  const tokensResponse = async (args) => {
     const zdkResponseTokens = await (await zdk.tokens(args)).tokens.nodes
     console.log("zdkResponseTokens", zdkResponseTokens)
     console.log("nftCounter", nftCounter(zdkResponseTokens, "collectionAddress"))
@@ -102,71 +100,77 @@ const Api: NextPage = () => {
     includeFullDetails: false
   }
 
-
   useEffect(() => {
     if(!!userNFTs) {
-    tokensResponse(tokensArgs)
+      tokensResponse(tokensArgs)
     }},
     [currentUserAddress]
   )
 
+// ========== check specific collection functionality
+  const [collectionForm, setCollectionForm] = useState("0xCa21d4228cDCc68D4e23807E5e370C07577Dd152")
+  const [collectionNFTs, setCollectionNFTs] = useState({
+    "0": {
+        "address": "0xca21d4228cdcc68d4e23807e5e370c07577dd152",
+        "description": "",
+        "name": "Zorbs",
+        "symbol": "ZORB",
+        "totalSupply": 56741,
+        "networkInfo": {
+            "chain": "MAINNET",
+            "network": "ETHEREUM"
+        }
+    },
+    "floorPrice": 0.02,
+    "ownerCount": 33728,
+    "nftCount": 56741,
+    "salesVolume": {
+        "chainTokenPrice": 654.2453815022026,
+        "usdcPrice": 1661775.679886936,
+        "totalCount": 11934
+    }
+})
+
+  const currentCollectionNFTs = collectionNFTs ? collectionNFTs : ""
+
+  const collectionArgs = {
+    where: {
+      collectionAddresses: [collectionForm]
+    },
+    includeFullDetails: false
+  }
+
+  const aggStatArgs = {
+      collectionAddress: collectionForm // collectionForm
+  }
+
+  const collectionAggregateResponse = async (collArgs, aggArgs) => {
+    console.log("what are the args: ", collArgs, aggArgs)
+    const zdkResponseCollection = await (await zdk.collections(collArgs)).collections.nodes
+    const zdkResponseAggStat = await (await zdk.collectionStatsAggregate(aggArgs)).aggregateStat
+    const mergedResponse = {
+      ...zdkResponseCollection,
+      ...zdkResponseAggStat
+    }
+    console.log("mergedResponse ", mergedResponse )
+    setCollectionNFTs(mergedResponse)
+  }
+
+  useEffect(() => {
+    if(!!collectionNFTs) {
+      collectionAggregateResponse( collectionArgs, aggStatArgs)
+    }},
+    [collectionForm]
+  )
 
   return (
     <div className='flex flex-col justify-center h-screen min-h-screen'>
       <Header />
       <main className="w-full flex flex-row flex-wrap justify-center self-center items-center">        
-      <UserNFTs nfts={currentUserNFTs} />
+      <UserNFTs userAddress={currentUserAddress} nfts={currentUserNFTs} collectionInfo={currentCollectionNFTs} setCollectionCB={setCollectionForm} />
       </main>
     </div>
   )
 }
 
 export default Api
-
-
-// const keyChecker = (obj) => {
-
-//   const keys = Object.keys(obj).length
-//   console.log("keys: ", keys)
-//   return keys
-
-//   // if (!Object.keys) {
-//   //   Object.keys = function (obj) {
-//   //       var keys = [],
-//   //           k;
-//   //       for (k in obj) {
-//   //           if (Object.prototype.hasOwnProperty.call(obj, k)) {
-//   //               keys.push(k);
-//   //           }
-//   //       }
-//   //       return keys;
-//   //   };
-//   // } 
-
-// }
-
-// const addressFilterer = (obj) => {
-
-//   const uniqueAddresses = new Set() 
-//   for (let i = 0; i < obj.length; i++) {
-//     uniqueAddresses.add(obj[i].token.collectionAddress)
-//   }
-//   const arrayOfAddresses = Array.from(uniqueAddresses)
-
-
-//   return arrayOfAddresses
-
-//   // if (!Object.keys) {
-//   //   Object.keys = function (obj) {
-//   //       var keys = [],
-//   //           k;
-//   //       for (k in obj) {
-//   //           if (Object.prototype.hasOwnProperty.call(obj, k)) {
-//   //               keys.push(k);
-//   //           }
-//   //       }
-//   //       return keys;
-//   //   };
-//   // } 
-
-// }

@@ -1,83 +1,133 @@
-const UserNFTs = ({ nfts }) => {
+import { useState } from "react"
+
+const UserNFTs = ({ userAddress, nfts, collectionInfo, setCollectionCB }) => {
+
+    const [collectionLookup, setCollectionLookup] = useState("0xca21d4228cdcc68d4e23807e5e370c07577dd152")
 
     return (
         <>
-            <div className="flex flex-row flex-wrap  justify-center text-center w-full ">
-                <div className="text-white text-4xl pb-10">
-                    My NFTs
+            <div className="pt-60 sm:pt-24 flex flex-row flex-wrap justify-center text-center w-full ">
+                <div className="w-full underline text-white text-3xl">
+                    {`My NFTs (${userAddress.substring(0, 4) + "..." + userAddress.substring(userAddress.length - 4)})`}
                 </div>
-                <div className="flex flex-row flex-wrap  justify-center w-full">
-                    <div className="border-2 border-solid border-red-500 text-white w-2/12">
+                <div className="mt-5 w-full md:w-7/12  grid grid-cols-3">
+                    <div className=" text-xl mb-1 text-white w-fit flex flex-row justify-self-center self-center">
                         Address
                     </div>                
-                    <div className="border-2 border-solid border-red-500 text-white w-2/12">
-                        My Balance
+                    <div className=" text-xl mb-1 text-white w-fit flex flex-row justify-self-center self-center">
+                        Balance
                     </div>
-                    <div className="border-2 border-solid border-red-500 text-white w-5/12">
+                    <div className=" text-xl mb-1 text-white w-fit flex flex-row justify-self-center self-center">
                         Name
                     </div>
                 </div>
-
-            </div>
-
-            {
-                nfts && nfts.length > 0
-                ?
-                nfts.map((nft, index) => {
-                    while (index < nfts.length && index < 10 ) {
-                        return (
-                            <div key={nft.collectionAddress} className="text-center text-white w-full flex flex-row flex-wrap justify-center">
-                                <a
-                                href={`https://etherscan.io/address/${nft.collectionAddress}`}
-                                className="border-2 border-solid border-red-500 w-2/12 underline hover:text-green-300"
-                                >
-                                    {"" + (nft.collectionAddress.substring(0, 4)) + "..." + (nft.collectionAddress.substring(nft.collectionAddress.length - 4))}
-                                </a>
-                                <div className="border-2 border-solid border-red-500 w-2/12 ">
-                                    {"" + nft.count}    
+                <div className="w-full md:w-7/12"> 
+                    {
+                        nfts && nfts.length > 0
+                        ?
+                        nfts.map((nft, index) => {
+                        while (index < nfts.length && index < 10 ) {
+                            return (
+                                <div key={nft.collectionAddress} className="text-white w-full grid grid-cols-3">
+                                    <a
+                                    href={`https://etherscan.io/address/${nft.collectionAddress}`}
+                                    className=" py-[0.5px] w-fit flex flex-row justify-self-center self-center hover:underline hover:text-green-300"
+                                    >
+                                        {"" + (nft.collectionAddress.substring(0, 4)) + "..." + (nft.collectionAddress.substring(nft.collectionAddress.length - 4))}
+                                    </a>
+                                    <div className=" py-[0.5px] w-fit flex flex-row justify-self-center self-center ">
+                                        {"" + nft.count}    
+                                    </div>                                             
+                                    <div className=" py-[0.5px] w-fit flex flex-row justify-self-center self-center">
+                                        {"" + nft.name}    
+                                    </div>                     
+                                </div>
+                            )
+                        }
+                    }   
+                        ) : (
+                            <div className=" text-white w-full grid grid-cols-3 ">
+                                <div className="w-fit flex flex-row justify-self-center self-center ">
+                                    n/a
+                                </div>        
+                                <div className="w-fit flex flex-row justify-self-center self-center ">
+                                    0  
                                 </div>                                             
-                                <div className="border-2 border-solid border-red-500 w-5/12">
-                                    {"" + nft.name}    
+                                <div className="w-fit flex flex-row justify-self-center self-center ">
+                                    n/a
                                 </div>                     
                             </div>
                         )
-                    }
-                }
-                ) : (
-                <div className="text-center text-white w-full flex flex-row flex-wrap justify-center">
-                    <div className="border-2 border-solid border-red-500 w-2/12 ">
-                        n/a
-                    </div>        
-                    <div className="border-2 border-solid border-red-500 w-2/12 ">
-                        0  
-                    </div>                                             
-                    <div className="border-2 border-solid border-red-500 w-5/12">
-                        n/a
-                    </div>                     
+                    }                    
                 </div>
-                )
-            }
-
-            <div className="border-2 border-solid border-blue-500 mt-10 flex flex-row flex-wrap  justify-center text-center w-full ">
-                
-                <div className="text-white text-4xl pb-10">
+            </div>
+            <div className="h-fit flex flex-row flex-wrap  justify-center pt-5 sm:pt-10 text-center w-full ">                        
+                <div className="w-full text-white underline text-3xl pb-5 ">
                     Collection Lookup
                 </div>
-                <div className="flex flex-col flex-wrap content-center w-full">
-                    <div className="border-2 border-solid border-red-500 text-white w-3/12">
-                        Address
-                    </div>                
-                    <div className="border-2 border-solid border-red-500 text-white w-3/12">
-                        Name
+                <div className="flex flex-col flex-wrap">
+                    <input
+                        className="text-center bg-slate-200 h-full w-6/12 px-2"
+                        placeholder="Input NFT Address"
+                        name="inputContract"
+                        type="text"
+                        value={collectionLookup} // zorbs
+                        onChange={(e) => {
+                            e.preventDefault();
+                            setCollectionLookup(e.target.value)
+                        }}
+                        required                    
+                    >
+                    </input>
+                    <button
+                        className="h-full ml-2 border-2 border-solid text-slate-200 border-slate-200 hover:text-black hover:bg-slate-200 text-white px-2 "
+                        onClick={() => {
+                            setCollectionCB(collectionLookup)
+                        }}
+                    >
+                        SEARCH
+                    </button>
+                </div>
+                <div className="pt-2 flex flex-col flex-wrap content-center w-full">
+                    <div className="h-full">
+                        <div className="text-white">
+                            Address
+                        </div>                
+                        <div className=" text-white">
+                            Name
+                        </div>
+                        <div className=" text-white">
+                            Current Supply
+                        </div>
+                        <div className=" text-white">
+                            Unique Owners
+                        </div>
+                        <div className=" text-white">
+                            Sales Volume
+                        </div>
+                        <div className=" text-white">
+                            Floor Price
+                        </div>
                     </div>
-                    <div className="border-2 border-solid border-red-500 text-white w-3/12">
-                        Current Supply
-                    </div>
-                    <div className="border-2 border-solid border-red-500 text-white w-3/12">
-                        Owner Count
-                    </div>
-                    <div className="border-2 border-solid border-red-500 text-white w-3/12">
-                        Sales Volume (ETH)
+                    <div className="h-full">
+                        <div className=" text-white">
+                            {"" + (collectionInfo[0].address.substring(0, 4)) + "..." + (collectionInfo[0].address.substring(collectionInfo[0].address.length - 4))}                
+                        </div>                
+                        <div className=" text-white">
+                            {collectionInfo[0].name}
+                        </div>
+                        <div className=" text-white">
+                            {collectionInfo.nftCount}
+                        </div>
+                        <div className=" text-white">
+                            {collectionInfo.ownerCount}
+                        </div>
+                        <div className=" text-white">
+                            {"" + Number(collectionInfo["salesVolume"].chainTokenPrice).toFixed(2) + " ETH"}
+                        </div>
+                        <div className=" text-white">
+                            {collectionInfo.floorPrice + " ETH"} 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -88,18 +138,3 @@ const UserNFTs = ({ nfts }) => {
 }
 
 export default UserNFTs
-
-// query MyQuery {
-//     collections(where: {collectionAddresses: "0x8427e46826a520b1264B55f31fCB5DDFDc31E349"}) {
-//       nodes {
-//         name
-//         address
-//       }
-//     }
-//     aggregateStat {
-//       ownerCount(where: {collectionAddresses: "0x8427e46826a520b1264B55f31fCB5DDFDc31E349"})
-//       nftCount(where: {collectionAddresses: "0x8427e46826a520b1264B55f31fCB5DDFDc31E349"})
-//       salesVolume(where: {collectionAddresses: "0x8427e46826a520b1264B55f31fCB5DDFDc31E349"}) {
-//         chainTokenPrice
-//       }
-//     }

@@ -12,7 +12,7 @@ export const Header = () => {
           showBalance={false}
         />
       </div>
-      <div className="fixed top-0 px-4 py-4 flex flex-row w-fit space-x-4">
+      <div className="fixed top-8 sm:top-0 px-4 py-4 flex flex-row w-fit space-x-4">
         <Link
           href="/"
         >
