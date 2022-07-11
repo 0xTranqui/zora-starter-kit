@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.6.6",
     "@rainbow-me/rainbowkit": "^0.4.2",
     "@zoralabs/nft-components": "^1.1.2",
     "@zoralabs/zdk": "^2.1.3",
