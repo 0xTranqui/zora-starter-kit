@@ -84,8 +84,6 @@ const Api: NextPage = () => {
 
   const tokensResponse = async (args) => {
     const zdkResponseTokens = await (await zdk.tokens(args)).tokens.nodes
-    console.log("zdkResponseTokens", zdkResponseTokens)
-    console.log("nftCounter", nftCounter(zdkResponseTokens, "collectionAddress"))
     const myNFTs = nftCounter(zdkResponseTokens, "collectionAddress")
     setUserNFTs(myNFTs)
   }
@@ -122,7 +120,7 @@ const Api: NextPage = () => {
         }
     },
     "floorPrice": 0.02,
-    "ownerCount": 33728,
+    "ownerCount": 33729,
     "nftCount": 56741,
     "salesVolume": {
         "chainTokenPrice": 654.2453815022026,
@@ -145,7 +143,6 @@ const Api: NextPage = () => {
   }
 
   const collectionAggregateResponse = async (collArgs, aggArgs) => {
-    console.log("what are the args: ", collArgs, aggArgs)
     const zdkResponseCollection = await (await zdk.collections(collArgs)).collections.nodes
     const zdkResponseAggStat = await (await zdk.collectionStatsAggregate(aggArgs)).aggregateStat
     const mergedResponse = {
