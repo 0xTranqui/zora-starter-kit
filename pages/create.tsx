@@ -1,34 +1,127 @@
 import { NextPage } from "next"
 import { Header } from "../components/Header"
-import { useState } from "react"
-import { useContractWrite } from "wagmi"
+import { useState, useEffect } from "react"
+import { useContractWrite, useSwitchNetwork, useNetwork, useAccount, useConnect } from "wagmi"
+import { InjectedConnector } from 'wagmi/connectors/injected'
 import { utils } from "ethers"
 
 const ZoraNFTCreatorProxy_ABI = require("../node_modules/@zoralabs/nft-drop-contracts/dist/artifacts/ZoraNFTCreatorV1.sol/ZoraNFTCreatorV1.json")
 
+const ZoraNFTCreatorProxy_ADDRESS_RINKEBY = "0x2d2acD205bd6d9D0B3E79990e093768375AD3a30"
+const ZoraNFTCreatorProxy_ADDRESS_MAINNET = "0xF74B146ce44CC162b601deC3BE331784DB111DC1"
+
 const Create: NextPage = () => {
 
   const [dropInputs, setDropInputs] = useState({
-    contractName: "",
-    contractSymbol: "",
-    contractAdmin: "",
-    contractMaxSupply: "",
-    secondaryRoyalties: "",
-    fundsRecipient: "",
+    contractName: "Example Project",
+    contractSymbol: "TEST",
+    contractAdmin: "0x153D2A196dc8f1F6b9Aa87241864B3e4d4FEc170",
+    contractMaxSupply: "100",
+    secondaryRoyalties: "500",
+    fundsRecipient: "0x153D2A196dc8f1F6b9Aa87241864B3e4d4FEc170",
     salesConfig: {
       priceEther: "0.001", // ETH
-      perWalletMintCap: "",
-      publicSaleStart: "",
-      publicSaleEnd: "",
-      presaleStart: "",
-      presaleEnd: "",
-      presaleMerkleRoot: ""
+      perWalletMintCap: "5",
+      publicSaleStart: "0",
+      publicSaleEnd: "0",
+      presaleStart: "0",
+      presaleEnd: "0",
+      presaleMerkleRoot: "0x0000000000000000000000000000000000000000000000000000000000000000"
     },
-    metadataURIBase: "",
-    metadtaContractURI: "",
+    metadataURIBase: "uribase/",
+    metadtaContractURI: "contracturi/",
   })
+
+  const { chain } = useNetwork()
+
+
+  // switch network and call create drop flow (for when wallet already connected but to incorrect network)
+  const { data: rinkebyChainData, switchNetworkAsync: switchToRinkeby } = useSwitchNetwork({
+    chainId: 4,
+    onSuccess(rinkebyChainData) {
+      console.log("Success", rinkebyChainData)
+    }
+  })
+
+  const { data: mainnetChainData, switchNetworkAsync: switchToMainnet } = useSwitchNetwork({
+    chainId: 1,
+    onSuccess(mainnetChainData) {
+      console.log("Success", mainnetChainData)
+    }
+  })
+
+  const switchToRinkebyAndDrop = async () => {
+    await switchToRinkeby()
+    rinkebyDropWrite()
+  }
+
+  const switchToMainnetAndDrop = async () => {
+    await switchToMainnet()
+    mainnetDropWrite()
+  }
+
+
+  // connect to network and call create drop flow (for when no wallet previously connected)
+  const { connectAsync: connectToRinkeby } = useConnect({
+    connector: new InjectedConnector,
+    chainId: 4,
+    onSettled(data, error, variables, context) {
+      console.log("connect to mainnet settled: ", data)
+    },
+  })
+
+  const { connectAsync: connectToMainnet } = useConnect({
+    connector: new InjectedConnector,
+    chainId: 1,
+    onSettled(data, error, variables, context) {
+      console.log("connect to mainnet settled: ", data)
+    },
+  })
+
+  const connectToRinkebyAndDrop = async () => {
+    await connectToRinkeby()
+    rinkebyDropWrite()
+  }
   
-  const { data, isError, isLoading, write } = useContractWrite({
+  const connectToMainnetAndDrop = async () => {
+    await connectToMainnet()
+    mainnetDropWrite()
+  }
+
+  // call create drop flow (for when wallet already connected to proper network)
+  const createDropRinkeby = () => {
+    if (!chain ) {
+      connectToRinkebyAndDrop()
+      return
+    } else if (chain && chain.id !== 4) {
+      switchToRinkebyAndDrop()
+      return
+    }
+    rinkebyDropWrite()
+  }
+
+  const createDropMainnet = () => {
+    if (!chain ) {
+      connectToMainnetAndDrop()
+      return
+    } else if (chain && chain.id !== 1) {
+      switchToMainnetAndDrop()
+      return
+    }
+    mainnetDropWrite()
+  }
+
+  useEffect(() => {
+    if(!chain) {
+      console.log("no wallet connected")
+    } else {
+      console.log("chain ID =", chain.id)
+    }
+  },
+  [chain]
+)
+  
+  const { data: rinkebyDropData, isError: rinkebyDropError, isLoading: rinkebyDropLoading, write: rinkebyDropWrite } = useContractWrite({
     addressOrName: '0x2d2acD205bd6d9D0B3E79990e093768375AD3a30',
     contractInterface: ZoraNFTCreatorProxy_ABI.abi,
     functionName: 'createDrop',
@@ -52,6 +145,33 @@ const Create: NextPage = () => {
       dropInputs.metadtaContractURI,
     ]
   })
+
+  const { data: mainnetDropData, isError: mainnetDropError, isLoading: mainnetDropLoading, write: mainnetDropWrite } = useContractWrite({
+    addressOrName: '0xF74B146ce44CC162b601deC3BE331784DB111DC1',
+    contractInterface: ZoraNFTCreatorProxy_ABI.abi,
+    functionName: 'createDrop',
+    args: [
+      dropInputs.contractName,
+      dropInputs.contractSymbol,
+      dropInputs.contractAdmin,
+      dropInputs.contractMaxSupply,
+      dropInputs.secondaryRoyalties,
+      dropInputs.fundsRecipient,
+      [
+        utils.parseEther(dropInputs.salesConfig.priceEther),
+        dropInputs.salesConfig.perWalletMintCap,
+        dropInputs.salesConfig.publicSaleStart,
+        dropInputs.salesConfig.publicSaleEnd,
+        dropInputs.salesConfig.presaleStart,
+        dropInputs.salesConfig.presaleEnd,
+        dropInputs.salesConfig.presaleMerkleRoot
+      ],
+      dropInputs.metadataURIBase,
+      dropInputs.metadtaContractURI,
+    ]
+  })
+
+
 
   return (
     <div className="min-h-screen h-screen">
@@ -522,11 +642,17 @@ const Create: NextPage = () => {
           
           <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
             <button
-              className="flex flex-row w-full justify-center"
-              onClick={() => write()}
+              className="border-2 hover:bg-white hover:text-black border-solid border-white py-1 flex flex-row w-full justify-center"
+              onClick={() => createDropRinkeby()}
             >
-              SEND CREATE DROP TXN
-            </button>            
+              DEPLOY TO RINKEBY
+            </button>
+            <button
+              className="border-2 border-l-0 hover:bg-white hover:text-black border-solid border-white py-1  flex flex-row w-full justify-center"
+              onClick={() => createDropMainnet()}
+            >
+              DEPLOY TO MAINNET
+            </button>              
           </div>                       
                                                                                                                                   
 
