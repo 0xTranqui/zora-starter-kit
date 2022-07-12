@@ -22,7 +22,7 @@ const Create: NextPage = () => {
     salesConfig: {
       priceEther: "0.001",
       perWalletMintCap: "5",
-      publicSaleStart: "1654181910", // makes it so edition will be live to start 
+      publicSaleStart: "0", // makes it so edition will be live to start 
       publicSaleEnd: "50000000000", // makes it so edition will be live to start
       presaleStart: "0",
       presaleEnd: "0",
@@ -42,7 +42,7 @@ const Create: NextPage = () => {
     salesConfig: {
       priceEther: "0.001",
       perWalletMintCap: "5",
-      publicSaleStart: "1654181910", // makes it so edition will be live to start
+      publicSaleStart: "0", // makes it so edition will be live to start
       publicSaleEnd: "50000000000", // makes it so edition will be live to start
       presaleStart: "0",
       presaleEnd: "0",
@@ -1307,7 +1307,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                IMAGE URUI
+                IMAGE URI
               </div>
               <input
                 className="text-black text-center bg-slate-200"
