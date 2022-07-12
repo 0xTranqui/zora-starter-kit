@@ -1,6 +1,10 @@
 import { NextPage } from "next"
 import { Header } from "../components/Header"
 import { useState } from "react"
+import { useContractWrite } from "wagmi"
+import { utils } from "ethers"
+
+const ZoraNFTCreatorProxy_ABI = require("../node_modules/@zoralabs/nft-drop-contracts/dist/artifacts/ZoraNFTCreatorV1.sol/ZoraNFTCreatorV1.json")
 
 const Create: NextPage = () => {
 
@@ -12,7 +16,7 @@ const Create: NextPage = () => {
     secondaryRoyalties: "",
     fundsRecipient: "",
     salesConfig: {
-      priceEther: "",
+      priceEther: "0.001", // ETH
       perWalletMintCap: "",
       publicSaleStart: "",
       publicSaleEnd: "",
@@ -22,6 +26,31 @@ const Create: NextPage = () => {
     },
     metadataURIBase: "",
     metadtaContractURI: "",
+  })
+  
+  const { data, isError, isLoading, write } = useContractWrite({
+    addressOrName: '0x2d2acD205bd6d9D0B3E79990e093768375AD3a30',
+    contractInterface: ZoraNFTCreatorProxy_ABI.abi,
+    functionName: 'createDrop',
+    args: [
+      dropInputs.contractName,
+      dropInputs.contractSymbol,
+      dropInputs.contractAdmin,
+      dropInputs.contractMaxSupply,
+      dropInputs.secondaryRoyalties,
+      dropInputs.fundsRecipient,
+      [
+        utils.parseEther(dropInputs.salesConfig.priceEther),
+        dropInputs.salesConfig.perWalletMintCap,
+        dropInputs.salesConfig.publicSaleStart,
+        dropInputs.salesConfig.publicSaleEnd,
+        dropInputs.salesConfig.presaleStart,
+        dropInputs.salesConfig.presaleEnd,
+        dropInputs.salesConfig.presaleMerkleRoot
+      ],
+      dropInputs.metadataURIBase,
+      dropInputs.metadtaContractURI,
+    ]
   })
 
   return (
@@ -492,7 +521,10 @@ const Create: NextPage = () => {
           </div>
           
           <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
-            <button className="flex flex-row w-full justify-center">
+            <button
+              className="flex flex-row w-full justify-center"
+              onClick={() => write()}
+            >
               SEND CREATE DROP TXN
             </button>            
           </div>                       
@@ -517,7 +549,7 @@ const Create: NextPage = () => {
             {"fundsRecipient: " + dropInputs.fundsRecipient}
           </div>
           <div className="text-white w-full">
-            {"salesConfig Price Ether: " + dropInputs.salesConfig.priceEther}
+            {"salesConfig Price Ether: " + utils.parseEther(dropInputs.salesConfig.priceEther)}
           </div>
           <div className="text-white w-full">
             {"salesConfig wallet cap: " + dropInputs.salesConfig.perWalletMintCap}
