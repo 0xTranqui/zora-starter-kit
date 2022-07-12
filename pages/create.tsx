@@ -321,7 +321,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center ">
-                CONTRACT NAME:
+                CONTRACT NAME
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -350,7 +350,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                CONTRACT SYMBOL:
+                CONTRACT SYMBOL
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -379,7 +379,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                CONTRACT ADMIN:
+                CONTRACT ADMIN
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -408,7 +408,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                CONTRACT MAX SUPPLY:
+                CONTRACT MAX SUPPLY
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -437,7 +437,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                SECONDARY ROYALTIES:
+                SECONDARY ROYALTIES
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -466,7 +466,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                FUNDS RECIPIENT:
+                FUNDS RECIPIENT
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -495,7 +495,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                SALES CONFIG price:
+                PRICE PER MINT
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -527,7 +527,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                SALES CONFIG wallet cap:
+                MINT CAP PER WALLET
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -559,7 +559,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                SALES CONFIG pubsale start:
+                PUBLIC SALE START
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -591,7 +591,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                SALES CONFIG pubsale end:
+                PUBLIC SALE END
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -623,7 +623,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                SALES CONFIG presale start:
+                PRESALE START
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -655,7 +655,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                SALES CONFIG presale end:
+                PRESALE END
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -687,7 +687,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                SALES CONFIG presale merkle:
+                PRESALE MERKLE ROOT
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -719,7 +719,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                URI BASE:
+                URI BASE
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -748,7 +748,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                CONTRACT URI:
+                CONTRACT URI
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -851,7 +851,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center ">
-                CONTRACT NAME:
+                CONTRACT NAME
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -880,7 +880,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                CONTRACT SYMBOL:
+                CONTRACT SYMBOL
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -909,7 +909,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                CONTRACT MAX SUPPLY:
+                CONTRACT MAX SUPPLY
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -938,7 +938,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                SECONDARY ROYALTIES:
+                SECONDARY ROYALTIES
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -967,7 +967,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                FUNDS RECIPIENT:
+                FUNDS RECIPIENT
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -996,7 +996,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                CONTRACT ADMIN:
+                CONTRACT ADMIN
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -1025,7 +1025,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                SALES CONFIG price:
+                PRICE PER MINT
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -1057,7 +1057,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                SALES CONFIG wallet cap:
+                MINT CAP PER WALLET
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -1089,7 +1089,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                SALES CONFIG pubsale start:
+                PUBLIC SALE START
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -1121,7 +1121,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                SALES CONFIG pubsale end:
+                PUBLIC SALE END
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -1153,7 +1153,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                SALES CONFIG presale start:
+                PRESALE START
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -1185,7 +1185,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                SALES CONFIG presale end:
+                PRESALE END
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -1217,7 +1217,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                SALES CONFIG presale merkle:
+                PRESALE MERKLE ROOT
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -1249,7 +1249,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                Edition Description:
+                EDITION DESCRIPTION
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -1278,7 +1278,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                ANIMATION URI:
+                ANIMATION URI
               </div>
               <input
                 className="text-black text-center bg-slate-200"
@@ -1307,7 +1307,7 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
-                IMAGE URI:
+                IMAGE URUI
               </div>
               <input
                 className="text-black text-center bg-slate-200"
