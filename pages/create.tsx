@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import { useContractWrite, useSwitchNetwork, useNetwork, useAccount, useConnect } from "wagmi"
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { utils } from "ethers"
-// import CreateDrop from "../components/CreateDrop"
 
 const ZoraNFTCreatorProxy_ABI = require("../node_modules/@zoralabs/nft-drop-contracts/dist/artifacts/ZoraNFTCreatorV1.sol/ZoraNFTCreatorV1.json")
 
