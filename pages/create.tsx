@@ -310,16 +310,16 @@ const Create: NextPage = () => {
   return (
     <div className="min-h-screen h-screen">
       <Header />
-      <main className="border-red-500 border-2 border-solid text-white h-full flex sm:flex-col flex-row flex-wrap">
+      <main className="text-white h-full flex sm:flex-col flex-row flex-wrap">
 
-        <div className=" border-2 border-solid border-blue-500 sm:w-6/12 sm:h-full w-full h-6/12 flex flex-row flex-wrap content-start">
+        <div className=" sm:w-6/12 sm:h-full w-full h-6/12 flex flex-row flex-wrap content-start">
           <div className="mt-20 sm:mt-10 flex flex-row justify-center h-fit w-full border-2 border-solid border-red-500 ">
             CREATE DROP
           </div>
           
           
           
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center ">
                 CONTRACT NAME:
@@ -348,7 +348,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 CONTRACT SYMBOL:
@@ -377,7 +377,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 CONTRACT ADMIN:
@@ -406,7 +406,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 CONTRACT MAX SUPPLY:
@@ -435,7 +435,7 @@ const Create: NextPage = () => {
             </div>            
           </div>          
           
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 SECONDARY ROYALTIES:
@@ -464,7 +464,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 FUNDS RECIPIENT:
@@ -493,7 +493,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 SALES CONFIG price:
@@ -525,7 +525,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 SALES CONFIG wallet cap:
@@ -557,7 +557,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 SALES CONFIG pubsale start:
@@ -589,7 +589,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 SALES CONFIG pubsale end:
@@ -621,7 +621,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 SALES CONFIG presale start:
@@ -653,7 +653,7 @@ const Create: NextPage = () => {
             </div>            
           </div>                 
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 SALES CONFIG presale end:
@@ -685,7 +685,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 SALES CONFIG presale merkle:
@@ -717,7 +717,7 @@ const Create: NextPage = () => {
             </div>            
           </div>                                                                                                                     
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 URI BASE:
@@ -746,7 +746,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 CONTRACT URI:
@@ -775,7 +775,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className=" grid grid-cols-3">
               <div className=" text-center col-start-2 col-end-3">
               {"symmetricality issues"}
@@ -785,13 +785,13 @@ const Create: NextPage = () => {
           
           <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
             <button
-              className="border-2 hover:bg-white hover:text-black border-solid border-white py-1 flex flex-row w-full justify-center"
+              className="border-2 hover:bg-white hover:text-black border-solid border-red-500 py-1 flex flex-row w-full justify-center"
               onClick={() => createDropRinkeby()}
             >
               DEPLOY TO RINKEBY
             </button>
             <button
-              className="border-2 border-l-0 hover:bg-white hover:text-black border-solid border-white py-1  flex flex-row w-full justify-center"
+              className="border-2 border-l-0 hover:bg-white hover:text-black border-solid border-red-500 py-1  flex flex-row w-full justify-center"
               onClick={() => createDropMainnet()}
             >
               DEPLOY TO MAINNET
@@ -845,11 +845,11 @@ const Create: NextPage = () => {
           </div>  */}
 
         </div>
-        <div className="border-2 border-solid border-blue-500 sm:w-6/12 sm:h-full w-full h-6/12 flex flex-row flex-wrap content-start">
-          <div className="mt-20 sm:mt-10 flex flex-row justify-center h-fit w-full border-2 border-solid border-red-500 ">
+        <div className=" sm:w-6/12 sm:h-full w-full h-6/12 flex flex-row flex-wrap content-start">
+          <div className="mt-20 sm:mt-10 flex flex-row justify-center h-fit w-full border-2 border-solid border-blue-500 ">
             CREATE EDITION
           </div>
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center ">
                 CONTRACT NAME:
@@ -878,7 +878,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 CONTRACT SYMBOL:
@@ -907,7 +907,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 CONTRACT MAX SUPPLY:
@@ -936,7 +936,7 @@ const Create: NextPage = () => {
             </div>            
           </div>                
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 SECONDARY ROYALTIES:
@@ -965,7 +965,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 FUNDS RECIPIENT:
@@ -994,7 +994,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 CONTRACT ADMIN:
@@ -1023,7 +1023,7 @@ const Create: NextPage = () => {
             </div>            
           </div>          
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 SALES CONFIG price:
@@ -1055,7 +1055,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 SALES CONFIG wallet cap:
@@ -1087,7 +1087,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 SALES CONFIG pubsale start:
@@ -1119,7 +1119,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 SALES CONFIG pubsale end:
@@ -1151,7 +1151,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 SALES CONFIG presale start:
@@ -1183,7 +1183,7 @@ const Create: NextPage = () => {
             </div>            
           </div>                 
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 SALES CONFIG presale end:
@@ -1215,7 +1215,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 SALES CONFIG presale merkle:
@@ -1247,7 +1247,7 @@ const Create: NextPage = () => {
             </div>            
           </div>                                                                                                                     
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 Edition Description:
@@ -1276,7 +1276,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 ANIMATION URI:
@@ -1305,7 +1305,7 @@ const Create: NextPage = () => {
             </div>            
           </div>
 
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
                 IMAGE URI:
@@ -1334,15 +1334,15 @@ const Create: NextPage = () => {
             </div>            
           </div>          
           
-          <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
+          <div className="flex flex-row justify-center w-full h-fit border-2 border-blue-500 border-solid">
             <button
-              className="border-2 hover:bg-white hover:text-black border-solid border-white py-1 flex flex-row w-full justify-center"
+              className="border-2 hover:bg-white hover:text-black border-solid border-blue-500 py-1 flex flex-row w-full justify-center"
               onClick={() => createEditionRinkeby()}
             >
               DEPLOY TO RINKEBY
             </button>
             <button
-              className="border-2 border-l-0 hover:bg-white hover:text-black border-solid border-white py-1  flex flex-row w-full justify-center"
+              className="border-2 border-l-0 hover:bg-white hover:text-black border-solid border-blue-500 py-1  flex flex-row w-full justify-center"
               onClick={() => createEditionMainnet()}
             >
               DEPLOY TO MAINNET
