@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import { Dispatch, useState, useEffect } from 'react'
 import { ZDK, ZDKNetwork, ZDKChain } from "@zoralabs/zdk";
 import { NFTPreview, MediaConfiguration } from '@zoralabs/nft-components';
 import { Networks, Strategies } from "@zoralabs/nft-hooks"
@@ -11,6 +11,9 @@ import { useAccount } from 'wagmi'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import NFTCard from '../components/NFTCard';
+import AskRead_disclosure from "../components/AskRead_disclosure"
+import { AskForNFT_READ } from '../components/AskforNFT_READ';
+import AskWrite_disclosure from '../components/AskWrite_disclosure';
 
 
 const networkInfo = {
@@ -62,6 +65,11 @@ const Protocol: NextPage = () => {
 
       <Header />
       <main className="border-2 border-white border-solid text-white grid grid-cols-3 h-full">        
+        
+        {/* ASKS MODULE */}
+        {/* ASKS MODULE */}
+        {/* ASKS MODULE */}
+
         <div className='mt-10 border-2 border-green-500 border-solid flex flex-row flex-wrap content-start'>
           <div className='h-fit content-start border-2 border-blue-500 border-solid flex flex-row flex-wrap w-full'>
             <div className="text-2xl border-2 border-red-500 border-solid h-fit w-full flex flex-row justify-center">            
@@ -82,7 +90,6 @@ const Protocol: NextPage = () => {
               </a>
             </div>
           </div>
-
 
           {/* NFT RENDERING + CONTRACT INPUTS */}
           <div className="border-2 border-solid border-blue-500 w-full h-fit flex flex-row flex-wrap justify-center "> 
@@ -163,55 +170,29 @@ const Protocol: NextPage = () => {
             </div>                   
           </div>
 
-
           <div className="mt-5 flex flex-row flex-wrap w-full ">
-            <div>
-              <div>
-                READ
+            <div className="w-full">
+              <div className="ml-2 mb-2 text-xl">
+                ASK MODULE READS
               </div>
-              <div>
-                readcall 1
-              </div>
-              <div>
-                readcall 2
-              </div>
+              <AskRead_disclosure nft={asksNFT} />
+              {/* <AskForNFT_READ nft={asksNFT} /> */}
             </div>
           </div>
           <div className="mt-5 flex flex-row flex-wrap w-full ">
-            <div>
-              <div>
-                INTERACT W/ EXISTING
+          <div className="w-full">
+              <div className="ml-2 mb-2 text-xl">
+                ASK MODULE WRITES
               </div>
-              <div>
-                writecall 1
-              </div>
-              <div>
-                writecall 2
-              </div>
-              <div>
-                writecall 3
-              </div>
-            </div>
-          </div>
-          <div className="mt-5 flex flex-row flex-wrap w-full ">
-            <div>
-              <div>
-                INTERACT W/ NEW
-              </div>
-              <div>
-                writecall 1
-              </div>
-              <div>
-                writecall 2
-              </div>
-              <div>
-                writecall 3
-              </div>
+              <AskWrite_disclosure nft={asksNFT} />
             </div>
           </div>
         </div>
 
         {/* OFFERS MODULE */}
+        {/* OFFERS MODULE */}
+        {/* OFFERS MODULE */}
+
         <div className='mt-10 border-2 border-yellow-500 border-solid'>
           <div className='h-fit content-start border-2 border-blue-500 border-solid flex flex-row flex-wrap w-full'>
             <div className="text-2xl border-2 border-red-500 border-solid h-fit w-full flex flex-row justify-center">            

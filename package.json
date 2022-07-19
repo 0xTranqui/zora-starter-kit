@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.6.6",
+    "@heroicons/react": "^1.0.6",
     "@rainbow-me/rainbowkit": "^0.4.2",
     "@zoralabs/nft-components": "^1.1.2",
     "@zoralabs/nft-drop-contracts": "^1.0.1",
@@ -19,6 +20,7 @@
     "next": "12.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "svg-loaders": "^0.2.0",
     "wagmi": "^0.5.9"
   },
   "devDependencies": {
