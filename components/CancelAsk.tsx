@@ -7,20 +7,16 @@ import { useState, useEffect } from "react";
 import { ReadContractResult } from "@wagmi/core";
 import { BigNumber, utils } from "ethers";
 
-export const SetAskPrice = (nft, call) => {
+export const CancelAsk = (nft, call) => {
 
-    interface updateAskCall {
+    interface cancelAskCall {
         tokenContract: any,
         tokenId: any,
-        askPrice: any, 
-        askCurrency: any,
     }
 
-    const [updateAsk, setUpdateAsk] = useState<updateAskCall>({
+    const [cancelAsk, setCancelAsk] = useState<cancelAskCall>({
         "tokenContract": nft.nft.nft.contractAddress,
         "tokenId": nft.nft.nft.tokenId,
-        "askPrice": "",
-        "askCurrency": ""
     })
 
     // checking prop
@@ -56,22 +52,20 @@ export const SetAskPrice = (nft, call) => {
     const currentFindersFee = data ? `${currentReadData[3] / 100 }` + " %" : "undefined"
 
 
-    // AsksV1_1 setAskPrice Write
-    const { data: setAskData, isError: setAskError, isLoading: setAskLoading, isSuccess: setAskSuccess, write: setAskWrite  } = useContractWrite({
+    // AsksV1_1 cancelAsk Write
+    const { data: cancelData, isError: cancelAskError, isLoading: cancelAskLoading, isSuccess: cancelAskSuccess, write: cancelAskWrite  } = useContractWrite({
         addressOrName: asksAddresses.AsksV1_1,
         contractInterface: abi,
-        functionName: 'setAskPrice',
+        functionName: 'cancelAsk',
         args: [
-            updateAsk.tokenContract,
-            updateAsk.tokenId,
-            updateAsk.askPrice,
-            updateAsk.askCurrency
+            cancelAsk.tokenContract,
+            cancelAsk.tokenId,
         ],
         onError(error, variables, context) {
             console.log("error", error)
         },
-        onSuccess(setAskData, variables, context) {
-            console.log("Success!", setAskData)
+        onSuccess(cancelData, variables, context) {
+            console.log("Success!", cancelData)
         },
     })    
 
@@ -113,7 +107,7 @@ export const SetAskPrice = (nft, call) => {
     }
 
     const callCheck = (functionCall) => {
-        if (functionCall === "update" ) {
+        if (functionCall === "cancel" ) {
             return (
                 <div className="flex flex-row flex-wrap w-fit space-y-1">
                     <div className="flex flex-row flex-wrap w-full">                    
@@ -121,56 +115,14 @@ export const SetAskPrice = (nft, call) => {
                     </div>                
                     <div className="flex flex-row flex-wrap w-full">                    
                         {"Token Id: " + nft.nft.nft.tokenId}
-                    </div>               
-                    
-                    <div className="flex flex-row w-full">
-                        <input
-                            className="flex flex-row flex-wrap w-fit ml-5 text-black text-center bg-slate-200"
-                            placeholder="Listing Price"
-                            name="createAskListingPrice"
-                            type="text"
-                            value={updateAsk.askPrice}
-                            onChange={(e) => {
-                                e.preventDefault();
-                                setUpdateAsk(current => {
-                                    return {
-                                    ...current,
-                                    askPrice: e.target.value
-                                    }
-                                })
-                            }}
-                            required                              
-                        >
-                        </input>
-                    </div>                     
-                    
-                    <div className="flex flex-row w-full">                
-                        <input
-                            className="flex flex-row flex-wrap w-fit ml-5 text-black text-center bg-slate-200"
-                            placeholder="Listing Currency"
-                            name="createAskListingCurrency"
-                            type="text"
-                            value={updateAsk.askCurrency}
-                            onChange={(e) => {
-                                e.preventDefault();
-                                setUpdateAsk(current => {
-                                    return {
-                                    ...current,
-                                    askCurrency: e.target.value
-                                    }
-                                })
-                            }}
-                            required                              
-                        >
-                        </input>
-                    </div>               
+                    </div>                           
                     
                     <button 
                         type="button"
-                        onClick={() => setAskWrite()}
+                        onClick={() => cancelAskWrite()}
                         className="border-2 border-white border-solid px-2 hover:bg-white hover:text-slate-900"
                     >
-                        UPDATE ASK
+                        CaNCEL ASK
                     </button>
 
                 </div>
@@ -185,7 +137,7 @@ export const SetAskPrice = (nft, call) => {
                     {callCheck(nft.call)}
                 </div>
                 <div className="w-6/12">
-                    {JSON.stringify(updateAsk)}
+                    {JSON.stringify(cancelAsk)}
                 </div>    
             </main>
         </div>

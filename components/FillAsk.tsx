@@ -5,22 +5,25 @@ import * as asksAddresses from "@zoralabs/v3/dist/addresses/1.json"
 import { abi } from "@zoralabs/v3/dist/artifacts/AsksV1_1.sol/AsksV1_1.json"
 import { useState, useEffect } from "react";
 import { ReadContractResult } from "@wagmi/core";
-import { BigNumber, utils } from "ethers";
+import { BigNumber, ethers, utils } from "ethers";
 
-export const SetAskPrice = (nft, call) => {
+export const FillAsk = (nft, call) => {
 
-    interface updateAskCall {
+    interface fillAskCall {
         tokenContract: any,
         tokenId: any,
-        askPrice: any, 
-        askCurrency: any,
+        fillCurrency: any,
+        fillAmount: any,
+        finder: any
     }
 
-    const [updateAsk, setUpdateAsk] = useState<updateAskCall>({
+    const [fillAsk, setFillAsk] = useState<fillAskCall>({
         "tokenContract": nft.nft.nft.contractAddress,
         "tokenId": nft.nft.nft.tokenId,
-        "askPrice": "",
-        "askCurrency": ""
+        "fillCurrency": "",
+        "fillAmount": "",
+        "finder": ""
+
     })
 
     // checking prop
@@ -55,23 +58,36 @@ export const SetAskPrice = (nft, call) => {
     const currentReadPrice = data ? `${utils.formatEther(BigNumber.from(currentReadData[4]).toString())}` + " ETH" : "undefined"
     const currentFindersFee = data ? `${currentReadData[3] / 100 }` + " %" : "undefined"
 
+    // AsksV1_1 fillAsk Write
 
-    // AsksV1_1 setAskPrice Write
-    const { data: setAskData, isError: setAskError, isLoading: setAskLoading, isSuccess: setAskSuccess, write: setAskWrite  } = useContractWrite({
+    const fillAmountOverride = () => {
+        if (fillAsk.fillAmount === "") {
+            return 0
+        } else {
+            return ethers.utils.parseEther(fillAsk.fillAmount)
+        }
+    }
+
+    const { data: cancelData, isError: fillAskError, isLoading: fillAskLoading, isSuccess: fillAskSuccess, write: fillAskWrite  } = useContractWrite({
         addressOrName: asksAddresses.AsksV1_1,
         contractInterface: abi,
-        functionName: 'setAskPrice',
+        functionName: 'fillAsk',
         args: [
-            updateAsk.tokenContract,
-            updateAsk.tokenId,
-            updateAsk.askPrice,
-            updateAsk.askCurrency
+            fillAsk.tokenContract,
+            fillAsk.tokenId,
+            fillAsk.fillCurrency,
+            fillAsk.fillAmount,
+            fillAsk.finder,
+
         ],
+        overrides: {
+            value: fillAmountOverride()
+        },
         onError(error, variables, context) {
             console.log("error", error)
         },
-        onSuccess(setAskData, variables, context) {
-            console.log("Success!", setAskData)
+        onSuccess(fillData, variables, context) {
+            console.log("Success!", fillData)
         },
     })    
 
@@ -113,7 +129,7 @@ export const SetAskPrice = (nft, call) => {
     }
 
     const callCheck = (functionCall) => {
-        if (functionCall === "update" ) {
+        if (functionCall === "fill" ) {
             return (
                 <div className="flex flex-row flex-wrap w-fit space-y-1">
                     <div className="flex flex-row flex-wrap w-full">                    
@@ -121,56 +137,77 @@ export const SetAskPrice = (nft, call) => {
                     </div>                
                     <div className="flex flex-row flex-wrap w-full">                    
                         {"Token Id: " + nft.nft.nft.tokenId}
-                    </div>               
-                    
+                    </div>          
+
                     <div className="flex flex-row w-full">
                         <input
                             className="flex flex-row flex-wrap w-fit ml-5 text-black text-center bg-slate-200"
-                            placeholder="Listing Price"
-                            name="createAskListingPrice"
+                            placeholder="Fill Currency"
+                            name="fillAskCurrency"
                             type="text"
-                            value={updateAsk.askPrice}
+                            value={fillAsk.fillCurrency}
                             onChange={(e) => {
                                 e.preventDefault();
-                                setUpdateAsk(current => {
+                                setFillAsk(current => {
                                     return {
                                     ...current,
-                                    askPrice: e.target.value
+                                    fillCurrency: e.target.value
                                     }
                                 })
                             }}
                             required                              
                         >
                         </input>
-                    </div>                     
-                    
-                    <div className="flex flex-row w-full">                
+                    </div>         
+
+                    <div className="flex flex-row w-full">
                         <input
                             className="flex flex-row flex-wrap w-fit ml-5 text-black text-center bg-slate-200"
-                            placeholder="Listing Currency"
-                            name="createAskListingCurrency"
+                            placeholder="Fill Amount"
+                            name="fillAskAmount"
                             type="text"
-                            value={updateAsk.askCurrency}
+                            value={fillAsk.fillAmount}
                             onChange={(e) => {
                                 e.preventDefault();
-                                setUpdateAsk(current => {
+                                setFillAsk(current => {
                                     return {
                                     ...current,
-                                    askCurrency: e.target.value
+                                    fillAmount: e.target.value
                                     }
                                 })
                             }}
                             required                              
                         >
                         </input>
-                    </div>               
+                    </div>
+
+                    <div className="flex flex-row w-full">
+                        <input
+                            className="flex flex-row flex-wrap w-fit ml-5 text-black text-center bg-slate-200"
+                            placeholder="Finder"
+                            name="fillAskFinder"
+                            type="text"
+                            value={fillAsk.finder}
+                            onChange={(e) => {
+                                e.preventDefault();
+                                setFillAsk(current => {
+                                    return {
+                                    ...current,
+                                    finder: e.target.value
+                                    }
+                                })
+                            }}
+                            required                              
+                        >
+                        </input>
+                    </div>                                                                                                  
                     
                     <button 
                         type="button"
-                        onClick={() => setAskWrite()}
+                        onClick={() => fillAskWrite()}
                         className="border-2 border-white border-solid px-2 hover:bg-white hover:text-slate-900"
                     >
-                        UPDATE ASK
+                        FILL ASK
                     </button>
 
                 </div>
@@ -185,7 +222,7 @@ export const SetAskPrice = (nft, call) => {
                     {callCheck(nft.call)}
                 </div>
                 <div className="w-6/12">
-                    {JSON.stringify(updateAsk)}
+                    {JSON.stringify(fillAsk)}
                 </div>    
             </main>
         </div>

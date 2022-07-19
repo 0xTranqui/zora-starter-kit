@@ -2,6 +2,8 @@ import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/solid'
 import { CreateAsk } from './CreateAsk'
 import { SetAskPrice } from './SetAskPrice'
+import { CancelAsk } from './CancelAsk'
+import { FillAsk } from './FillAsk'
 import { Dispatch, useState, SetStateAction } from 'react'
 
 interface nftInfo {
@@ -75,7 +77,7 @@ export default function AskWrite_disclosure(nft) {
                     </Disclosure.Button>
                     <Disclosure.Panel className="bg-slate-900 border-white border-2 border-solid flex flex-row flex-wrap px-4 pt-4 pb-2 text-lg w-full">
                         <div className="w-fit flex flex-row flex-wrap">
-                            <CreateAsk nft={nft} />
+                            <CancelAsk nft={nft} call={"cancel"} />
                         </div>
                     </Disclosure.Panel>
                     </>
@@ -96,7 +98,7 @@ export default function AskWrite_disclosure(nft) {
                     </Disclosure.Button>
                     <Disclosure.Panel className="bg-slate-900 border-white border-2 border-solid flex flex-row flex-wrap px-4 pt-4 pb-2 text-lg w-full">
                         <div className="w-fit flex flex-row flex-wrap">
-                            <CreateAsk nft={nft} />
+                            <FillAsk nft={nft} call={"fill"} />
                         </div>
                     </Disclosure.Panel>
                     </>
