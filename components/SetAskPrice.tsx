@@ -7,16 +7,7 @@ import { useState, useEffect } from "react";
 import { ReadContractResult } from "@wagmi/core";
 import { BigNumber, utils } from "ethers";
 
-export const AskForNFT_WRITE = (nft, call) => {
-
-    interface createAskCall {
-        tokenContract: any,
-        tokenId: any,
-        askPrice: any, 
-        askCurrency: any,
-        sellerFundsRecipient: any,
-        findersFeeBps: any
-    }
+export const SetAskPrice = (nft, call) => {
 
     interface updateAskCall {
         tokenContract: any,
@@ -25,28 +16,6 @@ export const AskForNFT_WRITE = (nft, call) => {
         askCurrency: any,
     }
 
-    interface cancelAskCall {
-        tokenContract: any,
-        tokenId: any,
-    }
-
-    interface fillAskCall {
-        tokenContract: any,
-        tokenId: any,
-        fillCurrency: any,
-        fillAmount: any,
-        finder: any
-    }
-    
-    const [createAsk, setCreateAsk] = useState<createAskCall>({
-        "tokenContract": nft.nft.nft.contractAddress,
-        "tokenId": nft.nft.nft.tokenId,
-        "askPrice": "",
-        "askCurrency": "",
-        "sellerFundsRecipient": "",
-        "findersFeeBps": ""
-    })
-
     const [updateAsk, setUpdateAsk] = useState<updateAskCall>({
         "tokenContract": "",
         "tokenId": "",
@@ -54,22 +23,8 @@ export const AskForNFT_WRITE = (nft, call) => {
         "askCurrency": ""
     })
 
-    const [cancelAsk, setCancelAsk] = useState<cancelAskCall>({
-        "tokenContract": "",
-        "tokenId": ""
-    })
-
-    const [fillAsk, setFillAsk] = useState<fillAskCall>({
-        "tokenContract": "",
-        "tokenId": "",
-        "fillCurrency": "",
-        "fillAmount": "",
-        "finder": "",
-    })
-
     // checking prop
     // console.log("what is write nft", nft)
-
     // console.log("what is the nft.call", nft.call)
     
     // get account hook
@@ -100,26 +55,25 @@ export const AskForNFT_WRITE = (nft, call) => {
     const currentReadPrice = data ? `${utils.formatEther(BigNumber.from(currentReadData[4]).toString())}` + " ETH" : "undefined"
     const currentFindersFee = data ? `${currentReadData[3] / 100 }` + " %" : "undefined"
 
-    // AsksV1_1 useContractWrite
-    const { data: createAskData, isError: createAskError, isLoading: createAskLoading, isSuccess: createAskSuccess, write: createAskWrite  } = useContractWrite({
+
+    // AsksV1_1 setAskPrice Write
+    const { data: setAskData, isError: setAskError, isLoading: setAskLoading, isSuccess: setAskSuccess, write: setAskWrite  } = useContractWrite({
         addressOrName: asksAddresses.AsksV1_1,
         contractInterface: abi,
-        functionName: 'createAsk',
+        functionName: 'setAskPrice',
         args: [
-            createAsk.tokenContract,
-            createAsk.tokenId,
-            createAsk.askPrice,
-            createAsk.askCurrency,
-            createAsk.sellerFundsRecipient,
-            createAsk.findersFeeBps
+            updateAsk.tokenContract,
+            updateAsk.tokenId,
+            updateAsk.askPrice,
+            updateAsk.askCurrency
         ],
         onError(error, variables, context) {
             console.log("error", error)
         },
         onSuccess(createAskData, variables, context) {
-            console.log("Success!", createAskData)
+            console.log("Success!", setAskData)
         },
-    })
+    })    
 
     const listingCheck = (sellerAddress) => {
         console.log("selleraddress: ", sellerAddress)
@@ -159,7 +113,7 @@ export const AskForNFT_WRITE = (nft, call) => {
     }
 
     const callCheck = (functionCall) => {
-        if (functionCall === "create" ) {
+        if (functionCall === "update" ) {
             return (
                 <div className="flex flex-row flex-wrap w-fit space-y-1">
                     <div className="flex flex-row flex-wrap w-full">                    
@@ -175,10 +129,10 @@ export const AskForNFT_WRITE = (nft, call) => {
                             placeholder="Listing Price"
                             name="createAskListingPrice"
                             type="text"
-                            value={createAsk.askPrice}
+                            value={updateAsk.askPrice}
                             onChange={(e) => {
                                 e.preventDefault();
-                                setCreateAsk(current => {
+                                setUpdateAsk(current => {
                                     return {
                                     ...current,
                                     askPrice: e.target.value
@@ -196,10 +150,10 @@ export const AskForNFT_WRITE = (nft, call) => {
                             placeholder="Listing Currency"
                             name="createAskListingCurrency"
                             type="text"
-                            value={createAsk.askCurrency}
+                            value={updateAsk.askCurrency}
                             onChange={(e) => {
                                 e.preventDefault();
-                                setCreateAsk(current => {
+                                setUpdateAsk(current => {
                                     return {
                                     ...current,
                                     askCurrency: e.target.value
@@ -209,56 +163,14 @@ export const AskForNFT_WRITE = (nft, call) => {
                             required                              
                         >
                         </input>
-                    </div>
-                    
-                    <div className="flex flex-row w-full">                          
-                        <input
-                            className="flex flex-row flex-wrap w-fit ml-5 text-black text-center bg-slate-200"
-                            placeholder="Sale Funds Recipient"
-                            name="createAskSaleFundsRecipient"
-                            type="text"
-                            value={createAsk.sellerFundsRecipient}
-                            onChange={(e) => {
-                                e.preventDefault();
-                                setCreateAsk(current => {
-                                    return {
-                                    ...current,
-                                    sellerFundsRecipient: e.target.value
-                                    }
-                                })
-                            }}
-                            required                              
-                        >
-                        </input>
-                    </div>
-
-                    <div className="flex flex-row w-full">                      
-                        <input
-                            className="flex flex-row flex-wrap w-fit ml-5 text-black text-center bg-slate-200"
-                            placeholder="Finders Fee Bps"
-                            name="createAskFindersFeeBps"
-                            type="text"
-                            value={createAsk.findersFeeBps}
-                            onChange={(e) => {
-                                e.preventDefault();
-                                setCreateAsk(current => {
-                                    return {
-                                    ...current,
-                                    findersFeeBps: e.target.value
-                                    }
-                                })
-                            }}
-                            required                              
-                        >
-                        </input>     
                     </div>               
                     
                     <button 
                         type="button"
-                        onClick={() => createAskWrite()}
+                        onClick={() => setAskWrite()}
                         className="border-2 border-white border-solid px-2 hover:bg-white hover:text-slate-900"
                     >
-                        CREATE ASK
+                        UPDATE ASK
                     </button>
 
                 </div>
@@ -273,7 +185,7 @@ export const AskForNFT_WRITE = (nft, call) => {
                     {callCheck(nft.call)}
                 </div>
                 <div className="w-6/12">
-                    {JSON.stringify(createAsk)}
+                    {JSON.stringify(updateAsk)}
                 </div>    
             </main>
         </div>

@@ -1,6 +1,7 @@
 import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/solid'
-import { AskForNFT_WRITE } from './AskForNFT_WRITE'
+import { CreateAsk } from './CreateAsk'
+import { SetAskPrice } from './SetAskPrice'
 import { Dispatch, useState, SetStateAction } from 'react'
 
 interface nftInfo {
@@ -32,7 +33,7 @@ export default function AskWrite_disclosure(nft) {
                     </Disclosure.Button>
                     <Disclosure.Panel className="bg-slate-900 border-white border-2 border-solid flex flex-row flex-wrap px-4 pt-4 pb-2 text-lg w-full">
                         <div className="w-fit flex flex-row flex-wrap">
-                            <AskForNFT_WRITE nft={nft} call={"create"} />
+                            <CreateAsk nft={nft} call={"create"} />
                         </div>
                     </Disclosure.Panel>
                     </>
@@ -53,7 +54,7 @@ export default function AskWrite_disclosure(nft) {
                     </Disclosure.Button>
                     <Disclosure.Panel className="bg-slate-900 border-white border-2 border-solid flex flex-row flex-wrap px-4 pt-4 pb-2 text-lg w-full">
                         <div className="w-fit flex flex-row flex-wrap">
-                            <AskForNFT_WRITE nft={nft}  />
+                            <SetAskPrice nft={nft} call={"update"} />
                         </div>
                     </Disclosure.Panel>
                     </>
@@ -74,7 +75,7 @@ export default function AskWrite_disclosure(nft) {
                     </Disclosure.Button>
                     <Disclosure.Panel className="bg-slate-900 border-white border-2 border-solid flex flex-row flex-wrap px-4 pt-4 pb-2 text-lg w-full">
                         <div className="w-fit flex flex-row flex-wrap">
-                            <AskForNFT_WRITE nft={nft} />
+                            <CreateAsk nft={nft} />
                         </div>
                     </Disclosure.Panel>
                     </>
@@ -95,7 +96,7 @@ export default function AskWrite_disclosure(nft) {
                     </Disclosure.Button>
                     <Disclosure.Panel className="bg-slate-900 border-white border-2 border-solid flex flex-row flex-wrap px-4 pt-4 pb-2 text-lg w-full">
                         <div className="w-fit flex flex-row flex-wrap">
-                            <AskForNFT_WRITE nft={nft} />
+                            <CreateAsk nft={nft} />
                         </div>
                     </Disclosure.Panel>
                     </>

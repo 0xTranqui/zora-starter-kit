@@ -12,7 +12,6 @@ import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import NFTCard from '../components/NFTCard';
 import AskRead_disclosure from "../components/AskRead_disclosure"
-import { AskForNFT_READ } from '../components/AskforNFT_READ';
 import AskWrite_disclosure from '../components/AskWrite_disclosure';
 
 
