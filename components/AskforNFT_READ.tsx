@@ -24,8 +24,10 @@ export const AskForNFT_READ = (nft) => {
         contractInterface: abi,
         functionName: 'askForNFT',
         args: [
-            nft.nft.nft.contractAddress,
-            nft.nft.nft.tokenId
+            "0x7e6663E45Ae5689b313e6498D22B041f4283c88A",
+            "1"
+            // nft.nft.nft.contractAddress,
+            // nft.nft.nft.tokenId
         ],
         watch: true,
         onError(error) {
@@ -37,6 +39,7 @@ export const AskForNFT_READ = (nft) => {
     })
 
     const currentReadData = data ? data : ""
+    console.log("currentReadData", currentReadData)
     const currentReadPrice = data ? `${utils.formatEther(BigNumber.from(currentReadData[4]).toString())}` + " ETH" : "undefined"
     const currentFindersFee = data ? `${currentReadData[3] / 100 }` + " %" : "undefined"
 
