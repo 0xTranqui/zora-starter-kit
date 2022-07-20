@@ -69,9 +69,9 @@ const Protocol: NextPage = () => {
         {/* ASKS MODULE */}
         {/* ASKS MODULE */}
 
-        <div className='mt-10 border-2 border-green-500 border-solid flex flex-row flex-wrap content-start'>
-          <div className='h-fit content-start border-2 border-blue-500 border-solid flex flex-row flex-wrap w-full'>
-            <div className="text-2xl border-2 border-red-500 border-solid h-fit w-full flex flex-row justify-center">            
+        <div className='mt-10 flex flex-row flex-wrap content-start'>
+          <div className='h-fit content-start flex flex-row flex-wrap w-full'>
+            <div className="text-2xl h-fit w-full flex flex-row justify-center">            
               ASKS MODULE
             </div>
             <div className=" justify-center border-2 border-white border-solid flex flex-row h-fit w-full">
@@ -91,7 +91,7 @@ const Protocol: NextPage = () => {
           </div>
 
           {/* NFT RENDERING + CONTRACT INPUTS */}
-          <div className="border-2 border-solid border-blue-500 w-full h-fit flex flex-row flex-wrap justify-center "> 
+          <div className=" w-full h-fit flex flex-row flex-wrap justify-center "> 
             <MediaConfiguration
               networkId="1"                        
               strategy={zdkStrategyMainnet}
@@ -120,12 +120,12 @@ const Protocol: NextPage = () => {
               />
             </MediaConfiguration> 
             <div className="w-full flex flex-row flex-wrap justify-center">
-              <div className="justify-center flex flex-row w-full border-2 border-red-500 border-soli">
+              <div className="justify-center flex flex-row w-full">
                 <div>
                   CONTRACT ADDRESS
                 </div>
                 <input
-                  className="ml-5 text-black text-center bg-slate-200"
+                  className="border-[1px] border-solid border-black ml-5 text-black text-center bg-slate-200"
                   placeholder="Input NFT Address"
                   name="inputContract"
                   type="text"
@@ -143,12 +143,12 @@ const Protocol: NextPage = () => {
                 >
                 </input>
               </div>
-              <div className="justify-center flex flex-row w-full border-2 border-red-500 border-soli">
+              <div className="justify-center flex flex-row w-full">
                 <div>
                   TOKEN ID
                 </div>
                 <input
-                  className="ml-5 text-black text-center bg-slate-200"
+                  className="border-[1px] border-solid border-black ml-5 text-black text-center bg-slate-200"
                   placeholder="Input Token Id "
                   name="inputContract"
                   type="text"
