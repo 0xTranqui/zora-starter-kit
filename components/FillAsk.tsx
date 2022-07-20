@@ -91,6 +91,11 @@ export const FillAsk = (nft, call) => {
         },
     })    
 
+    const shortenedAddress = (address) => {
+        let displayAddress = address?.substr(0,4) + "..." + address?.substr(-4)
+        return displayAddress
+    }
+
     const listingCheck = (sellerAddress) => {
         console.log("selleraddress: ", sellerAddress)
         if (sellerAddress === "0x0000000000000000000000000000000000000000") {
@@ -103,7 +108,7 @@ export const FillAsk = (nft, call) => {
             return (
                 <div className="flex flex-row flex-wrap w-fit space-y-1">
                     <div className="flex flex-row flex-wrap w-full">                    
-                        {"Contract Address: " + nft.nft.nft.contractAddress}
+                        {"Contract Address: " + shortenedAddress(nft.nft.nft.contractAddress)}
                     </div>                
                     <div className="flex flex-row flex-wrap w-full">                    
                         {"Token Id: " + nft.nft.nft.tokenId}
@@ -132,16 +137,17 @@ export const FillAsk = (nft, call) => {
         if (functionCall === "fill" ) {
             return (
                 <div className="flex flex-row flex-wrap w-fit space-y-1">
-                    <div className="flex flex-row flex-wrap w-full">                    
-                        {"Contract Address: " + nft.nft.nft.contractAddress}
-                    </div>                
-                    <div className="flex flex-row flex-wrap w-full">                    
-                        {"Token Id: " + nft.nft.nft.tokenId}
-                    </div>          
-
+                    <div className="flex flex-row flex-wrap w-full justify-center  border-solid ">
+                        <div>
+                            {"Contract Address: " + shortenedAddress(nft.nft.nft.contractAddress)}
+                        </div>                    
+                        <div className="ml-5 flex flex-row flex-wrap ">                    
+                            {"Token Id: " + nft.nft.nft.tokenId}
+                        </div>                                       
+                    </div>               
                     <div className="flex flex-row w-full">
                         <input
-                            className="flex flex-row flex-wrap w-fit ml-5 text-black text-center bg-slate-200"
+                            className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
                             placeholder="Fill Currency"
                             name="fillAskCurrency"
                             type="text"
@@ -162,7 +168,7 @@ export const FillAsk = (nft, call) => {
 
                     <div className="flex flex-row w-full">
                         <input
-                            className="flex flex-row flex-wrap w-fit ml-5 text-black text-center bg-slate-200"
+                            className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
                             placeholder="Fill Amount"
                             name="fillAskAmount"
                             type="text"
@@ -183,7 +189,7 @@ export const FillAsk = (nft, call) => {
 
                     <div className="flex flex-row w-full">
                         <input
-                            className="flex flex-row flex-wrap w-fit ml-5 text-black text-center bg-slate-200"
+                            className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
                             placeholder="Finder"
                             name="fillAskFinder"
                             type="text"
@@ -205,7 +211,7 @@ export const FillAsk = (nft, call) => {
                     <button 
                         type="button"
                         onClick={() => fillAskWrite()}
-                        className="border-2 border-white border-solid px-2 hover:bg-white hover:text-slate-900"
+                        className="border-2 border-white border-solid w-full px-2 hover:bg-white hover:text-slate-900"
                     >
                         FILL ASK
                     </button>
@@ -221,9 +227,6 @@ export const FillAsk = (nft, call) => {
                 <div>
                     {callCheck(nft.call)}
                 </div>
-                <div className="w-6/12">
-                    {JSON.stringify(fillAsk)}
-                </div>    
             </main>
         </div>
     )

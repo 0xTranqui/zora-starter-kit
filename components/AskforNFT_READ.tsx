@@ -44,7 +44,7 @@ export const AskForNFT_READ = (nft) => {
         console.log("selleraddress: ", sellerAddress)
         if (sellerAddress === "0x0000000000000000000000000000000000000000") {
             return (
-                <div>
+                <div className="flex flex-row content-center ">
                 No Active Listing for current address + token Id
                 </div>
             )

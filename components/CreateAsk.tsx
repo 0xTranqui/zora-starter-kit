@@ -177,20 +177,26 @@ export const CreateAsk = (nft, call) => {
         }
     }
 
+    const shortenedAddress = (address) => {
+        let displayAddress = address?.substr(0,4) + "..." + address?.substr(-4)
+        return displayAddress
+    }
+
     const callCheck = (functionCall) => {
         if (functionCall === "create" ) {
             return (
                 <div className="flex flex-row flex-wrap w-fit space-y-1">
-                    <div className="flex flex-row flex-wrap w-full">                    
-                        {"Contract Address: " + nft.nft.nft.contractAddress}
+                    <div className="flex flex-row flex-wrap w-full justify-center  border-solid ">
+                        <div>
+                            {"Contract Address: " + shortenedAddress(nft.nft.nft.contractAddress)}
+                        </div>                    
+                        <div className="ml-5 flex flex-row flex-wrap w-fit">                    
+                            {"Token Id: " + nft.nft.nft.tokenId}
+                        </div>                                       
                     </div>                
-                    <div className="flex flex-row flex-wrap w-full">                    
-                        {"Token Id: " + nft.nft.nft.tokenId}
-                    </div>               
-                    
                     <div className="flex flex-row w-full">
                         <input
-                            className="flex flex-row flex-wrap w-fit ml-5 text-black text-center bg-slate-200"
+                            className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
                             placeholder="Listing Price"
                             name="createAskListingPrice"
                             type="text"
@@ -211,7 +217,7 @@ export const CreateAsk = (nft, call) => {
                     
                     <div className="flex flex-row w-full">                
                         <input
-                            className="flex flex-row flex-wrap w-fit ml-5 text-black text-center bg-slate-200"
+                            className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
                             placeholder="Listing Currency"
                             name="createAskListingCurrency"
                             type="text"
@@ -232,7 +238,7 @@ export const CreateAsk = (nft, call) => {
                     
                     <div className="flex flex-row w-full">                          
                         <input
-                            className="flex flex-row flex-wrap w-fit ml-5 text-black text-center bg-slate-200"
+                            className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
                             placeholder="Sale Funds Recipient"
                             name="createAskSaleFundsRecipient"
                             type="text"
@@ -253,7 +259,7 @@ export const CreateAsk = (nft, call) => {
 
                     <div className="flex flex-row w-full">                      
                         <input
-                            className="flex flex-row flex-wrap w-fit ml-5 text-black text-center bg-slate-200"
+                            className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
                             placeholder="Finders Fee Bps"
                             name="createAskFindersFeeBps"
                             type="text"
@@ -275,7 +281,7 @@ export const CreateAsk = (nft, call) => {
                     <button 
                         type="button"
                         onClick={() => createAskWrite()}
-                        className="border-2 border-white border-solid px-2 hover:bg-white hover:text-slate-900"
+                        className="border-2 border-white border-solid w-full px-2 hover:bg-white hover:text-slate-900"
                     >
                         CREATE ASK
                     </button>
@@ -284,16 +290,14 @@ export const CreateAsk = (nft, call) => {
             )
         }
     }
+
     
     return (
         <div className=" text-white text-sm h-full flex flex-col flex-wrap items-center justify-center">
             <main className=" w-full flex flex-row flex-wrap">        
                 <div>
                     {callCheck(nft.call)}
-                </div>
-                <div className="w-6/12">
-                    {JSON.stringify(createAsk)}
-                </div>    
+                </div>  
             </main>
         </div>
     )

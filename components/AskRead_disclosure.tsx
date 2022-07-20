@@ -14,8 +14,8 @@ export default function AskRead_disclosure(nft) {
     // export default function ContractActions(nft, setAsksCB: Dispatch<SetStateAction<nftInfo>>)
 
     return (
-        <div className=" ml-2 w-full text-black">
-            <div className=" w-full max-w-md bg-white ">
+        <div className="ml w-full text-black">
+            <div className=" w-full bg-white ">
             <Disclosure>
                 {({ open }) => (
                 <>
@@ -29,7 +29,7 @@ export default function AskRead_disclosure(nft) {
                         } h-5 w-5`}
                     /> */}
                 </Disclosure.Button>
-                <Disclosure.Panel className="bg-slate-900 border-white border-2 border-solid flex flex-row flex-wrap px-4 pt-4 pb-2 text-lg w-full">
+                <Disclosure.Panel className="bg-slate-900 border-white border-2 border-solid flex flex-row flex-wrap items-center p-2 text-lg w-full">
                     <div className="w-fit flex flex-row flex-wrap">
                         <AskForNFT_READ nft={nft} />
                     </div>

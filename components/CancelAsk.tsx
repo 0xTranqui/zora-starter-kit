@@ -69,6 +69,11 @@ export const CancelAsk = (nft, call) => {
         },
     })    
 
+    const shortenedAddress = (address) => {
+        let displayAddress = address?.substr(0,4) + "..." + address?.substr(-4)
+        return displayAddress
+    }
+
     const listingCheck = (sellerAddress) => {
         console.log("selleraddress: ", sellerAddress)
         if (sellerAddress === "0x0000000000000000000000000000000000000000") {
@@ -109,20 +114,28 @@ export const CancelAsk = (nft, call) => {
     const callCheck = (functionCall) => {
         if (functionCall === "cancel" ) {
             return (
-                <div className="flex flex-row flex-wrap w-fit space-y-1">
-                    <div className="flex flex-row flex-wrap w-full">                    
-                        {"Contract Address: " + nft.nft.nft.contractAddress}
-                    </div>                
-                    <div className="flex flex-row flex-wrap w-full">                    
-                        {"Token Id: " + nft.nft.nft.tokenId}
-                    </div>                           
-                    
+                <div className=" flex flex-row flex-wrap w-fit space-y-1">
+                    <div className="flex flex-row flex-wrap w-full justify-center">
+                        <div>
+                            {"Contract Address: " + shortenedAddress(nft.nft.nft.contractAddress)}
+                        </div>                    
+                        <div className="ml-5 flex flex-row flex-wrap ">                    
+                            {"Token Id: " + nft.nft.nft.tokenId}
+                        </div>                                       
+                    </div>      
+                    <div className="flex flex-row w-full">
+                        <input
+                            className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
+                            placeholder="PLACEHOLDER FOR SPACING"                       
+                        >
+                        </input>
+                    </div>                                                                        
                     <button 
                         type="button"
                         onClick={() => cancelAskWrite()}
-                        className="border-2 border-white border-solid px-2 hover:bg-white hover:text-slate-900"
+                        className="border-2 border-white border-solid flex flex-row justify-center w-full px-2 hover:bg-white hover:text-slate-900"
                     >
-                        CaNCEL ASK
+                        CANCEL ASK
                     </button>
 
                 </div>
@@ -132,13 +145,10 @@ export const CancelAsk = (nft, call) => {
     
     return (
         <div className=" text-white text-sm h-full flex flex-col flex-wrap items-center justify-center">
-            <main className=" w-full flex flex-row flex-wrap">        
-                <div>
+            <main className=" w-full flex flex-row flex-wrap ">        
+                <div className=" flex flex-row flex-wrap">
                     {callCheck(nft.call)}
                 </div>
-                <div className="w-6/12">
-                    {JSON.stringify(cancelAsk)}
-                </div>    
             </main>
         </div>
     )
