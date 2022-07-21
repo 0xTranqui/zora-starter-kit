@@ -20,7 +20,7 @@ export const SetAskPrice = (nft, call) => {
         "tokenContract": nft.nft.nft.contractAddress,
         "tokenId": nft.nft.nft.tokenId,
         "askPrice": "",
-        "askCurrency": ""
+        "askCurrency": "0x0000000000000000000000000000000000000000"
     })
 
     // checking prop
@@ -57,6 +57,8 @@ export const SetAskPrice = (nft, call) => {
 
 
     // AsksV1_1 setAskPrice Write
+    const listingPrice = updateAsk.askPrice ? utils.parseEther(updateAsk.askPrice) : ""
+
     const { data: setAskData, isError: setAskError, isLoading: setAskLoading, isSuccess: setAskSuccess, write: setAskWrite  } = useContractWrite({
         addressOrName: asksAddresses.AsksV1_1,
         contractInterface: abi,
@@ -64,7 +66,7 @@ export const SetAskPrice = (nft, call) => {
         args: [
             updateAsk.tokenContract,
             updateAsk.tokenId,
-            updateAsk.askPrice,
+            listingPrice,
             updateAsk.askCurrency
         ],
         onError(error, variables, context) {
@@ -132,9 +134,9 @@ export const SetAskPrice = (nft, call) => {
                     <div className="flex flex-row w-full">
                         <input
                             className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
-                            placeholder="Listing Price"
+                            placeholder="Listing Price - ETH"
                             name="createAskListingPrice"
-                            type="text"
+                            type="number"
                             value={updateAsk.askPrice}
                             onChange={(e) => {
                                 e.preventDefault();

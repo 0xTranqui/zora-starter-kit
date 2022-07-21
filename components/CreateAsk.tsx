@@ -5,7 +5,7 @@ import * as asksAddresses from "@zoralabs/v3/dist/addresses/1.json"
 import { abi } from "@zoralabs/v3/dist/artifacts/AsksV1_1.sol/AsksV1_1.json"
 import { useState, useEffect } from "react";
 import { ReadContractResult } from "@wagmi/core";
-import { BigNumber, utils } from "ethers";
+import { BigNumber, ethers, utils } from "ethers";
 
 export const CreateAsk = (nft, call) => {
 
@@ -17,54 +17,14 @@ export const CreateAsk = (nft, call) => {
         sellerFundsRecipient: any,
         findersFeeBps: any
     }
-
-    interface updateAskCall {
-        tokenContract: any,
-        tokenId: any,
-        askPrice: any, 
-        askCurrency: any,
-    }
-
-    interface cancelAskCall {
-        tokenContract: any,
-        tokenId: any,
-    }
-
-    interface fillAskCall {
-        tokenContract: any,
-        tokenId: any,
-        fillCurrency: any,
-        fillAmount: any,
-        finder: any
-    }
     
     const [createAsk, setCreateAsk] = useState<createAskCall>({
         "tokenContract": nft.nft.nft.contractAddress,
         "tokenId": nft.nft.nft.tokenId,
         "askPrice": "",
-        "askCurrency": "",
+        "askCurrency": "0x0000000000000000000000000000000000000000",
         "sellerFundsRecipient": "",
         "findersFeeBps": ""
-    })
-
-    const [updateAsk, setUpdateAsk] = useState<updateAskCall>({
-        "tokenContract": "",
-        "tokenId": "",
-        "askPrice": "",
-        "askCurrency": ""
-    })
-
-    const [cancelAsk, setCancelAsk] = useState<cancelAskCall>({
-        "tokenContract": "",
-        "tokenId": ""
-    })
-
-    const [fillAsk, setFillAsk] = useState<fillAskCall>({
-        "tokenContract": "",
-        "tokenId": "",
-        "fillCurrency": "",
-        "fillAmount": "",
-        "finder": "",
     })
 
     // checking prop
@@ -77,30 +37,9 @@ export const CreateAsk = (nft, call) => {
     const currentUserAddress = address ? address : ""
 
 
-    // AsksV1_1 askForNFT read call
-
-    const { data, isLoading, isSuccess, isFetching  } = useContractRead({
-        addressOrName: asksAddresses.AsksV1_1,
-        contractInterface: abi,
-        functionName: 'askForNFT',
-        args: [
-            nft.nft.nft.contractAddress,
-            nft.nft.nft.tokenId
-        ],
-        watch: true,
-        onError(error) {
-            console.log("error: ", error)
-        },
-        onSuccess(data) {
-            console.log("success! --> ", data)
-        }  
-    })
-
-    const currentReadData = data ? data : ""
-    const currentReadPrice = data ? `${utils.formatEther(BigNumber.from(currentReadData[4]).toString())}` + " ETH" : "undefined"
-    const currentFindersFee = data ? `${currentReadData[3] / 100 }` + " %" : "undefined"
-
     // AsksV1_1 createAsk Write
+    const listingPrice = createAsk.askPrice ? ethers.utils.parseEther(createAsk.askPrice) : ""
+
     const { data: createAskData, isError: createAskError, isLoading: createAskLoading, isSuccess: createAskSuccess, write: createAskWrite  } = useContractWrite({
         addressOrName: asksAddresses.AsksV1_1,
         contractInterface: abi,
@@ -108,7 +47,7 @@ export const CreateAsk = (nft, call) => {
         args: [
             createAsk.tokenContract,
             createAsk.tokenId,
-            createAsk.askPrice,
+            listingPrice,
             createAsk.askCurrency,
             createAsk.sellerFundsRecipient,
             createAsk.findersFeeBps
@@ -120,62 +59,6 @@ export const CreateAsk = (nft, call) => {
             console.log("Success!", createAskData)
         },
     })
-
-    // AsksV1_1 setAskPrice Write
-    const { data: setAskData, isError: setAskError, isLoading: setAskLoading, isSuccess: setAskSuccess, write: setAskWrite  } = useContractWrite({
-        addressOrName: asksAddresses.AsksV1_1,
-        contractInterface: abi,
-        functionName: 'setAskPrice',
-        args: [
-            createAsk.tokenContract,
-            createAsk.tokenId,
-            createAsk.askPrice,
-            createAsk.askCurrency
-        ],
-        onError(error, variables, context) {
-            console.log("error", error)
-        },
-        onSuccess(createAskData, variables, context) {
-            console.log("Success!", setAskData)
-        },
-    })    
-
-    const listingCheck = (sellerAddress) => {
-        console.log("selleraddress: ", sellerAddress)
-        if (sellerAddress === "0x0000000000000000000000000000000000000000") {
-            return (
-                <div>
-                No Active Listing for current address + token Id
-                </div>
-            )
-        } else {
-            return (
-                <div className="flex flex-row flex-wrap w-fit space-y-1">
-                    <div className="flex flex-row flex-wrap w-full">                    
-                        {"Contract Address: " + nft.nft.nft.contractAddress}
-                    </div>                
-                    <div className="flex flex-row flex-wrap w-full">                    
-                        {"Token Id: " + nft.nft.nft.tokenId}
-                    </div>                
-                    <div className="flex flex-row flex-wrap w-full">                    
-                        {"Seller: " + currentReadData[0]}
-                    </div>
-                    <div className="flex flex-row flex-wrap w-full">                    
-                        {"Funds Recipient: " + currentReadData[1]}
-                    </div>
-                    <div className="flex flex-row flex-wrap w-full">                    
-                        {"Currency: " + currentReadData[2]}
-                    </div>
-                    <div className="flex flex-row flex-wrap w-full">                    
-                        {"Finders Fee: " + currentFindersFee}
-                    </div>
-                    <div className="flex flex-row flex-wrap w-full">                    
-                        {"Price: " + currentReadPrice}
-                    </div>
-                </div>
-            )
-        }
-    }
 
     const shortenedAddress = (address) => {
         let displayAddress = address?.substr(0,4) + "..." + address?.substr(-4)
@@ -197,9 +80,9 @@ export const CreateAsk = (nft, call) => {
                     <div className="flex flex-row w-full">
                         <input
                             className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
-                            placeholder="Listing Price"
+                            placeholder="Listing Price - ETH"
                             name="createAskListingPrice"
-                            type="text"
+                            type="number"
                             value={createAsk.askPrice}
                             onChange={(e) => {
                                 e.preventDefault();
@@ -262,7 +145,7 @@ export const CreateAsk = (nft, call) => {
                             className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
                             placeholder="Finders Fee Bps"
                             name="createAskFindersFeeBps"
-                            type="text"
+                            type="number"
                             value={createAsk.findersFeeBps}
                             onChange={(e) => {
                                 e.preventDefault();

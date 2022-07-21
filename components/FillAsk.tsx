@@ -20,7 +20,7 @@ export const FillAsk = (nft, call) => {
     const [fillAsk, setFillAsk] = useState<fillAskCall>({
         "tokenContract": nft.nft.nft.contractAddress,
         "tokenId": nft.nft.nft.tokenId,
-        "fillCurrency": "",
+        "fillCurrency": "0x0000000000000000000000000000000000000000",
         "fillAmount": "",
         "finder": ""
 
@@ -60,13 +60,15 @@ export const FillAsk = (nft, call) => {
 
     // AsksV1_1 fillAsk Write
 
-    const fillAmountOverride = () => {
-        if (fillAsk.fillAmount === "") {
-            return 0
-        } else {
-            return ethers.utils.parseEther(fillAsk.fillAmount)
-        }
-    }
+    const fillPrice = fillAsk.fillAmount ? ethers.utils.parseEther(fillAsk.fillAmount) : ""
+
+    // const fillAmountOverride = () => {
+    //     if (fillAsk.fillAmount === "") {
+    //         return 0
+    //     } else {
+    //         return ethers.utils.parseEther(fillAsk.fillAmount)
+    //     }
+    // }
 
     const { data: cancelData, isError: fillAskError, isLoading: fillAskLoading, isSuccess: fillAskSuccess, write: fillAskWrite  } = useContractWrite({
         addressOrName: asksAddresses.AsksV1_1,
@@ -76,12 +78,12 @@ export const FillAsk = (nft, call) => {
             fillAsk.tokenContract,
             fillAsk.tokenId,
             fillAsk.fillCurrency,
-            fillAsk.fillAmount,
+            fillPrice,
             fillAsk.finder,
 
         ],
         overrides: {
-            value: fillAmountOverride()
+            value: fillPrice
         },
         onError(error, variables, context) {
             console.log("error", error)
@@ -169,9 +171,9 @@ export const FillAsk = (nft, call) => {
                     <div className="flex flex-row w-full">
                         <input
                             className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
-                            placeholder="Fill Amount"
+                            placeholder="Fill Amount - ETH"
                             name="fillAskAmount"
-                            type="text"
+                            type="number"
                             value={fillAsk.fillAmount}
                             onChange={(e) => {
                                 e.preventDefault();

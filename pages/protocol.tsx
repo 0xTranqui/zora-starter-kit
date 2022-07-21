@@ -5,9 +5,13 @@ import { Dispatch, useState, useEffect } from 'react'
 import { ZDK, ZDKNetwork, ZDKChain } from "@zoralabs/zdk";
 import { NFTPreview, MediaConfiguration } from '@zoralabs/nft-components';
 import { Networks, Strategies } from "@zoralabs/nft-hooks"
+import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/1.json"
+import asksABI from "@zoralabs/v3/dist/artifacts/AsksV1_1.sol/AsksV1_1.json"
+import zmmABI from "@zoralabs/v3/dist/artifacts/ZoraModuleManager.sol/ZoraModuleManager.json"
 
-import { useAccount } from 'wagmi'
+import erc721abi from 'erc-token-abis/abis/ERC721Full.json'
 
+import { erc721ABI, useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import NFTCard from '../components/NFTCard';
@@ -39,6 +43,10 @@ const Protocol: NextPage = () => {
     tokenId: string
   }
 
+  interface nftABIInfo {
+    nftABI: any
+  }
+
   const [ asksNFT, setAsksNFT] = useState<nftInfo>({
     "contractAddress": "0x7e6663E45Ae5689b313e6498D22B041f4283c88A",
     "tokenId": "1"
@@ -53,6 +61,138 @@ const Protocol: NextPage = () => {
     "contractAddress": "0x7e6663E45Ae5689b313e6498D22B041f4283c88A",
     "tokenId": "3"
   })
+
+  // get account hook
+  const { address, connector, isConnecting, isConnected, status} = useAccount(); 
+  const currentUserAddress = address ? address : ""
+
+  // const [asksNFTABI, setAsksNFTABI] = useState<nftABIInfo>({
+  //   "nftABI": ""
+  // })
+
+  // // const getNFTABI = (nftAddress) => {
+  // //   const etherActorURL = `https://ether.actor/${asksNFT.contractAddress}.json`
+  // //   console.log("url: ", etherActorURL)
+  // //   fetch(etherActorURL)
+  // //     .then(result => result.json())
+  // //     .then((output) => {
+  // //       console.log("Output: ", output.abi);
+  // //       setAsksNFTABI(output.abi)
+  // //     }).catch(err => console.error(err));
+  // // }
+
+  // check if owner has approved ERC721 transfer helper for specific NFT
+  const { data, isLoading, isSuccess, isFetching  } = useContractRead({
+    addressOrName: asksNFT.contractAddress,
+    contractInterface: erc721abi,
+    functionName: 'isApprovedForAll',
+    args: [
+      currentUserAddress, //owner
+      mainnetZoraAddresses.ERC721TransferHelper // transferhelper
+    ],
+    watch: false,
+    onError(error) {
+      console.log("error: ", error)
+    },
+    onSuccess(data) {
+      console.log("ERC721TransferHelper Approved? --> ", data)
+    }  
+  })
+
+  const transferHelperDataBool = () => {
+    return Boolean(data);
+  }
+
+    // Apporve ERC721TransferHelper as an operator of the specific NFT
+    const { data: transferHelperData, isError: transferHelperError, isLoading: transferHelperLoading, isSuccess: transferHelperSuccess, write: transferHelperWrite } = useContractWrite({
+      addressOrName: asksNFT.contractAddress,
+      contractInterface: erc721ABI,
+      functionName: 'setApprovalForAll',
+      args: [
+          mainnetZoraAddresses.ERC721TransferHelper,
+          true,
+      ],
+      onError(error, variables, context) {
+          console.log("error", error)
+      },
+      onSuccess(cancelData, variables, context) {
+          console.log("Success!", transferHelperData)
+      },
+  })    
+
+  // check if owner has approved Asks Module V1.1
+  const { data: zmmAsksBool, isLoading: zmmAsksLoading, isSuccess: zmmAsksSuccess, isFetching: zmmAsksFetching  } = useContractRead({
+    addressOrName: mainnetZoraAddresses.ZoraModuleManager,
+    contractInterface: zmmABI.abi,
+    functionName: 'isModuleApproved',
+    args: [
+      currentUserAddress, //owner
+      mainnetZoraAddresses.AsksV1_1 // AsksV1.1 address
+    ],
+    watch: false,
+    onError(error) {
+        console.log("error: ", error)
+    },
+    onSuccess(data) {
+        console.log("AsksV1.1 Module Approved? --> ", data)
+    }  
+  })  
+
+  const zmmAsksApprovalCheck = () => {
+    return Boolean(zmmAsksBool);
+  }
+
+  // check if owner has approved OffersV1 Module
+  const { data: zmmOffersBool, isLoading: zmmOffersLoading, isSuccess: zmmOffersSuccess, isFetching: zmmOffersFetching  } = useContractRead({
+    addressOrName: mainnetZoraAddresses.ZoraModuleManager,
+    contractInterface: zmmABI.abi,
+    functionName: 'isModuleApproved',
+    args: [
+      currentUserAddress, //owner
+      mainnetZoraAddresses.OffersV1 // OffersV1 address
+    ],
+    watch: false,
+    onError(error) {
+        console.log("error: ", error)
+    },
+    onSuccess(data) {
+        console.log("OffersV1 Module Approved? --> ", data)
+    }  
+  })  
+
+  const zmmOffersApprovalCheck = () => {
+    return Boolean(zmmOffersBool);
+  }
+
+  // check if owner has approved AuctionFindersEth Module
+  const { data: zmmAuctionFindersEthBool, isLoading: zmmAuctionFindersEthLoading, isSuccess: zmmAuctionFindersEthSuccess, isFetching: zmmAuctionFindersEthFetching  } = useContractRead({
+    addressOrName: mainnetZoraAddresses.ZoraModuleManager,
+    contractInterface: zmmABI.abi,
+    functionName: 'isModuleApproved',
+    args: [
+      currentUserAddress, //owner
+      mainnetZoraAddresses.ReserveAuctionFindersEth // AuctionFindersEth address
+    ],
+    watch: false,
+    onError(error) {
+        console.log("error: ", error)
+    },
+    onSuccess(data) {
+        console.log("AuctionFindersEth Module Approved? --> ", data)
+    }  
+  })  
+
+  const zmmAuctionFindersEthApprovalCheck = () => {
+    return Boolean(zmmAuctionFindersEthBool);
+  }  
+
+  
+
+  // useEffect(() => {
+  //   getNFTABI(asksNFT.contractAddress);
+  // },
+  // [asksNFT.contractAddress]
+  // )
 
   return (
     <div className='flex flex-col justify-center h-full min-h-screen'>
@@ -148,7 +288,7 @@ const Protocol: NextPage = () => {
                   TOKEN ID
                 </div>
                 <input
-                  className="border-[1px] border-solid border-black ml-5 text-black text-center bg-slate-200"
+                  className="border-l-[1px] border-r-[1px] border-b-[1px] border-solid border-black ml-5 mt-1 text-black text-center bg-slate-200"
                   placeholder="Input Token Id "
                   name="inputContract"
                   type="text"
@@ -166,9 +306,41 @@ const Protocol: NextPage = () => {
                 >
                 </input>
               </div>
+              
+              <div className="flex flex-row flex-wrap w-full justify-center">
+                {zmmAsksApprovalCheck() === false ? (
+                <div className="flex w-full justify-center">
+                  <button className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1">
+                    APPROVE ASKS MODULE
+                  </button>
+                </div>
+                ) : (
+                <div className="flex w-full justify-center">
+                  <button disabled={true}  className="w-fit border-2 border-slate-600 text-slate-400 border-solid p-1 mt-1">
+                    ASK MODULE APPROVED ✅
+                  </button>
+                </div>                
+                )}
+                {transferHelperDataBool() === false ? (
+                <div className="flex w-full justify-center">
+                  <button 
+                    onClick={() => transferHelperWrite()}
+                    className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1"
+                  >
+                    APPROVE TRANSFER HELPER
+                  </button>
+                </div>
+                ) : (
+                <div className="flex w-full justify-center">
+                  <button disabled={true}  className="w-fit border-2 border-slate-600 text-slate-400 border-solid p-1 mt-1">
+                    TRANSFER HELPER APPROVED ✅
+                  </button>
+                </div>  
+                )}
+              </div>
+
             </div>                   
           </div>
-
           <div className="mt-5 flex flex-row flex-wrap w-full ">
             <div className="w-full">
               <div className="ml-2 mb-2 text-xl">
@@ -289,6 +461,35 @@ const Protocol: NextPage = () => {
                 >
                 </input>
               </div>
+              <div className="flex flex-row flex-wrap w-full justify-center">
+                {zmmOffersApprovalCheck() === false ? (
+                <div className="flex w-full justify-center">
+                  <button className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1">
+                    APPROVE OFFERS MODULE
+                  </button>
+                </div>
+                ) : (
+                <div className="flex w-full justify-center">
+                  <button disabled={true}  className="w-fit border-2 border-slate-600 text-slate-400 border-solid p-1 mt-1">
+                    OFFERS MODULE APPROVED ✅
+                  </button>
+                </div>                
+                )}
+                {transferHelperDataBool() === false ? (
+                <div className="flex w-full justify-center">
+                  <button className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1">
+                    APPROVE TRANSFER HELPER
+                  </button>
+                </div>
+                ) : (
+                <div className="flex w-full justify-center">
+                  <button disabled={true}  className="w-fit border-2 border-slate-600 text-slate-400 border-solid p-1 mt-1">
+                    TRANSFER HELPER APPROVED ✅
+                  </button>
+                </div>  
+                )}
+              </div>
+
             </div>                   
           </div>
 
@@ -440,6 +641,35 @@ const Protocol: NextPage = () => {
                 >
                 </input>
               </div>
+              <div className="flex flex-row flex-wrap w-full justify-center">
+                {zmmAuctionFindersEthApprovalCheck() === false ? (
+                <div className="flex w-full justify-center">
+                  <button className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1">
+                    APPROVE AUCTION MODULE
+                  </button>
+                </div>
+                ) : (
+                <div className="flex w-full justify-center">
+                  <button disabled={true}  className="w-fit border-2 border-slate-600 text-slate-400 border-solid p-1 mt-1">
+                    AUCTION MODULE APPROVED ✅
+                  </button>
+                </div>                
+                )}
+                {transferHelperDataBool() === false ? (
+                <div className="flex w-full justify-center">
+                  <button className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1">
+                    APPROVE TRANSFER HELPER
+                  </button>
+                </div>
+                ) : (
+                <div className="flex w-full justify-center">
+                  <button disabled={true}  className="w-fit border-2 border-slate-600 text-slate-400 border-solid p-1 mt-1">
+                    TRANSFER HELPER APPROVED ✅
+                  </button>
+                </div>  
+                )}
+              </div>
+
             </div>                   
           </div>
 

@@ -125,6 +125,7 @@ export const CancelAsk = (nft, call) => {
                     </div>      
                     <div className="flex flex-row w-full">
                         <input
+                            disabled={true}
                             className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
                             placeholder="PLACEHOLDER FOR SPACING"                       
                         >
