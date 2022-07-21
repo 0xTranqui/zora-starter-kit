@@ -1,4 +1,4 @@
-import { Header } from "./Header";
+import { Header } from "../Header";
 import { useContractRead, useAccount } from "wagmi";
 import { AsksV1_1Interface } from "@zoralabs/v3/dist/typechain/AsksV1_1"
 import * as asksAddresses from "@zoralabs/v3/dist/addresses/1.json"
@@ -7,27 +7,26 @@ import { useState, useEffect } from "react";
 import { ReadContractResult } from "@wagmi/core";
 import { BigNumber, utils } from "ethers";
 
-export const AskForNFT_READ = (nft) => {
+export const AskForNFT = (nft) => {
 
-    // checking prop
-    console.log("what is nft", nft)
-    
-    // get account hook
-    const { address, connector, isConnecting, isConnected, status} = useAccount(); 
-    const currentUserAddress = address ? address : ""
+    interface askForNFT {
+        tokenContract: any,
+        tokenId: any
+    }
 
+    const [askForNFT, setAskForNFT] = useState<askForNFT>({
+        "tokenContract": "0x7e6663E45Ae5689b313e6498D22B041f4283c88A",
+        "tokenId": "1",
+    })
 
     // AsksV1_1 askForNFT read call
-
     const { data, isLoading, isSuccess, isFetching  } = useContractRead({
         addressOrName: asksAddresses.AsksV1_1,
         contractInterface: abi,
         functionName: 'askForNFT',
         args: [
-            "0x7e6663E45Ae5689b313e6498D22B041f4283c88A",
-            "1"
-            // nft.nft.nft.contractAddress,
-            // nft.nft.nft.tokenId
+            askForNFT.tokenContract,
+            askForNFT.tokenId
         ],
         watch: true,
         onError(error) {
@@ -39,12 +38,10 @@ export const AskForNFT_READ = (nft) => {
     })
 
     const currentReadData = data ? data : ""
-    console.log("currentReadData", currentReadData)
     const currentReadPrice = data ? `${utils.formatEther(BigNumber.from(currentReadData[4]).toString())}` + " ETH" : "undefined"
     const currentFindersFee = data ? `${currentReadData[3] / 100 }` + " %" : "undefined"
 
     const listingCheck = (sellerAddress) => {
-        console.log("selleraddress: ", sellerAddress)
         if (sellerAddress === "0x0000000000000000000000000000000000000000") {
             return (
                 <div className="flex flex-row content-center ">

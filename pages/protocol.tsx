@@ -14,10 +14,12 @@ import erc721abi from 'erc-token-abis/abis/ERC721Full.json'
 import { erc721ABI, useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
-import NFTCard from '../components/NFTCard';
-import AskRead_disclosure from "../components/AskRead_disclosure"
-import AskWrite_disclosure from '../components/AskWrite_disclosure';
-
+import AskRead_disclosure from "../components/Asks/AskRead_disclosure"
+import AskWrite_disclosure from '../components/Asks/AskWrite_disclosure';
+import OffersRead_disclosure from "../components/Offers/OffersRead_disclosure"
+import OffersWrite_disclosure from '../components/Offers/OffersWrite_disclosure';
+import AuctionRead_disclosure from "../components/Auctions/AuctionRead_disclosure"
+import AuctionWrite_disclosure from '../components/Auctions/AuctionWrite_disclosure'
 
 const networkInfo = {
   network: ZDKNetwork.Ethereum,
@@ -364,15 +366,15 @@ const Protocol: NextPage = () => {
         {/* OFFERS MODULE */}
         {/* OFFERS MODULE */}
 
-        <div className='mt-10 border-2 border-yellow-500 border-solid'>
-          <div className='h-fit content-start border-2 border-blue-500 border-solid flex flex-row flex-wrap w-full'>
-            <div className="text-2xl border-2 border-red-500 border-solid h-fit w-full flex flex-row justify-center">            
+        <div className='mt-10 '>
+          <div className='h-fit content-start flex flex-row flex-wrap w-full'>
+            <div className="text-2xl h-fit w-full flex flex-row justify-center">            
               OFFERS MODULE
             </div>
             <div className=" justify-center border-2 border-white border-solid flex flex-row h-fit w-full">
               MAKE/RECEIVE OFFERS ON NFTs
             </div>
-            <div className="grid grid-cols-3 border-2 boreder-yellow-500 border-solid w-full" >
+            <div className="grid grid-cols-3 border-2 boreder-white border-solid w-full" >
               <a className="text-center">
                 DOCS
               </a>
@@ -386,7 +388,7 @@ const Protocol: NextPage = () => {
           </div>
 
           {/* NFT RENDERING + CONTRACT INPUTS */}
-          <div className="border-2 border-solid border-blue-500 w-full h-fit flex flex-row flex-wrap justify-center "> 
+          <div className="border-l-2 border-r-2 border-b-2 border-solid border-white w-full h-fit flex flex-row flex-wrap justify-center "> 
             <MediaConfiguration
               networkId="1"                        
               strategy={zdkStrategyMainnet}
@@ -415,12 +417,12 @@ const Protocol: NextPage = () => {
               />
             </MediaConfiguration> 
             <div className="w-full flex flex-row flex-wrap justify-center">
-              <div className="justify-center flex flex-row w-full border-2 border-red-500 border-soli">
+              <div className="justify-center flex flex-row w-full ">
                 <div>
                   CONTRACT ADDRESS
                 </div>
                 <input
-                  className="ml-5 text-black text-center bg-slate-200"
+                  className="border-[1px] border-solid border-black ml-5 text-black text-center bg-slate-200"
                   placeholder="Input NFT Address"
                   name="inputContract"
                   type="text"
@@ -438,12 +440,12 @@ const Protocol: NextPage = () => {
                 >
                 </input>
               </div>
-              <div className="justify-center flex flex-row w-full border-2 border-red-500 border-soli">
+              <div className="justify-center flex flex-row w-full">
                 <div>
                   TOKEN ID
                 </div>
                 <input
-                  className="ml-5 text-black text-center bg-slate-200"
+                  className="border-l-[1px] border-r-[1px] border-b-[1px] border-solid border-black ml-5 mt-1 text-black text-center bg-slate-200"
                   placeholder="Input Token Id "
                   name="inputContract"
                   type="text"
@@ -489,64 +491,34 @@ const Protocol: NextPage = () => {
                 </div>  
                 )}
               </div>
+              <div className="mt-5 flex flex-row flex-wrap w-full ">
+                <div className="w-full">
+                  <div className="ml-2 mb-2 text-xl">
+                    OFFERS MODULE READS
+                  </div>
+                  <OffersRead_disclosure nft={asksNFT} />
+                  {/* <AskForNFT_READ nft={asksNFT} /> */}
+                </div>
+              </div>
+              <div className="mt-5 flex flex-row flex-wrap w-full ">
+                <div className="flex flex-row flex-wrap w-full">
+                  <div className="ml-2 mb-2 text-xl">
+                    OFFERS MODULE WRITES
+                  </div>
+                  <OffersWrite_disclosure nft={asksNFT} />
+                </div>
+              </div>              
 
             </div>                   
-          </div>
-
-
-          <div className="mt-5 flex flex-row flex-wrap w-full ">
-            <div>
-              <div>
-                READ
-              </div>
-              <div>
-                readcall 1
-              </div>
-              <div>
-                readcall 2
-              </div>
-            </div>
-          </div>
-          <div className="mt-5 flex flex-row flex-wrap w-full ">
-            <div>
-              <div>
-                INTERACT W/ EXISTING
-              </div>
-              <div>
-                writecall 1
-              </div>
-              <div>
-                writecall 2
-              </div>
-              <div>
-                writecall 3
-              </div>
-            </div>
-          </div>
-          <div className="mt-5 flex flex-row flex-wrap w-full ">
-            <div>
-              <div>
-                INTERACT W/ NEW
-              </div>
-              <div>
-                writecall 1
-              </div>
-              <div>
-                writecall 2
-              </div>
-              <div>
-                writecall 3
-              </div>
-            </div>
           </div>
         </div>
 
 
 
         {/* AUCTION MODULE */}
-        <div className='mt-10 border-2 border-blue-500 border-solid'>
-          <div className='h-fit content-start border-2 border-blue-500 border-solid flex flex-row flex-wrap w-full'>
-            <div className="text-2xl border-2 border-red-500 border-solid h-fit w-full flex flex-row justify-center">            
+        <div className='mt-10'>
+          <div className='h-fit content-start border-solid flex flex-row flex-wrap w-full'>
+            <div className="text-2xl h-fit w-full flex flex-row justify-center">            
               AUCTIONS MODULE
             </div>
             <div className=" justify-center border-2 border-white border-solid flex flex-row h-fit w-full">
@@ -566,7 +538,7 @@ const Protocol: NextPage = () => {
           </div>
 
           {/* NFT RENDERING + CONTRACT INPUTS */}              
-          <div className="border-2 border-solid border-blue-500 w-full h-fit flex flex-row flex-wrap justify-center "> 
+          <div className=" w-full h-fit flex flex-row flex-wrap justify-center "> 
             <MediaConfiguration
               networkId="1"                        
               strategy={zdkStrategyMainnet}
@@ -595,12 +567,12 @@ const Protocol: NextPage = () => {
               />
             </MediaConfiguration> 
             <div className="w-full flex flex-row flex-wrap justify-center">
-              <div className="justify-center flex flex-row w-full border-2 border-red-500 border-soli">
+              <div className="justify-center flex flex-row w-full">
                 <div>
                   CONTRACT ADDRESS
                 </div>
                 <input
-                  className="ml-5 text-black text-center bg-slate-200"
+                  className="border-[1px] border-solid border-black ml-5 text-black text-center bg-slate-200"
                   placeholder="Input NFT Address"
                   name="inputContract"
                   type="text"
@@ -618,12 +590,12 @@ const Protocol: NextPage = () => {
                 >
                 </input>
               </div>
-              <div className="justify-center flex flex-row w-full border-2 border-red-500 border-soli">
+              <div className="justify-center flex flex-row w-full">
                 <div>
                   TOKEN ID
                 </div>
                 <input
-                  className="ml-5 text-black text-center bg-slate-200"
+                  className="border-l-[1px] border-r-[1px] border-b-[1px] border-solid border-black ml-5 mt-1 text-black text-center bg-slate-200"
                   placeholder="Input Token Id "
                   name="inputContract"
                   type="text"
@@ -669,58 +641,25 @@ const Protocol: NextPage = () => {
                 </div>  
                 )}
               </div>
-
             </div>                   
-          </div>
-
+          </div>              
           <div className="mt-5 flex flex-row flex-wrap w-full ">
-            <div>
-              <div>
-                READ
+            <div className="w-full">
+              <div className="ml-2 mb-2 text-xl">
+                AUCTION MODULE READS
               </div>
-              <div>
-                readcall 1
-              </div>
-              <div>
-                readcall 2
-              </div>
+              <AuctionRead_disclosure nft={asksNFT} />
             </div>
           </div>
           <div className="mt-5 flex flex-row flex-wrap w-full ">
-            <div>
-              <div>
-                INTERACT W/ EXISTING
+            <div className="flex flex-row flex-wrap w-full">
+              <div className="ml-2 mb-2 text-xl">
+                AUCTION MODULE WRITES
               </div>
-              <div>
-                writecall 1
-              </div>
-              <div>
-                writecall 2
-              </div>
-              <div>
-                writecall 3
-              </div>
+              <AuctionWrite_disclosure nft={asksNFT} />
             </div>
           </div>
-          <div className="mt-5 flex flex-row flex-wrap w-full ">
-            <div>
-              <div>
-                INTERACT W/ NEW
-              </div>
-              <div>
-                writecall 1
-              </div>
-              <div>
-                writecall 2
-              </div>
-              <div>
-                writecall 3
-              </div>
-            </div>
-          </div>
-        </div>        
-
-
+        </div>
       </main>
     </div>
   )
