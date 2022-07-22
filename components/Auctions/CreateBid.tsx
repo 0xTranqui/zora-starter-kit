@@ -1,6 +1,6 @@
 import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/solid'
-import { AskForNFT } from './AskForNFT'
+import { AskForNFT } from '../Asks/AskForNFT'
 import { Dispatch, useState, SetStateAction } from 'react'
 
 interface nftInfo {
