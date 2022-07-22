@@ -1,38 +1,24 @@
 import { Header } from "../Header";
 import { useContractRead, useAccount } from "wagmi";
 import * as mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/1.json"
-import { abi } from "@zoralabs/v3/dist/artifacts/AsksV1_1.sol/AsksV1_1.json"
+import { abi } from "@zoralabs/v3/dist/artifacts/OffersV1.sol/OffersV1.json"
 import { useState, useEffect } from "react";
 import { ReadContractResult } from "@wagmi/core";
 import { BigNumber, utils } from "ethers";
 
 export const GetExistingOffers = (nft) => {
 
-    console.log("this shit is running")
-
-    interface offerForNFT {
-        tokenContract: any,
-        tokenId: any
-        offerId: any
-    }
-
-    const [offerForNFT, setOfferForNFT] = useState<offerForNFT>({
-        "tokenContract": "0x7e6663E45Ae5689b313e6498D22B041f4283c88A",
-        "tokenId": "1",
-        "offerId": "0"
-    })
-
-    console.log("offerForNFT", offerForNFT);
+    const [offerId, setOfferId] = useState("0")
 
     // OffersV1 offerForNFT read call
     const { data, isLoading, isSuccess, isFetching  } = useContractRead({
-        addressOrName: mainnetZoraAddresses.OffersV1,
+        addressOrName: "0x76744367AE5A056381868f716BDF0B13ae1aEaa3", //mainnetZoraAddresses.OffersV1,
         contractInterface: abi,
         functionName: 'offersForNFT',
         args: [
-            offerForNFT.tokenContract,
-            offerForNFT.tokenId,
-            offerForNFT.offerId
+            nft.nft.nft.contractAddress,
+            nft.nft.nft.tokenId,
+            0 //hardcoded always looking for first offer
         ],
         watch: true,
         onError(error) {
@@ -40,24 +26,48 @@ export const GetExistingOffers = (nft) => {
         },
         onSuccess(data) {
             console.log("success! --> ", data)
+            console.log("data converted", BigNumber.from(data).toString())
+            setOfferId(BigNumber.from(data).toString())
         }  
     })
 
-    const test = () => {
-        if (data === undefined) {
-            console.log("this shit was undefined")
-        } else {
-            console.log("this shit was not undefined")
-        }
-    }
-
-    useEffect(() => {
-        test(),
-        [data]
+    // OffersV1 offers read call
+    const { data: offersData, isLoading: offersLoading, isSuccess: offersSuccess, isFetching: offersFetching  } = useContractRead({
+        addressOrName: "0x76744367AE5A056381868f716BDF0B13ae1aEaa3", //mainnetZoraAddresses.OffersV1,
+        contractInterface: abi,
+        functionName: 'offers',
+        args: [
+            nft.nft.nft.contractAddress,
+            nft.nft.nft.tokenId,
+            offerId
+        ],
+        watch: true,
+        onError(error) {
+            console.log("error: ", error)
+        },
+        onSuccess(data) {
+            console.log("success! --> ", offersData)
+            console.log("specific offer info", offersData)
+        }  
     })
 
+    const offerMaker = offersData ? offersData.maker : "0x0000000000000000000000000000000000000000"
+
+    // const test = () => {
+    //     if (data === undefined) {
+    //         console.log("this shit was undefined")
+    //     } else {
+    //         console.log("this shit was not undefined")
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     test(),
+    //     [data]
+    // })
+
     const offersCheck = () => {
-        if (data === undefined) {
+        if (offerMaker === "0x0000000000000000000000000000000000000000") {
             return (
             <div>
                 No Active Listing for current Address + token id
@@ -65,9 +75,23 @@ export const GetExistingOffers = (nft) => {
             )
         } else {
             return (
-            <div>
-                {JSON.stringify(data)}
-            </div>
+                <div className="flex flex-row flex-wrap w-fit space-y-1">
+                    <div className="flex flex-row flex-wrap w-full">                    
+                        {"Contract Address: " + nft.nft.nft.contractAddress}
+                    </div>                
+                    <div className="flex flex-row flex-wrap w-full">                    
+                        {"Token Id: " + offersData[0]}
+                    </div>                
+                    <div className="flex flex-row flex-wrap w-full">                    
+                        {"Seller: " + offersData[1]}
+                    </div>
+                    <div className="flex flex-row flex-wrap w-full">                    
+                        {"Funds Recipient: " + offersData[2]}
+                    </div>
+                    <div className="flex flex-row flex-wrap w-full">                    
+                        {"Currency: " + offersData[3]}
+                    </div>
+                </div>
             )
         }
     }

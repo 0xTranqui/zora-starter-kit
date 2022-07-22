@@ -372,10 +372,10 @@ const Protocol: NextPage = () => {
         <div className='sm:mt-10 '>
           <div className='h-fit content-start flex flex-row flex-wrap w-full'>
             <div className="text-2xl h-fit w-full flex flex-row justify-center">            
-              ASKS MODULE
+              OFFERS MODULE
             </div>
             <div className=" justify-center border-2 border-white border-solid flex flex-row h-fit w-full">
-              LIST AND BUY NFTs FOR A SPECIFIC PRICE
+              MAKE AND RECIEVE OFFERS ON NFTs
             </div>
             <div className="grid grid-cols-2 border-2 boreder-yellow-500 border-solid w-full" >
             <a
@@ -526,10 +526,10 @@ const Protocol: NextPage = () => {
         <div className='sm:mt-10 '>
           <div className='h-fit content-start flex flex-row flex-wrap w-full'>
             <div className="text-2xl h-fit w-full flex flex-row justify-center">            
-              ASKS MODULE
+              AUCTIONS MODULE
             </div>
             <div className=" justify-center border-2 border-white border-solid flex flex-row h-fit w-full">
-              LIST AND BUY NFTs FOR A SPECIFIC PRICE
+              RUN AND BID ON AUCTIONS FOR NFTs
             </div>
             <div className="grid grid-cols-2 border-2 boreder-yellow-500 border-solid w-full" >
               <a

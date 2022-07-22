@@ -9,24 +9,14 @@ import { BigNumber, utils } from "ethers";
 
 export const AskForNFT = (nft) => {
 
-    interface askForNFT {
-        tokenContract: any,
-        tokenId: any
-    }
-
-    const [askForNFT, setAskForNFT] = useState<askForNFT>({
-        "tokenContract": "0x7e6663E45Ae5689b313e6498D22B041f4283c88A",
-        "tokenId": "1",
-    })
-
     // AsksV1_1 askForNFT read call
     const { data, isLoading, isSuccess, isFetching  } = useContractRead({
         addressOrName: asksAddresses.AsksV1_1,
         contractInterface: abi,
         functionName: 'askForNFT',
         args: [
-            askForNFT.tokenContract,
-            askForNFT.tokenId
+            nft.nft.nft.contractAddress,
+            nft.nft.nft.tokenId
         ],
         watch: true,
         onError(error) {
