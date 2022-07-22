@@ -307,7 +307,7 @@ const Create: NextPage = () => {
 
 
   return (
-    <div className="min-h-screen h-screen">
+    <div className="mt-2 sm:0 min-h-screen h-screen">
       <Header />
       <main className="text-white h-full flex sm:flex-col flex-row flex-wrap">
 

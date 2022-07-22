@@ -219,15 +219,18 @@ const Protocol: NextPage = () => {
             <div className=" justify-center border-2 border-white border-solid flex flex-row h-fit w-full">
               LIST AND BUY NFTs FOR A SPECIFIC PRICE
             </div>
-            <div className="grid grid-cols-3 border-2 boreder-yellow-500 border-solid w-full" >
-              <a className="text-center">
-                DOCS
-              </a>
-              <a className="text-center">
+            <div className="grid grid-cols-2 border-2 boreder-yellow-500 border-solid w-full" >
+              <a
+                href="https://github.com/0xTranqui/zora-starter-kit"
+                className=" hover:cursor-pointer hover:text-[#f53bc3] text-center"
+              >
                 REPO
               </a>
-              <a className="text-center">
-                ETHERSCAN
+              <a 
+                href="https://etherscan.io/address/0x6170B3C3A54C3d8c854934cBC314eD479b2B29A3"
+                className="hover:text-[#f53bc3] text-center"
+              >
+              ETHERSCAN
               </a>
             </div>
           </div>
@@ -369,20 +372,23 @@ const Protocol: NextPage = () => {
         <div className='sm:mt-10 '>
           <div className='h-fit content-start flex flex-row flex-wrap w-full'>
             <div className="text-2xl h-fit w-full flex flex-row justify-center">            
-              OFFERS MODULE
+              ASKS MODULE
             </div>
             <div className=" justify-center border-2 border-white border-solid flex flex-row h-fit w-full">
-              MAKE/RECEIVE OFFERS ON NFTs
+              LIST AND BUY NFTs FOR A SPECIFIC PRICE
             </div>
-            <div className="grid grid-cols-3 border-2 boreder-white border-solid w-full" >
-              <a className="text-center">
-                DOCS
-              </a>
-              <a className="text-center">
+            <div className="grid grid-cols-2 border-2 boreder-yellow-500 border-solid w-full" >
+            <a
+                href="https://github.com/0xTranqui/zora-starter-kit"
+                className=" hover:cursor-pointer hover:text-[#f53bc3] text-center"
+              >
                 REPO
               </a>
-              <a className="text-center">
-                ETHERSCAN
+              <a 
+                href="https://etherscan.io/address/0x76744367ae5a056381868f716bdf0b13ae1aeaa3"
+                className="hover:text-[#f53bc3] text-center"
+              >
+              ETHERSCAN
               </a>
             </div>
           </div>
@@ -417,7 +423,7 @@ const Protocol: NextPage = () => {
               />
             </MediaConfiguration> 
             <div className="w-full flex flex-row flex-wrap justify-center">
-              <div className="justify-center flex flex-row w-full ">
+            <div className="justify-center flex flex-row w-full">
                 <div className="align-center">
                   CONTRACT ADDRESS
                 </div>
@@ -441,11 +447,11 @@ const Protocol: NextPage = () => {
                 </input>
               </div>
               <div className="justify-center flex flex-row w-full">
-                <div className="mt-2 align-cener flex flex-row">
+                <div className=" mt-1 self-center">
                   TOKEN ID
                 </div>
                 <input
-                  className="mt-2 border-l-[1px] border-r-[1px] border-b-[1px] border-solid border-black ml-2 mt-1 text-black text-center bg-slate-200"
+                  className="border-l-[1px] border-r-[1px] border-b-[1px] border-solid border-black ml-2 mt-2 flex flex-row align-center text-black text-center bg-slate-200"
                   placeholder="Input Token Id "
                   name="inputContract"
                   type="text"
@@ -517,23 +523,26 @@ const Protocol: NextPage = () => {
         {/* AUCTION MODULE */}
         {/* AUCTION MODULE */}
 
-        <div className='sm:mt-10'>
-          <div className='h-fit content-start border-solid flex flex-row flex-wrap w-full'>
+        <div className='sm:mt-10 '>
+          <div className='h-fit content-start flex flex-row flex-wrap w-full'>
             <div className="text-2xl h-fit w-full flex flex-row justify-center">            
-              AUCTIONS MODULE
+              ASKS MODULE
             </div>
             <div className=" justify-center border-2 border-white border-solid flex flex-row h-fit w-full">
-              RUN/BID ON AUCTIONS FOR NFTs
+              LIST AND BUY NFTs FOR A SPECIFIC PRICE
             </div>
-            <div className="grid grid-cols-3 border-2 boreder-yellow-500 border-solid w-full" >
-              <a className="text-center">
-                DOCS
-              </a>
-              <a className="text-center">
+            <div className="grid grid-cols-2 border-2 boreder-yellow-500 border-solid w-full" >
+              <a
+                href="https://github.com/0xTranqui/zora-starter-kit"
+                className=" hover:cursor-pointer hover:text-[#f53bc3] text-center"
+              >
                 REPO
               </a>
-              <a className="text-center">
-                ETHERSCAN
+              <a 
+                href="https://etherscan.io/address/0x9458E29713B98BF452ee9B2C099289f533A5F377"
+                className="hover:text-[#f53bc3] text-center"
+              >
+              ETHERSCAN
               </a>
             </div>
           </div>
@@ -592,11 +601,11 @@ const Protocol: NextPage = () => {
                 </input>
               </div>
               <div className="justify-center flex flex-row w-full">
-                <div className="mt-2 align-cener flex flex-row">
+                <div className=" mt-1 self-center">
                   TOKEN ID
                 </div>
                 <input
-                  className="mt-2 border-l-[1px] border-r-[1px] border-b-[1px] border-solid border-black ml-2 mt-1 text-black text-center bg-slate-200"
+                  className="border-l-[1px] border-r-[1px] border-b-[1px] border-solid border-black ml-2 mt-2 flex flex-row align-center text-black text-center bg-slate-200"
                   placeholder="Input Token Id "
                   name="inputContract"
                   type="text"
