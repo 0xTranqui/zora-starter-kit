@@ -69,7 +69,7 @@ export const FillAsk = (nft) => {
             </div>               
             <div className="flex flex-row w-full">
                 <input
-                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
+                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200 hover:bg-slate-300"
                     placeholder="Fill Currency"
                     name="fillAskCurrency"
                     type="text"
@@ -90,7 +90,7 @@ export const FillAsk = (nft) => {
 
             <div className="flex flex-row w-full">
                 <input
-                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
+                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200 hover:bg-slate-300"
                     placeholder="Fill Amount - ETH"
                     name="fillAskAmount"
                     type="number"
@@ -111,7 +111,7 @@ export const FillAsk = (nft) => {
 
             <div className="flex flex-row w-full">
                 <input
-                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
+                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200 hover:bg-slate-300"
                     placeholder="Finder"
                     name="fillAskFinder"
                     type="text"
@@ -133,7 +133,7 @@ export const FillAsk = (nft) => {
             <button 
                 type="button"
                 onClick={() => fillAskWrite()}
-                className="border-2 border-white border-solid w-full px-2 hover:bg-white hover:text-slate-900"
+                className="border-2 border-white border-solid w-full px-2 hover:bg-[#33FF57] hover:text-slate-900"
             >
                 FILL ASK
             </button>

@@ -16,12 +16,12 @@ interface nftInfo {
 export default function AuctionWrite_disclosure(nft) {
 
     return (
-        <div className=" w-full flex flex-row flex-wrap text-black">
+        <div className=" w-full flex flex-row flex-wrap text-white">
             <div className=" w-full flex flex-row flex-wrap bg-white ">
                 <Disclosure>
                     {({ open }) => (
                     <>
-                    <Disclosure.Button className="hover:bg-white hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
+                    <Disclosure.Button className="hover:bg-[#c3f53b] hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
                         <span>
                             {"createAuction(tokenContract, tokenId, duration, reservePrice, sellerFundsRecipient, startTime, findersFeeBps)"}
                         </span>
@@ -32,7 +32,7 @@ export default function AuctionWrite_disclosure(nft) {
                         /> */}
                     </Disclosure.Button>
                     <Disclosure.Panel className="bg-slate-900 border-white border-2 border-solid flex flex-row flex-wrap p-2 text-lg w-full">
-                        <div className="w-fit flex flex-row flex-wrap">
+                        <div className=" w-fit flex flex-row flex-wrap">
                             <CreateAsk nft={nft} />
                         </div>
                     </Disclosure.Panel>
@@ -42,7 +42,7 @@ export default function AuctionWrite_disclosure(nft) {
                 <Disclosure>
                     {({ open }) => (
                     <>
-                    <Disclosure.Button className="hover:bg-white hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
+                    <Disclosure.Button className="hover:bg-[#c3f53b] hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
                         <span>
                             {"setAuctionReservePrice(tokenContract, tokenId, reservePrice)"}
                         </span>
@@ -63,7 +63,7 @@ export default function AuctionWrite_disclosure(nft) {
                 <Disclosure>
                     {({ open }) => (
                     <>
-                    <Disclosure.Button className="hover:bg-white hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row flex-wrap w-full justify-between py-2 text-left text-lg font-normal ">
+                    <Disclosure.Button className="hover:bg-[#c3f53b] hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row flex-wrap w-full justify-between py-2 text-left text-lg font-normal ">
                         <span>
                             {"cancelAuction(tokenContract, tokenId)"}
                         </span>
@@ -84,7 +84,7 @@ export default function AuctionWrite_disclosure(nft) {
                 <Disclosure>
                     {({ open }) => (
                     <>
-                    <Disclosure.Button className="hover:bg-white hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row flex-wrap w-full justify-between py-2 text-left text-lg font-normal ">
+                    <Disclosure.Button className="hover:bg-[#c3f53b] hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row flex-wrap w-full justify-between py-2 text-left text-lg font-normal ">
                         <span>
                             {"settleAuction(tokenContract, tokenId)"}
                         </span>
@@ -105,7 +105,7 @@ export default function AuctionWrite_disclosure(nft) {
                 <Disclosure>
                     {({ open }) => (
                     <>
-                    <Disclosure.Button className="hover:bg-white hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
+                    <Disclosure.Button className="hover:bg-[#c3f53b] hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
                         <span>
                             {"createBid(payableAmount, tokenContract, tokenId, finder)"}
                         </span>

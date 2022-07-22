@@ -175,7 +175,7 @@ export const CreateAsk = (nft) => {
             </div>                
             <div className="flex flex-row w-full">
                 <input
-                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
+                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200 hover:bg-slate-300"
                     placeholder="Listing Price - ETH"
                     name="createAskListingPrice"
                     type="number"
@@ -196,7 +196,7 @@ export const CreateAsk = (nft) => {
             
             <div className="flex flex-row w-full">                
                 <input
-                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
+                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200 hover:bg-slate-300"
                     placeholder="Listing Currency"
                     name="createAskListingCurrency"
                     type="text"
@@ -217,7 +217,7 @@ export const CreateAsk = (nft) => {
             
             <div className="flex flex-row w-full">                          
                 <input
-                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
+                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200 hover:bg-slate-300"
                     placeholder="Sale Funds Recipient"
                     name="createAskSaleFundsRecipient"
                     type="text"
@@ -238,7 +238,7 @@ export const CreateAsk = (nft) => {
 
             <div className="flex flex-row w-full">                      
                 <input
-                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
+                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200 hover:bg-slate-300"
                     placeholder="Finders Fee Bps"
                     name="createAskFindersFeeBps"
                     type="number"
@@ -259,7 +259,7 @@ export const CreateAsk = (nft) => {
             <button 
                 type="button"
                 onClick={() => createAskWrite()}
-                className="border-2 border-white border-solid w-full px-2 hover:bg-white hover:text-slate-900"
+                className="border-2 border-white border-solid w-full px-2 hover:bg-[#33FF57] hover:text-slate-900"
             >
                 CREATE ASK
             </button>

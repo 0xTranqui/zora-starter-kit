@@ -45,7 +45,7 @@ export const AskForNFT = (nft) => {
         if (sellerAddress === "0x0000000000000000000000000000000000000000") {
             return (
                 <div className="flex flex-row content-center ">
-                No Active Listing for current address + token Id
+                No Active Listing for current address + token id
                 </div>
             )
         } else {

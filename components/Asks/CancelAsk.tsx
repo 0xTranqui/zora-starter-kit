@@ -54,7 +54,7 @@ export const CancelAsk = (nft) => {
             <button 
                 type="button"
                 onClick={() => cancelAskWrite()}
-                className="border-2 border-white border-solid flex flex-row justify-center w-full px-2 hover:bg-white hover:text-slate-900"
+                className="border-2 border-white border-solid flex flex-row justify-center w-full px-2 hover:text-slate-900 hover:bg-[#33FF57]"
             >
                 CANCEL ASK
             </button>

@@ -21,7 +21,7 @@ export default function AskWrite_disclosure(nft) {
                 <Disclosure>
                     {({ open }) => (
                     <>
-                    <Disclosure.Button className="hover:bg-white hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
+                    <Disclosure.Button className="hover:bg-[#c3f53b] hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
                         <span>
                             {"createAsk(tokenContract, tokenId, askPrice, askCurrency, sellerFundsRecipient, findersFeeBps)"}
                         </span>
@@ -42,7 +42,7 @@ export default function AskWrite_disclosure(nft) {
                 <Disclosure>
                     {({ open }) => (
                     <>
-                    <Disclosure.Button className="hover:bg-white hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
+                    <Disclosure.Button className="hover:bg-[#c3f53b] hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
                         <span>
                             {"setAskPrice(tokenContract, tokenId, askPrice, askCurrency)"}
                         </span>
@@ -63,7 +63,7 @@ export default function AskWrite_disclosure(nft) {
                 <Disclosure>
                     {({ open }) => (
                     <>
-                    <Disclosure.Button className="hover:bg-white hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row flex-wrap w-full justify-between py-2 text-left text-lg font-normal ">
+                    <Disclosure.Button className="hover:bg-[#c3f53b] hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row flex-wrap w-full justify-between py-2 text-left text-lg font-normal ">
                         <span>
                             {"cancelAsk(tokenContract, tokenId)"}
                         </span>
@@ -84,7 +84,7 @@ export default function AskWrite_disclosure(nft) {
                 <Disclosure>
                     {({ open }) => (
                     <>
-                    <Disclosure.Button className="hover:bg-white hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
+                    <Disclosure.Button className="hover:bg-[#c3f53b] hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
                         <span>
                             {"fillAsk(tokenContract, tokenId, fillCurrency, fillAmount, finder)"}
                         </span>
@@ -113,7 +113,7 @@ export default function AskWrite_disclosure(nft) {
 //         <Disclosure>
 //             {({ open }) => (
 //             <>
-//             <Disclosure.Button className="hover:bg-white hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
+//             <Disclosure.Button className="hover:bg-[#c3f53b] hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
 //                 <span>
 //                     {"askForNFT(address, tokenId)"}
 //                 </span>

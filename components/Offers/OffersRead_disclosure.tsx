@@ -1,6 +1,6 @@
 import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/solid'
-import { AskForNFT } from '../Asks/AskForNFT'
+import { GetExistingOffers } from './GetExisitingOffers'
 import { Dispatch, useState, SetStateAction } from 'react'
 
 interface nftInfo {
@@ -10,7 +10,7 @@ interface nftInfo {
     }
 }
 
-export default function AskRead_disclosure(nft) {
+export default function OffersRead_disclosure(nft) {
     // export default function ContractActions(nft, setAsksCB: Dispatch<SetStateAction<nftInfo>>)
 
     return (
@@ -19,7 +19,7 @@ export default function AskRead_disclosure(nft) {
                 <Disclosure>
                     {({ open }) => (
                     <>
-                    <Disclosure.Button className="hover:bg-white hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
+                    <Disclosure.Button className="hover:bg-[#c3f53b] hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
                         <span>
                             {"offers(contractAddress, tokenId, offerId)"}
                         </span>
@@ -31,7 +31,7 @@ export default function AskRead_disclosure(nft) {
                     </Disclosure.Button>
                     <Disclosure.Panel className="bg-slate-900 border-white border-2 border-solid flex flex-row flex-wrap items-center p-2 text-lg w-full">
                         <div className="w-fit flex flex-row flex-wrap">
-                            <AskForNFT nft={nft} />
+                            <GetExistingOffers nft={nft} />
                         </div>
                     </Disclosure.Panel>
                     </>

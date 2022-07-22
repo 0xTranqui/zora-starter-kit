@@ -6,7 +6,7 @@ const UserNFTs = ({ userAddress, nfts, collectionInfo, setCollectionCB }) => {
 
     return (
         <>
-            <div className="pt-60 sm:pt-24 flex flex-row flex-wrap justify-center text-center w-full ">
+            <div className="pt-36 sm:pt-24 flex flex-row flex-wrap justify-center text-center w-full ">
                 <div className="w-full underline text-white text-3xl">
                     {`My NFTs (${userAddress.substring(0, 4) + "..." + userAddress.substring(userAddress.length - 4)})`}
                 </div>

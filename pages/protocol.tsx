@@ -205,13 +205,13 @@ const Protocol: NextPage = () => {
       </Head>
 
       <Header />
-      <main className="border-2 border-white border-solid text-white grid grid-cols-3 h-fit">        
+      <main className="border-l-2 border-r-2 border-t-2 border-white border-solid text-white grid  grid-rows-3 sm:grid-cols-3 h-fit">        
         
         {/* ASKS MODULE */}
         {/* ASKS MODULE */}
         {/* ASKS MODULE */}
 
-        <div className='mt-10 flex flex-row flex-wrap content-start'>
+        <div className='mt-24 sm:mt-10 flex flex-row flex-wrap content-start'>
           <div className='h-fit content-start flex flex-row flex-wrap w-full'>
             <div className="text-2xl h-fit w-full flex flex-row justify-center">            
               ASKS MODULE
@@ -233,7 +233,7 @@ const Protocol: NextPage = () => {
           </div>
 
           {/* NFT RENDERING + CONTRACT INPUTS */}
-          <div className=" w-full h-fit flex flex-row flex-wrap justify-center "> 
+          <div className="mt-2  w-full h-fit flex flex-row flex-wrap justify-center "> 
             <MediaConfiguration
               networkId="1"                        
               strategy={zdkStrategyMainnet}
@@ -263,11 +263,11 @@ const Protocol: NextPage = () => {
             </MediaConfiguration> 
             <div className="w-full flex flex-row flex-wrap justify-center">
               <div className="justify-center flex flex-row w-full">
-                <div>
+                <div className="align-center">
                   CONTRACT ADDRESS
                 </div>
                 <input
-                  className="border-[1px] border-solid border-black ml-5 text-black text-center bg-slate-200"
+                  className="border-[1px] border-solid border-black ml-2 text-black text-center bg-slate-200"
                   placeholder="Input NFT Address"
                   name="inputContract"
                   type="text"
@@ -286,11 +286,11 @@ const Protocol: NextPage = () => {
                 </input>
               </div>
               <div className="justify-center flex flex-row w-full">
-                <div>
+                <div className=" mt-1 self-center">
                   TOKEN ID
                 </div>
                 <input
-                  className="border-l-[1px] border-r-[1px] border-b-[1px] border-solid border-black ml-5 mt-1 text-black text-center bg-slate-200"
+                  className="border-l-[1px] border-r-[1px] border-b-[1px] border-solid border-black ml-2 mt-2 flex flex-row align-center text-black text-center bg-slate-200"
                   placeholder="Input Token Id "
                   name="inputContract"
                   type="text"
@@ -311,20 +311,20 @@ const Protocol: NextPage = () => {
               
               <div className="flex flex-row flex-wrap w-full justify-center">
                 {zmmAsksApprovalCheck() === false ? (
-                <div className="flex w-full justify-center">
+                <div className="mt-2 flex w-full justify-center">
                   <button className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1">
                     APPROVE ASKS MODULE
                   </button>
                 </div>
                 ) : (
-                <div className="flex w-full justify-center">
+                <div className="mt-2 flex w-full justify-center">
                   <button disabled={true}  className="w-fit border-2 border-slate-600 text-slate-400 border-solid p-1 mt-1">
                     ASK MODULE APPROVED ✅
                   </button>
                 </div>                
                 )}
                 {transferHelperDataBool() === false ? (
-                <div className="flex w-full justify-center">
+                <div className="mt-2 flex w-full justify-center">
                   <button 
                     onClick={() => transferHelperWrite()}
                     className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1"
@@ -333,7 +333,7 @@ const Protocol: NextPage = () => {
                   </button>
                 </div>
                 ) : (
-                <div className="flex w-full justify-center">
+                <div className="mt-2 flex w-full justify-center">
                   <button disabled={true}  className="w-fit border-2 border-slate-600 text-slate-400 border-solid p-1 mt-1">
                     TRANSFER HELPER APPROVED ✅
                   </button>
@@ -343,7 +343,7 @@ const Protocol: NextPage = () => {
 
             </div>                   
           </div>
-          <div className="mt-5 flex flex-row flex-wrap w-full ">
+          <div className="mt-8 flex flex-row flex-wrap w-full ">
             <div className="w-full">
               <div className="ml-2 mb-2 text-xl">
                 ASK MODULE READS
@@ -366,7 +366,7 @@ const Protocol: NextPage = () => {
         {/* OFFERS MODULE */}
         {/* OFFERS MODULE */}
 
-        <div className='mt-10 '>
+        <div className='sm:mt-10 '>
           <div className='h-fit content-start flex flex-row flex-wrap w-full'>
             <div className="text-2xl h-fit w-full flex flex-row justify-center">            
               OFFERS MODULE
@@ -388,7 +388,7 @@ const Protocol: NextPage = () => {
           </div>
 
           {/* NFT RENDERING + CONTRACT INPUTS */}
-          <div className="border-l-2 border-r-2 border-b-2 border-solid border-white w-full h-fit flex flex-row flex-wrap justify-center "> 
+          <div className="mt-2  border-l-2 border-r-2 border-b-2 border-solid border-white w-full h-fit flex flex-row flex-wrap justify-center "> 
             <MediaConfiguration
               networkId="1"                        
               strategy={zdkStrategyMainnet}
@@ -418,11 +418,11 @@ const Protocol: NextPage = () => {
             </MediaConfiguration> 
             <div className="w-full flex flex-row flex-wrap justify-center">
               <div className="justify-center flex flex-row w-full ">
-                <div>
+                <div className="align-center">
                   CONTRACT ADDRESS
                 </div>
                 <input
-                  className="border-[1px] border-solid border-black ml-5 text-black text-center bg-slate-200"
+                  className="border-[1px] border-solid border-black ml-2 text-black text-center bg-slate-200"
                   placeholder="Input NFT Address"
                   name="inputContract"
                   type="text"
@@ -441,11 +441,11 @@ const Protocol: NextPage = () => {
                 </input>
               </div>
               <div className="justify-center flex flex-row w-full">
-                <div>
+                <div className="mt-2 align-cener flex flex-row">
                   TOKEN ID
                 </div>
                 <input
-                  className="border-l-[1px] border-r-[1px] border-b-[1px] border-solid border-black ml-5 mt-1 text-black text-center bg-slate-200"
+                  className="mt-2 border-l-[1px] border-r-[1px] border-b-[1px] border-solid border-black ml-2 mt-1 text-black text-center bg-slate-200"
                   placeholder="Input Token Id "
                   name="inputContract"
                   type="text"
@@ -465,7 +465,7 @@ const Protocol: NextPage = () => {
               </div>
               <div className="flex flex-row flex-wrap w-full justify-center">
                 {zmmOffersApprovalCheck() === false ? (
-                <div className="flex w-full justify-center">
+                <div className="mt-2 flex w-full justify-center">
                   <button className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1">
                     APPROVE OFFERS MODULE
                   </button>
@@ -478,25 +478,25 @@ const Protocol: NextPage = () => {
                 </div>                
                 )}
                 {transferHelperDataBool() === false ? (
-                <div className="flex w-full justify-center">
+                <div className="mt-2 flex w-full justify-center">
                   <button className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1">
                     APPROVE TRANSFER HELPER
                   </button>
                 </div>
                 ) : (
-                <div className="flex w-full justify-center">
+                <div className="mt-2 flex w-full justify-center">
                   <button disabled={true}  className="w-fit border-2 border-slate-600 text-slate-400 border-solid p-1 mt-1">
                     TRANSFER HELPER APPROVED ✅
                   </button>
                 </div>  
                 )}
               </div>
-              <div className="mt-5 flex flex-row flex-wrap w-full ">
+              <div className="mt-8 flex flex-row flex-wrap w-full ">
                 <div className="w-full">
                   <div className="ml-2 mb-2 text-xl">
                     OFFERS MODULE READS
                   </div>
-                  <OffersRead_disclosure nft={asksNFT} />
+                  <OffersRead_disclosure nft={offersNFT} />
                   {/* <AskForNFT_READ nft={asksNFT} /> */}
                 </div>
               </div>
@@ -505,18 +505,19 @@ const Protocol: NextPage = () => {
                   <div className="ml-2 mb-2 text-xl">
                     OFFERS MODULE WRITES
                   </div>
-                  <OffersWrite_disclosure nft={asksNFT} />
+                  <OffersWrite_disclosure nft={offersNFT} />
                 </div>
               </div>              
 
-            </div>                   
+            </div>                    
           </div>
         </div>
 
-
-
         {/* AUCTION MODULE */}
-        <div className='mt-10'>
+        {/* AUCTION MODULE */}
+        {/* AUCTION MODULE */}
+
+        <div className='sm:mt-10'>
           <div className='h-fit content-start border-solid flex flex-row flex-wrap w-full'>
             <div className="text-2xl h-fit w-full flex flex-row justify-center">            
               AUCTIONS MODULE
@@ -538,7 +539,7 @@ const Protocol: NextPage = () => {
           </div>
 
           {/* NFT RENDERING + CONTRACT INPUTS */}              
-          <div className=" w-full h-fit flex flex-row flex-wrap justify-center "> 
+          <div className="mt-2 w-full h-fit flex flex-row flex-wrap justify-center "> 
             <MediaConfiguration
               networkId="1"                        
               strategy={zdkStrategyMainnet}
@@ -568,11 +569,11 @@ const Protocol: NextPage = () => {
             </MediaConfiguration> 
             <div className="w-full flex flex-row flex-wrap justify-center">
               <div className="justify-center flex flex-row w-full">
-                <div>
+                <div className="align-center">
                   CONTRACT ADDRESS
                 </div>
                 <input
-                  className="border-[1px] border-solid border-black ml-5 text-black text-center bg-slate-200"
+                  className="border-[1px] border-solid border-black ml-2 text-black text-center bg-slate-200"
                   placeholder="Input NFT Address"
                   name="inputContract"
                   type="text"
@@ -591,11 +592,11 @@ const Protocol: NextPage = () => {
                 </input>
               </div>
               <div className="justify-center flex flex-row w-full">
-                <div>
+                <div className="mt-2 align-cener flex flex-row">
                   TOKEN ID
                 </div>
                 <input
-                  className="border-l-[1px] border-r-[1px] border-b-[1px] border-solid border-black ml-5 mt-1 text-black text-center bg-slate-200"
+                  className="mt-2 border-l-[1px] border-r-[1px] border-b-[1px] border-solid border-black ml-2 mt-1 text-black text-center bg-slate-200"
                   placeholder="Input Token Id "
                   name="inputContract"
                   type="text"
@@ -615,26 +616,26 @@ const Protocol: NextPage = () => {
               </div>
               <div className="flex flex-row flex-wrap w-full justify-center">
                 {zmmAuctionFindersEthApprovalCheck() === false ? (
-                <div className="flex w-full justify-center">
+                <div className="mt-2 flex w-full justify-center">
                   <button className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1">
                     APPROVE AUCTION MODULE
                   </button>
                 </div>
                 ) : (
-                <div className="flex w-full justify-center">
+                <div className="mt-2 flex w-full justify-center">
                   <button disabled={true}  className="w-fit border-2 border-slate-600 text-slate-400 border-solid p-1 mt-1">
                     AUCTION MODULE APPROVED ✅
                   </button>
                 </div>                
                 )}
                 {transferHelperDataBool() === false ? (
-                <div className="flex w-full justify-center">
+                <div className="mt-2 flex w-full justify-center">
                   <button className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1">
                     APPROVE TRANSFER HELPER
                   </button>
                 </div>
                 ) : (
-                <div className="flex w-full justify-center">
+                <div className="mt-2 flex w-full justify-center">
                   <button disabled={true}  className="w-fit border-2 border-slate-600 text-slate-400 border-solid p-1 mt-1">
                     TRANSFER HELPER APPROVED ✅
                   </button>
@@ -643,7 +644,7 @@ const Protocol: NextPage = () => {
               </div>
             </div>                   
           </div>              
-          <div className="mt-5 flex flex-row flex-wrap w-full ">
+          <div className="mt-8 flex flex-row flex-wrap w-full ">
             <div className="w-full">
               <div className="ml-2 mb-2 text-xl">
                 AUCTION MODULE READS

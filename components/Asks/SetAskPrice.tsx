@@ -61,7 +61,7 @@ export const SetAskPrice = (nft) => {
             </div>                 
             <div className="flex flex-row w-full">
                 <input
-                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
+                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200 hover:bg-slate-300"
                     placeholder="Listing Price - ETH"
                     name="createAskListingPrice"
                     type="number"
@@ -82,7 +82,7 @@ export const SetAskPrice = (nft) => {
             
             <div className="flex flex-row w-full">                
                 <input
-                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200"
+                    className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200 hover:bg-slate-300"
                     placeholder="Listing Currency"
                     name="createAskListingCurrency"
                     type="text"
@@ -104,7 +104,7 @@ export const SetAskPrice = (nft) => {
             <button 
                 type="button"
                 onClick={() => setAskWrite()}
-                className="border-2 border-white border-solid px-2 w-full hover:bg-white hover:text-slate-900"
+                className="border-2 border-white border-solid px-2 w-full hover:bg-[#33FF57] hover:text-slate-900"
             >
                 UPDATE ASK
             </button>
