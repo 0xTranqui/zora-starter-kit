@@ -1,4 +1,4 @@
-import { Header } from ".../Header";z
+import { Header } from "../Header";z
 import { useContractRead, useAccount, useContractWrite } from "wagmi";
 import { AsksV1_1Interface } from "@zoralabs/v3/dist/typechain/AsksV1_1"
 import * as asksAddresses from "@zoralabs/v3/dist/addresses/1.json"
