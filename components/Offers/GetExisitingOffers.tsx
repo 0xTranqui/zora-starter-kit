@@ -1,4 +1,4 @@
-import { Header } from "../Header";
+import { Header } from ".../Header";
 import { useContractRead, useAccount } from "wagmi";
 import * as mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/1.json"
 import { abi } from "@zoralabs/v3/dist/artifacts/AsksV1_1.sol/AsksV1_1.json"
