@@ -1,3 +1,3 @@
 ZORA DEVELOPER STARTER KIT\
--v0.1\
--published July 25, 2022
+Version 0.1\
+Published July 25, 2022
