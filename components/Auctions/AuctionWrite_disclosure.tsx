@@ -1,6 +1,6 @@
 import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/solid'
-import { CreateAsk } from '../Asks/CreateAsk'
+import { CreateAuction } from './CreateAuction'
 import { SetAskPrice } from '../Asks/SetAskPrice'
 import { CancelAsk } from '../Asks/CancelAsk'
 import { FillAsk } from '../Asks/FillAsk'
@@ -33,7 +33,7 @@ export default function AuctionWrite_disclosure(nft) {
                     </Disclosure.Button>
                     <Disclosure.Panel className="bg-slate-900 border-white border-2 border-solid flex flex-row flex-wrap p-2 text-lg w-full">
                         <div className=" w-fit flex flex-row flex-wrap">
-                            <CreateAsk nft={nft} />
+                            <CreateAuction nft={nft} />
                         </div>
                     </Disclosure.Panel>
                     </>

@@ -83,8 +83,8 @@ const Protocol: NextPage = () => {
   // //     }).catch(err => console.error(err));
   // // }
 
-  // check if owner has approved ERC721 transfer helper for specific NFT
-  const { data, isLoading, isSuccess, isFetching  } = useContractRead({
+  // ASKS: check if owner has approved ERC721 transfer helper for specific NFT
+  const { data: asksRead, isError: asksError, isLoading: asksLoading, isSuccess: asksSuccess, isFetching: asksFetching  } = useContractRead({
     addressOrName: asksNFT.contractAddress,
     contractInterface: erc721abi,
     functionName: 'isApprovedForAll',
@@ -94,19 +94,98 @@ const Protocol: NextPage = () => {
     ],
     watch: false,
     onError(error) {
-      console.log("error: ", error)
+      console.log("error: ", asksError)
     },
     onSuccess(data) {
-      console.log("ERC721TransferHelper Approved? --> ", data)
+      console.log("Asks ERC721TransferHelper Approved? --> ", asksRead)
     }  
   })
 
-  const transferHelperDataBool = () => {
-    return Boolean(data);
+  const transferHelperDataBoolAsks = () => {
+    return Boolean(asksRead);
   }
 
-    // Apporve ERC721TransferHelper as an operator of the specific NFT
-    const { data: transferHelperData, isError: transferHelperError, isLoading: transferHelperLoading, isSuccess: transferHelperSuccess, write: transferHelperWrite } = useContractWrite({
+  // ASKS: Apporve ERC721TransferHelper as an operator of the specific NFT
+  const { data: asksTransferHelperData, isError: asksTransferHelperError, isLoading: asksTransferHelperLoading, isSuccess: asksTransferHelperSuccess, write: asksTransferHelperWrite } = useContractWrite({
+    addressOrName: asksNFT.contractAddress,
+    contractInterface: erc721ABI,
+    functionName: 'setApprovalForAll',
+    args: [
+        mainnetZoraAddresses.ERC721TransferHelper,
+        true,
+    ],
+    onError(error, variables, context) {
+        console.log("error", error)
+    },
+    onSuccess(cancelData, variables, context) {
+        console.log("Success!", asksTransferHelperData)
+    },
+  })    
+
+  // check if owner has approved Asks Module V1.1
+  const { data: zmmAsksBool, isError: zmmAsksError, isLoading: zmmAsksLoading, isSuccess: zmmAsksSuccess, isFetching: zmmAsksFetching  } = useContractRead({
+    addressOrName: mainnetZoraAddresses.ZoraModuleManager,
+    contractInterface: zmmABI.abi,
+    functionName: 'isModuleApproved',
+    args: [
+      currentUserAddress, //owner
+      mainnetZoraAddresses.AsksV1_1 // AsksV1.1 address
+    ],
+    watch: false,
+    onError(error) {
+        console.log("error: ", zmmAsksError)
+    },
+    onSuccess(data) {
+        console.log("AsksV1.1 Module Approved? --> ", zmmAsksBool)
+    }  
+  })  
+
+  const zmmAsksApprovalCheck = () => {
+    return Boolean(zmmAsksBool);
+  }
+
+  // ASKS: approve Asks Module
+  const { data: asksZMMApproval, isError: asksZMMErrror, isLoading: asksZMMLoading, isSuccess: asksZMMSuccess, write: asksZMMWrite } = useContractWrite({
+    addressOrName: mainnetZoraAddresses.ZoraModuleManager,
+    contractInterface: zmmABI.abi,
+    functionName: 'setApprovalForModule',
+    args: [
+        mainnetZoraAddresses.AsksV1_1,
+        true,
+    ],
+    onError(error, variables, context) {
+        console.log("error", error)
+    },
+    onSuccess(asksZMMApproval, variables, context) {
+        console.log("Success!", asksZMMApproval)
+    },
+  })      
+
+
+  // OFFERS: check if owner has approved ERC721 transfer helper for specific NFT
+  const { data: offersData, isError: offersError, isLoading: offersLoading, isSuccess: offersSuccess, isFetching: offersFetching  } = useContractRead({
+    addressOrName: offersNFT.contractAddress,
+    contractInterface: erc721abi,
+    functionName: 'isApprovedForAll',
+    args: [
+      currentUserAddress, //owner
+      mainnetZoraAddresses.ERC721TransferHelper // transferhelper
+    ],
+    watch: false,
+    onError(error) {
+      console.log("error: ", offersError)
+    },
+    onSuccess(data) {
+      console.log("Offers ERC721TransferHelper Approved? --> ", offersData)
+    }  
+  })
+
+  const transferHelperDataBoolOffers = () => {
+    return Boolean(offersData);
+  }
+
+    // OFFERS: Apporve ERC721TransferHelper as an operator of the specific NFT
+    const { data: offersTransferHelperData, isError: offersTransferHelperError, isLoading: offersTransferHelperLoading, isSuccess: offersTransferHelperSuccess, write: offersTransferHelperWrite } = useContractWrite({
       addressOrName: asksNFT.contractAddress,
       contractInterface: erc721ABI,
       functionName: 'setApprovalForAll',
@@ -118,31 +197,9 @@ const Protocol: NextPage = () => {
           console.log("error", error)
       },
       onSuccess(cancelData, variables, context) {
-          console.log("Success!", transferHelperData)
+          console.log("Success!", offersTransferHelperData)
       },
   })    
-
-  // check if owner has approved Asks Module V1.1
-  const { data: zmmAsksBool, isLoading: zmmAsksLoading, isSuccess: zmmAsksSuccess, isFetching: zmmAsksFetching  } = useContractRead({
-    addressOrName: mainnetZoraAddresses.ZoraModuleManager,
-    contractInterface: zmmABI.abi,
-    functionName: 'isModuleApproved',
-    args: [
-      currentUserAddress, //owner
-      mainnetZoraAddresses.AsksV1_1 // AsksV1.1 address
-    ],
-    watch: false,
-    onError(error) {
-        console.log("error: ", error)
-    },
-    onSuccess(data) {
-        console.log("AsksV1.1 Module Approved? --> ", data)
-    }  
-  })  
-
-  const zmmAsksApprovalCheck = () => {
-    return Boolean(zmmAsksBool);
-  }
 
   // check if owner has approved OffersV1 Module
   const { data: zmmOffersBool, isLoading: zmmOffersLoading, isSuccess: zmmOffersSuccess, isFetching: zmmOffersFetching  } = useContractRead({
@@ -166,6 +223,62 @@ const Protocol: NextPage = () => {
     return Boolean(zmmOffersBool);
   }
 
+  // offers: approve Offers Module
+  const { data: offersZMMApproval, isError: offersZMMErrror, isLoading: offersZMMLoading, isSuccess: offersZMMSuccess, write: offersZMMWrite } = useContractWrite({
+    addressOrName: mainnetZoraAddresses.ZoraModuleManager,
+    contractInterface: zmmABI.abi,
+    functionName: 'setApprovalForModule',
+    args: [
+        mainnetZoraAddresses.OffersV1,
+        true,
+    ],
+    onError(error, variables, context) {
+        console.log("error", error)
+    },
+    onSuccess(offersZMMApproval, variables, context) {
+        console.log("Success!", offersZMMApproval)
+    },
+  })        
+
+  // auctions: check if owner has approved ERC721 transfer helper for specific NFT
+  const { data: auctionsData, isError: auctionsError, isLoading: auctionsLoading, isSuccess: auctionsSuccess, isFetching: auctionsFetching  } = useContractRead({
+    addressOrName: auctionsNFT.contractAddress,
+    contractInterface: erc721abi,
+    functionName: 'isApprovedForAll',
+    args: [
+      currentUserAddress, //owner
+      mainnetZoraAddresses.ERC721TransferHelper // transferhelper
+    ],
+    watch: false,
+    onError(error) {
+      console.log("error: ", auctionsError)
+    },
+    onSuccess(data) {
+      console.log("Auctions ERC721TransferHelper Approved? --> ", auctionsData)
+    }  
+  })
+
+  const transferHelperDataBoolAuctions = () => {
+    return Boolean(auctionsData);
+  }
+
+  // auctions: Apporve ERC721TransferHelper as an operator of the specific NFT
+  const { data: auctionsTransferHelperData, isError: auctionsTransferHelperError, isLoading: auctionsTransferHelperLoading, isSuccess: auctionsTransferHelperSuccess, write: auctionsTransferHelperWrite } = useContractWrite({
+    addressOrName: asksNFT.contractAddress,
+    contractInterface: erc721ABI,
+    functionName: 'setApprovalForAll',
+    args: [
+        mainnetZoraAddresses.ERC721TransferHelper,
+        true,
+    ],
+    onError(error, variables, context) {
+        console.log("error", error)
+    },
+    onSuccess(cancelData, variables, context) {
+        console.log("Success!", auctionsTransferHelperData)
+    },
+  })    
+
   // check if owner has approved AuctionFindersEth Module
   const { data: zmmAuctionFindersEthBool, isLoading: zmmAuctionFindersEthLoading, isSuccess: zmmAuctionFindersEthSuccess, isFetching: zmmAuctionFindersEthFetching  } = useContractRead({
     addressOrName: mainnetZoraAddresses.ZoraModuleManager,
@@ -188,6 +301,22 @@ const Protocol: NextPage = () => {
     return Boolean(zmmAuctionFindersEthBool);
   }  
 
+  // offers: approve Auctions Module
+  const { data: auctionsZMMApproval, isError: auctionsZMMErrror, isLoading: auctionsZMMLoading, isSuccess: auctionsZMMSuccess, write: auctionsZMMWrite } = useContractWrite({
+    addressOrName: mainnetZoraAddresses.ZoraModuleManager,
+    contractInterface: zmmABI.abi,
+    functionName: 'setApprovalForModule',
+    args: [
+        mainnetZoraAddresses.ReserveAuctionFindersEth,
+        true,
+    ],
+    onError(error, variables, context) {
+        console.log("error", error)
+    },
+    onSuccess(auctionsZMMApproval, variables, context) {
+        console.log("Success!", auctionsZMMApproval)
+    },
+  })         
   
 
   // useEffect(() => {
@@ -315,7 +444,10 @@ const Protocol: NextPage = () => {
               <div className="flex flex-row flex-wrap w-full justify-center">
                 {zmmAsksApprovalCheck() === false ? (
                 <div className="mt-2 flex w-full justify-center">
-                  <button className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1">
+                  <button
+                    onClick={() => asksZMMWrite()}
+                    className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1"
+                  >
                     APPROVE ASKS MODULE
                   </button>
                 </div>
@@ -326,10 +458,10 @@ const Protocol: NextPage = () => {
                   </button>
                 </div>                
                 )}
-                {transferHelperDataBool() === false ? (
+                {transferHelperDataBoolAsks() === false ? (
                 <div className="mt-2 flex w-full justify-center">
                   <button 
-                    onClick={() => transferHelperWrite()}
+                    onClick={() => asksTransferHelperWrite()}
                     className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1"
                   >
                     APPROVE TRANSFER HELPER
@@ -472,20 +604,26 @@ const Protocol: NextPage = () => {
               <div className="flex flex-row flex-wrap w-full justify-center">
                 {zmmOffersApprovalCheck() === false ? (
                 <div className="mt-2 flex w-full justify-center">
-                  <button className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1">
+                  <button
+                    onClick={() => offersZMMWrite()}
+                    className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1"
+                  >
                     APPROVE OFFERS MODULE
                   </button>
                 </div>
                 ) : (
-                <div className="flex w-full justify-center">
+                <div className="mt-2 flex w-full justify-center">
                   <button disabled={true}  className="w-fit border-2 border-slate-600 text-slate-400 border-solid p-1 mt-1">
                     OFFERS MODULE APPROVED ✅
                   </button>
                 </div>                
                 )}
-                {transferHelperDataBool() === false ? (
+                {transferHelperDataBoolOffers() === false ? (
                 <div className="mt-2 flex w-full justify-center">
-                  <button className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1">
+                  <button
+                    onClick={() => offersTransferHelperWrite()}
+                    className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1"
+                  >
                     APPROVE TRANSFER HELPER
                   </button>
                 </div>
@@ -626,7 +764,10 @@ const Protocol: NextPage = () => {
               <div className="flex flex-row flex-wrap w-full justify-center">
                 {zmmAuctionFindersEthApprovalCheck() === false ? (
                 <div className="mt-2 flex w-full justify-center">
-                  <button className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1">
+                  <button
+                    onClick={() => auctionsZMMWrite()}
+                    className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1"
+                  >
                     APPROVE AUCTION MODULE
                   </button>
                 </div>
@@ -637,9 +778,12 @@ const Protocol: NextPage = () => {
                   </button>
                 </div>                
                 )}
-                {transferHelperDataBool() === false ? (
+                {transferHelperDataBoolAuctions() === false ? (
                 <div className="mt-2 flex w-full justify-center">
-                  <button className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1">
+                  <button 
+                    onClick={() => auctionsTransferHelperWrite()}
+                    className="w-fit hover:bg-white hover:text-black border-2 border-white border-solid p-1 mt-1"
+                  >
                     APPROVE TRANSFER HELPER
                   </button>
                 </div>

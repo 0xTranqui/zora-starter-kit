@@ -1,32 +1,22 @@
 import { Header } from "../Header";
 import { useContractRead, useAccount } from "wagmi";
 import { AsksV1_1Interface } from "@zoralabs/v3/dist/typechain/AsksV1_1"
-import * as asksAddresses from "@zoralabs/v3/dist/addresses/1.json"
+import * as mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/1.json"
 import { abi } from "@zoralabs/v3/dist/artifacts/AsksV1_1.sol/AsksV1_1.json"
 import { useState, useEffect } from "react";
 import { ReadContractResult } from "@wagmi/core";
 import { BigNumber, utils } from "ethers";
 
-export const AskForNFT = (nft) => {
-
-    interface askForNFT {
-        tokenContract: any,
-        tokenId: any
-    }
-
-    const [askForNFT, setAskForNFT] = useState<askForNFT>({
-        "tokenContract": "0x7e6663E45Ae5689b313e6498D22B041f4283c88A",
-        "tokenId": "1",
-    })
+export const AuctionForNFT = (nft) => {
 
     // AsksV1_1 askForNFT read call
     const { data, isLoading, isSuccess, isFetching  } = useContractRead({
-        addressOrName: asksAddresses.AsksV1_1,
+        addressOrName: mainnetZoraAddresses.ReserveAuctionFindersEth,
         contractInterface: abi,
-        functionName: 'askForNFT',
+        functionName: 'auctionForNFT',
         args: [
-            askForNFT.tokenContract,
-            askForNFT.tokenId
+            nft.nft.nft.contractAddress,
+            nft.nft.nft.tokenId
         ],
         watch: true,
         onError(error) {
@@ -37,16 +27,14 @@ export const AskForNFT = (nft) => {
         }  
     })
 
-    const currentReadData = data ? data : ""
-    const currentReadPrice = data ? `${utils.formatEther(BigNumber.from(currentReadData[4]).toString())}` + " ETH" : "undefined"
-    const currentFindersFee = data ? `${currentReadData[3] / 100 }` + " %" : "undefined"
+    const auctionMaker = data ? data.seller : "0x0000000000000000000000000000000000000000"
 
-    const listingCheck = (sellerAddress) => {
-        if (sellerAddress === "0x0000000000000000000000000000000000000000") {
+    const auctionsCheck = () => {
+        if (auctionMaker === "0x0000000000000000000000000000000000000000") {
             return (
-                <div className="flex flex-row content-center ">
-                No Active Listing for current address + token id
-                </div>
+            <div>
+                No Active Listing for current Address + token id
+            </div>
             )
         } else {
             return (
@@ -55,22 +43,22 @@ export const AskForNFT = (nft) => {
                         {"Contract Address: " + nft.nft.nft.contractAddress}
                     </div>                
                     <div className="flex flex-row flex-wrap w-full">                    
-                        {"Token Id: " + nft.nft.nft.tokenId}
+                        {"Token Id: " + nft.nft.nft.contractAddress}
                     </div>                
                     <div className="flex flex-row flex-wrap w-full">                    
-                        {"Seller: " + currentReadData[0]}
+                        {"Seller: " + data[0]}
                     </div>
                     <div className="flex flex-row flex-wrap w-full">                    
-                        {"Funds Recipient: " + currentReadData[1]}
+                        {"Reserve Price: " + data[1]}
                     </div>
                     <div className="flex flex-row flex-wrap w-full">                    
-                        {"Currency: " + currentReadData[2]}
+                        {"Highest Bid: " + data[3]}
                     </div>
                     <div className="flex flex-row flex-wrap w-full">                    
-                        {"Finders Fee: " + currentFindersFee}
+                        {"Highest Bidder: " + data[4]}
                     </div>
                     <div className="flex flex-row flex-wrap w-full">                    
-                        {"Price: " + currentReadPrice}
+                        {"Auction Duration: " + data[5]}
                     </div>
                 </div>
             )
@@ -80,7 +68,7 @@ export const AskForNFT = (nft) => {
     return (
         <div className=" text-white text-sm h-full flex flex-col flex-wrap items-center justify-center">
             <main className=" w-full flex flex-row flex-wrap">        
-                {listingCheck(currentReadData[0])}
+                {auctionsCheck()}
             </main>
         </div>
     )

@@ -91,7 +91,7 @@ export const FillAsk = (nft) => {
             <div className="flex flex-row w-full">
                 <input
                     className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200 hover:bg-slate-300"
-                    placeholder="Fill Amount - ETH"
+                    placeholder="Fill Amount (ETH)"
                     name="fillAskAmount"
                     type="number"
                     value={fillAsk.fillAmount}

@@ -62,7 +62,7 @@ export const SetAskPrice = (nft) => {
             <div className="flex flex-row w-full">
                 <input
                     className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200 hover:bg-slate-300"
-                    placeholder="Listing Price - ETH"
+                    placeholder="Listing Price (ETH)"
                     name="createAskListingPrice"
                     type="number"
                     value={updateAsk.askPrice}
