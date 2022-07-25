@@ -23,7 +23,7 @@ export const CancelAuction = (nft) => {
     const auctionTokenId = nft ? nft.nft.nft.tokenId : cancelAuction.tokenId
 
     const { data: cancelAuctionData, isError: cancelAuctionError, isLoading: cancelAuctionLoading, isSuccess: cancelAuctionSuccess, write: cancelAuctionWrite  } = useContractWrite({
-        addressOrName: mainnetZoraAddresses.ReserveAuctionCoreEth,
+        addressOrName: mainnetZoraAddresses.ReserveAuctionFindersEth,
         contractInterface: abi,
         functionName: 'cancelAuction',
         args: [
