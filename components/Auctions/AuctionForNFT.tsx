@@ -2,7 +2,8 @@ import { Header } from "../Header";
 import { useContractRead, useAccount } from "wagmi";
 import { AsksV1_1Interface } from "@zoralabs/v3/dist/typechain/AsksV1_1"
 import * as mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/1.json"
-import { abi } from "@zoralabs/v3/dist/artifacts/AsksV1_1.sol/AsksV1_1.json"
+import { abi } from "@zoralabs/v3/dist/artifacts/ReserveAuctionCoreEth.sol/ReserveAuctionCoreEth.json"
+//// ^ should be pointing to ReserveAuctionFindersEth but that doesnt work for some reason
 import { useState, useEffect } from "react";
 import { ReadContractResult } from "@wagmi/core";
 import { BigNumber, utils } from "ethers";
@@ -11,7 +12,8 @@ export const AuctionForNFT = (nft) => {
 
     // AsksV1_1 askForNFT read call
     const { data, isLoading, isSuccess, isFetching  } = useContractRead({
-        addressOrName: mainnetZoraAddresses.ReserveAuctionFindersEth,
+        addressOrName: "0x9458e29713b98bf452ee9b2c099289f533a5f377",
+        // ^following inst working: mainnetZoraAddresses.ReserveAuctionFindersEth
         contractInterface: abi,
         functionName: 'auctionForNFT',
         args: [
@@ -21,13 +23,14 @@ export const AuctionForNFT = (nft) => {
         watch: true,
         onError(error) {
             console.log("error: ", error)
-        },
+        }, 
         onSuccess(data) {
             console.log("success! --> ", data)
         }  
     })
 
     const auctionMaker = data ? data.seller : "0x0000000000000000000000000000000000000000"
+    const currentReadPrice = data ? `${utils.formatEther(BigNumber.from(data[1]).toString())}` + " ETH" : "undefined"
 
     const auctionsCheck = () => {
         if (auctionMaker === "0x0000000000000000000000000000000000000000") {
@@ -49,7 +52,7 @@ export const AuctionForNFT = (nft) => {
                         {"Seller: " + data[0]}
                     </div>
                     <div className="flex flex-row flex-wrap w-full">                    
-                        {"Reserve Price: " + data[1]}
+                        {"Reserve Price: " + currentReadPrice}
                     </div>
                     <div className="flex flex-row flex-wrap w-full">                    
                         {"Highest Bid: " + data[3]}

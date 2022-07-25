@@ -21,6 +21,9 @@ export const CancelOffer = (nft) => {
         "offerId": "",
     })
 
+    const offerTokenId = nft ? nft.nft.nft.tokenId : cancelOffer.tokenId
+    const offerContractAddress = nft ? nft.nft.nft.contractAddress : cancelOffer.tokenContract
+
     // OffersV1 camcelOffer call
 
     const { data: cancelOfferData, isError: cancelOfferError, isLoading: cancelOfferLoading, isSuccess: cancelOfferSuccess, write: cancelOfferWrite  } = useContractWrite({
@@ -28,8 +31,8 @@ export const CancelOffer = (nft) => {
         contractInterface: abi,
         functionName: 'cancelOffer',
         args: [
-            cancelOffer.tokenContract,
-            cancelOffer.tokenId,
+            offerContractAddress,
+            offerTokenId,
             cancelOffer.offerId,
         ],
         onError(error, variables, context) {

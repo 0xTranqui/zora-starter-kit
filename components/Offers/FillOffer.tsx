@@ -27,6 +27,9 @@ export const FillOffer = (nft) => {
         "finder": "0x0000000000000000000000000000000000000000"
     })
 
+    const offerTokenId = nft ? nft.nft.nft.tokenId : fillOffer.tokenId
+    const offerContractAddress = nft ? nft.nft.nft.contractAddress : fillOffer.tokenContract
+
     // OffersV1 fillOfferAmount call
     const offerPrice = fillOffer.amount ? ethers.utils.parseEther(fillOffer.amount) : ""
 
@@ -35,8 +38,8 @@ export const FillOffer = (nft) => {
         contractInterface: abi,
         functionName: 'fillOffer',
         args: [
-            fillOffer.tokenContract,
-            fillOffer.tokenId,
+            offerContractAddress,
+            offerTokenId,
             fillOffer.offerId,
             fillOffer.currency,
             offerPrice,

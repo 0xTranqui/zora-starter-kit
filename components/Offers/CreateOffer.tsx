@@ -25,6 +25,9 @@ export const CreateOffer = (nft) => {
         "findersFeeBps": ""
     })
 
+    const offerTokenId = nft ? nft.nft.nft.tokenId : createOffer.tokenId
+    const offerContractAddress = nft ? nft.nft.nft.contractAddress : createOffer.tokenContract
+
     // OffersV1 createOffer call
     const offerPrice = createOffer.amount ? ethers.utils.parseEther(createOffer.amount) : ""
 
@@ -33,8 +36,8 @@ export const CreateOffer = (nft) => {
         contractInterface: abi,
         functionName: 'createOffer',
         args: [
-            createOffer.tokenContract,
-            createOffer.tokenId,
+            offerContractAddress,
+            offerTokenId,
             createOffer.currency,
             offerPrice,
             createOffer.findersFeeBps

@@ -802,7 +802,7 @@ const Protocol: NextPage = () => {
               <div className="ml-2 mb-2 text-xl">
                 AUCTION MODULE READS
               </div>
-              <AuctionRead_disclosure nft={asksNFT} />
+              <AuctionRead_disclosure nft={auctionsNFT} />
             </div>
           </div>
           <div className="mt-5 flex flex-row flex-wrap w-full ">
@@ -810,7 +810,7 @@ const Protocol: NextPage = () => {
               <div className="ml-2 mb-2 text-xl">
                 AUCTION MODULE WRITES
               </div>
-              <AuctionWrite_disclosure nft={asksNFT} />
+              <AuctionWrite_disclosure nft={auctionsNFT} />
             </div>
           </div>
         </div>

@@ -23,6 +23,9 @@ export const SetAskPrice = (nft) => {
         "askCurrency": "0x0000000000000000000000000000000000000000"
     })
 
+    const askTokenId = nft ? nft.nft.nft.tokenId : updateAsk.tokenId
+    const askContractAddress = nft ? nft.nft.nft.contractAddress : updateAsk.tokenContract
+
     // AsksV1_1 setAskPrice call
     const listingPrice = updateAsk.askPrice ? utils.parseEther(updateAsk.askPrice) : ""
 
@@ -31,8 +34,8 @@ export const SetAskPrice = (nft) => {
         contractInterface: abi,
         functionName: 'setAskPrice',
         args: [
-            updateAsk.tokenContract,
-            updateAsk.tokenId,
+            askContractAddress,
+            askTokenId,
             listingPrice,
             updateAsk.askCurrency
         ],

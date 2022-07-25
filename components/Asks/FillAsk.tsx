@@ -23,8 +23,11 @@ export const FillAsk = (nft) => {
         "fillCurrency": "0x0000000000000000000000000000000000000000",
         "fillAmount": "",
         "finder": ""
-
     })
+
+    const askTokenId = nft ? nft.nft.nft.tokenId : fillAsk.tokenId
+    const askContractAddress = nft ? nft.nft.nft.contractAddress : fillAsk.tokenContract
+
 
     // AsksV1_1 fillAsk Write
     const fillPrice = fillAsk.fillAmount ? ethers.utils.parseEther(fillAsk.fillAmount) : ""
@@ -34,8 +37,8 @@ export const FillAsk = (nft) => {
         contractInterface: abi,
         functionName: 'fillAsk',
         args: [
-            fillAsk.tokenContract,
-            fillAsk.tokenId,
+            askContractAddress,
+            askTokenId,
             fillAsk.fillCurrency,
             fillPrice,
             fillAsk.finder,

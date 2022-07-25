@@ -1,109 +1,66 @@
-import { Disclosure } from '@headlessui/react'
-import { ChevronUpIcon } from '@heroicons/react/solid'
-import { AskForNFT } from '../Asks/AskForNFT'
-import { Dispatch, useState, SetStateAction } from 'react'
+import { Header } from "../Header";
+import { useContractRead, useAccount, useContractWrite } from "wagmi";
+import { AsksV1_1Interface } from "@zoralabs/v3/dist/typechain/AsksV1_1"
+import * as mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/1.json"
+import { abi } from "@zoralabs/v3/dist/artifacts/ReserveAuctionFindersEth.sol/ReserveAuctionFindersEth.json"
+import { useState, useEffect } from "react";
+import { ReadContractResult } from "@wagmi/core";
+import { BigNumber, ethers, utils } from "ethers";
 
-interface nftInfo {
-    nft: {
-        contractAddress: string,
-        tokenId: string
+export const SettleAuction = (nft) => {
+
+    interface settleAuctionCall {
+        tokenContract: any,
+        tokenId: any,
     }
-}
 
-export default function AskRead_disclosure(nft) {
-    // export default function ContractActions(nft, setAsksCB: Dispatch<SetStateAction<nftInfo>>)
+    const [settleAuction, setSettleAuction] = useState<settleAuctionCall>({
+        "tokenContract": nft.nft.nft.contractAddress,
+        "tokenId": nft.nft.nft.tokenId,
+    })
 
+    const auctionContractAddress = nft ? nft.nft.nft.contractAddress : settleAuction.tokenContract    
+    const auctionTokenId = nft ? nft.nft.nft.tokenId : settleAuction.tokenId
+    
+    const { data: settleAuctionData, isError: settleAuctionError, isLoading: settleAuctionLoading, isSuccess: settleAuctionSuccess, write: settleAuctionWrite  } = useContractWrite({
+        addressOrName: mainnetZoraAddresses.ReserveAuctionCoreEth,
+        contractInterface: abi,
+        functionName: 'settleAuction',
+        args: [
+            auctionContractAddress,
+            auctionTokenId,
+        ],
+        onError(error, variables, context) {
+            console.log("error", error)
+        },
+        onSuccess(settleAuctionData, variables, context) {
+            console.log("Success!", settleAuctionData)
+        },
+    })
+
+    const shortenedAddress = (address) => {
+        let displayAddress = address?.substr(0,4) + "..." + address?.substr(-4)
+        return displayAddress
+    }
+    
     return (
-        <div className="ml w-full text-black">
-            <div className=" w-full bg-white ">
-            <Disclosure>
-                {({ open }) => (
-                <>
-                <Disclosure.Button className="hover:bg-[#c3f53b] hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
-                    <span>
-                        {"askForNFT(address, tokenId)"}
-                    </span>
-                    {/* <ChevronUpIcon
-                        className={`${
-                        open ? 'rotate-180 transform' : ''
-                        } h-5 w-5`}
-                    /> */}
-                </Disclosure.Button>
-                <Disclosure.Panel className="bg-slate-900 border-white border-2 border-solid flex flex-row flex-wrap items-center p-2 text-lg w-full">
-                    <div className="w-fit flex flex-row flex-wrap">
-                        <AskForNFT nft={nft} />
-                    </div>
-                </Disclosure.Panel>
-                </>
-                )}
-            </Disclosure>
-            </div>
+        <div className="flex flex-row flex-wrap w-fit space-y-1">
+            <div className="flex flex-row flex-wrap w-full justify-center ">
+                <div>
+                    {"Contract Address: " + shortenedAddress(nft.nft.nft.contractAddress)}
+                </div>                    
+                <div className="ml-5 flex flex-row flex-wrap w-fit">                    
+                    {"Token Id: " + nft.nft.nft.tokenId}
+                </div>                                       
+            </div>                                                                  
+        
+            <button 
+                type="button"
+                onClick={() => settleAuctionWrite()}
+                className="border-2 border-white border-solid flex flex-row justify-center w-full px-2 hover:text-slate-900 hover:bg-[#33FF57]"
+            >
+                SETTLE AUCTION
+            </button>
         </div>
     )
 }
-
-// return (
-//     <div className=" ml-2 w-full text-black">
-//         <div className=" w-full max-w-md bg-white ">
-//         <Disclosure>
-//             {({ open }) => (
-//             <>
-//             <Disclosure.Button className="hover:bg-white hover:text-black border-2 px-2 bg-black text-white border-white border-solid flex flex-row w-full justify-between py-2 text-left text-lg font-normal ">
-//                 <span>
-//                     {"askForNFT(address, tokenId)"}
-//                 </span>
-//                 {/* <ChevronUpIcon
-//                     className={`${
-//                     open ? 'rotate-180 transform' : ''
-//                     } h-5 w-5`}
-//                 /> */}
-//             </Disclosure.Button>
-//             <Disclosure.Panel className="bg-[#FFAFC2] px-4 pt-4 pb-2 text-lg">
-//                 <div>
-//                     <input
-//                         className="ml-5 text-black text-center bg-slate-200"
-//                         placeholder="contractAddress"
-//                         name="askForNFT_contractAddress"
-//                         type="text"
-//                         value={nft.nft.contractAddress}
-//                         onChange={(e) => {
-//                             e.preventDefault();
-//                             setAsksCB(current => {
-//                                 return {
-//                                 ...current,
-//                                 nft: {
-//                                 ...current.nft,
-//                                 tokenId: e.target.value
-//                                 }}
-//                             })
-//                         }}
-//                         required                              
-//                     >
-//                     </input>
-//                     <input
-//                         className="ml-5 text-black text-center bg-slate-200"
-//                         placeholder="tokenId"
-//                         name="askForNFT_tokenId"
-//                         type="text"
-//                         value={nft.nft.tokenId}
-//                         onChange={(e) => {
-//                             e.preventDefault();
-//                             setAsksCB(current => {
-//                                 return {
-//                                 ...current,
-//                                 tokenId: e.target.value
-//                                 }
-//                             })
-//                         }}
-//                         required                              
-//                     >
-//                     </input>
-//                     <AskForNFT_READ nft={nft} />
-//                 </div>
-//             </Disclosure.Panel>
-//             </>
-//             )}
-//         </Disclosure>
-//         </div>
-//     </div>
-// )

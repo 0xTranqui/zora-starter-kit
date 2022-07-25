@@ -9,7 +9,6 @@ import { BigNumber, ethers, utils } from "ethers";
 
 export const CreateAuction = (nft) => {
 
-
     // this file is integrated with the ReserveAuctionFindersEth module
     // so no currency is specified (since it only works for ETH)
 
@@ -22,7 +21,7 @@ export const CreateAuction = (nft) => {
         startTime: any,
         findersFeeBps: any
     }
-    
+
     const [createAuction, setCreateAuction] = useState<createAuctionCall>({
         "tokenContract": nft.nft.nft.contractAddress,
         "tokenId": nft.nft.nft.tokenId,
@@ -33,6 +32,9 @@ export const CreateAuction = (nft) => {
         "findersFeeBps": ""
     })
 
+    const auctionContractAddress = nft ? nft.nft.nft.contractAddress : createAuction.tokenContract    
+    const auctionTokenId = nft ? nft.nft.nft.tokenId : createAuction.tokenId    
+
     // ReserveAuctionFindersEth createAuction call
     const reservePrice = createAuction.reservePrice ? ethers.utils.parseEther(createAuction.reservePrice) : ""
 
@@ -41,17 +43,14 @@ export const CreateAuction = (nft) => {
         contractInterface: abi,
         functionName: 'createAuction',
         args: [
-            createAuction.tokenContract,
-            createAuction.tokenId,
+            auctionContractAddress,
+            auctionTokenId,
             createAuction.duration,
             reservePrice,
             createAuction.sellerFundsRecipient,
             createAuction.startTime,
             createAuction.findersFeeBps
         ],
-        overrides: {
-            value: reservePrice
-        },
         onError(error, variables, context) {
             console.log("error", error)
         },
@@ -121,7 +120,7 @@ export const CreateAuction = (nft) => {
             <div className="flex flex-row w-full">
                 <input
                     className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200 hover:bg-slate-300"
-                    placeholder="Seller Funds Recipient"
+                    placeholder="Seller Funds Recipient (address)"
                     name="createAuctionSellerFundsRecipient"
                     type="text"
                     value={createAuction.sellerFundsRecipient}
@@ -144,7 +143,7 @@ export const CreateAuction = (nft) => {
                     className="flex flex-row flex-wrap w-full text-black text-center bg-slate-200 hover:bg-slate-300"
                     placeholder="Start Time (unix)"
                     name="createAuctionStartTime"
-                    type="text"
+                    type="number"
                     value={createAuction.startTime}
                     onChange={(e) => {
                         e.preventDefault();

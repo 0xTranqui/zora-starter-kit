@@ -1,9 +1,10 @@
 import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/solid'
 import { CreateAuction } from './CreateAuction'
-import { SetAskPrice } from '../Asks/SetAskPrice'
-import { CancelAsk } from '../Asks/CancelAsk'
-import { FillAsk } from '../Asks/FillAsk'
+import { SetAuctionReservePrice } from './SetAuctionReservePrice'
+import { CancelAuction } from './CancelAuction'
+import { SettleAuction } from './SettleAuction'
+import { CreateBid } from './CreateBid'
 import { Dispatch, useState, SetStateAction } from 'react'
 
 interface nftInfo {
@@ -54,7 +55,7 @@ export default function AuctionWrite_disclosure(nft) {
                     </Disclosure.Button>
                     <Disclosure.Panel className="bg-slate-900 border-white border-2 border-solid flex flex-row flex-wrap p-2 text-lg w-full">
                         <div className="w-fit flex flex-row flex-wrap">
-                            <SetAskPrice nft={nft} />
+                            <SetAuctionReservePrice nft={nft} />
                         </div>
                     </Disclosure.Panel>
                     </>
@@ -75,7 +76,7 @@ export default function AuctionWrite_disclosure(nft) {
                     </Disclosure.Button>
                     <Disclosure.Panel className="bg-slate-900 border-white border-2 border-solid flex flex-row flex-wrap p-2 text-lg w-full">
                         <div className=" w-fit flex flex-row flex-wrap">
-                            <CancelAsk nft={nft} />
+                            <CancelAuction nft={nft} />
                         </div>
                     </Disclosure.Panel>
                     </>
@@ -96,7 +97,7 @@ export default function AuctionWrite_disclosure(nft) {
                     </Disclosure.Button>
                     <Disclosure.Panel className="bg-slate-900 border-white border-2 border-solid flex flex-row flex-wrap p-2 text-lg w-full">
                         <div className=" w-fit flex flex-row flex-wrap">
-                            <CancelAsk nft={nft} />
+                            <SettleAuction nft={nft} />
                         </div>
                     </Disclosure.Panel>
                     </>
@@ -117,7 +118,7 @@ export default function AuctionWrite_disclosure(nft) {
                     </Disclosure.Button>
                     <Disclosure.Panel className="bg-slate-900 border-white border-2 border-solid flex flex-row flex-wrap p-2 text-lg w-full">
                         <div className="w-fit flex flex-row flex-wrap">
-                            <FillAsk nft={nft} />
+                            <CreateBid nft={nft} />
                         </div>
                     </Disclosure.Panel>
                     </>

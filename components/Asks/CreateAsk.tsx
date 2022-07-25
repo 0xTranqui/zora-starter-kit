@@ -27,6 +27,9 @@ export const CreateAsk = (nft) => {
         "findersFeeBps": ""
     })
 
+    const askTokenId = nft ? nft.nft.nft.tokenId : createAsk.tokenId
+    const askContractAddress = nft ? nft.nft.nft.contractAddress : createAsk.tokenContract
+
     // AsksV1_1 createAsk call
     const listingPrice = createAsk.askPrice ? ethers.utils.parseEther(createAsk.askPrice) : ""
 
@@ -35,8 +38,8 @@ export const CreateAsk = (nft) => {
         contractInterface: abi,
         functionName: 'createAsk',
         args: [
-            createAsk.tokenContract,
-            createAsk.tokenId,
+            askContractAddress,
+            askTokenId,
             listingPrice,
             createAsk.askCurrency,
             createAsk.sellerFundsRecipient,
