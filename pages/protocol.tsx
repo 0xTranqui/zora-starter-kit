@@ -1,19 +1,14 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import { Dispatch, useState, useEffect } from 'react'
+import { useState } from 'react'
 import { ZDK, ZDKNetwork, ZDKChain } from "@zoralabs/zdk";
 import { NFTPreview, MediaConfiguration } from '@zoralabs/nft-components';
 import { Networks, Strategies } from "@zoralabs/nft-hooks"
 import mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/1.json"
-import asksABI from "@zoralabs/v3/dist/artifacts/AsksV1_1.sol/AsksV1_1.json"
 import zmmABI from "@zoralabs/v3/dist/artifacts/ZoraModuleManager.sol/ZoraModuleManager.json"
-
 import erc721abi from 'erc-token-abis/abis/ERC721Full.json'
-
 import { erc721ABI, useAccount, useContractRead, useContractWrite } from 'wagmi'
 import { Header } from '../components/Header'
-import { Footer } from '../components/Footer'
 import AskRead_disclosure from "../components/Asks/AskRead_disclosure"
 import AskWrite_disclosure from '../components/Asks/AskWrite_disclosure';
 import OffersRead_disclosure from "../components/Offers/OffersRead_disclosure"
@@ -67,21 +62,6 @@ const Protocol: NextPage = () => {
   // get account hook
   const { address, connector, isConnecting, isConnected, status} = useAccount(); 
   const currentUserAddress = address ? address : ""
-
-  // const [asksNFTABI, setAsksNFTABI] = useState<nftABIInfo>({
-  //   "nftABI": ""
-  // })
-
-  // // const getNFTABI = (nftAddress) => {
-  // //   const etherActorURL = `https://ether.actor/${asksNFT.contractAddress}.json`
-  // //   console.log("url: ", etherActorURL)
-  // //   fetch(etherActorURL)
-  // //     .then(result => result.json())
-  // //     .then((output) => {
-  // //       console.log("Output: ", output.abi);
-  // //       setAsksNFTABI(output.abi)
-  // //     }).catch(err => console.error(err));
-  // // }
 
   // ASKS: check if owner has approved ERC721 transfer helper for specific NFT
   const { data: asksRead, isError: asksError, isLoading: asksLoading, isSuccess: asksSuccess, isFetching: asksFetching  } = useContractRead({
@@ -161,6 +141,9 @@ const Protocol: NextPage = () => {
     },
   })      
 
+  // ===== OFFERS =====
+  // ===== OFFERS =====
+  // ===== OFFERS =====
 
   // OFFERS: check if owner has approved ERC721 transfer helper for specific NFT
   const { data: offersData, isError: offersError, isLoading: offersLoading, isSuccess: offersSuccess, isFetching: offersFetching  } = useContractRead({
@@ -240,6 +223,10 @@ const Protocol: NextPage = () => {
     },
   })        
 
+  // ===== AUCTIONS =====
+  // ===== AUCTIONS =====
+  // ===== AUCTIONS =====
+
   // auctions: check if owner has approved ERC721 transfer helper for specific NFT
   const { data: auctionsData, isError: auctionsError, isLoading: auctionsLoading, isSuccess: auctionsSuccess, isFetching: auctionsFetching  } = useContractRead({
     addressOrName: auctionsNFT.contractAddress,
@@ -317,13 +304,6 @@ const Protocol: NextPage = () => {
         console.log("Success!", auctionsZMMApproval)
     },
   })         
-  
-
-  // useEffect(() => {
-  //   getNFTABI(asksNFT.contractAddress);
-  // },
-  // [asksNFT.contractAddress]
-  // )
 
   return (
     <div className='flex flex-col justify-center h-full min-h-screen'>
@@ -820,67 +800,3 @@ const Protocol: NextPage = () => {
 }
 
 export default Protocol
-
-
-
-
-
-
-// const Protocol: NextPage = () => {
-//   const [userNFTs, setUserNFTs] = useState({});
-//   const currentUserNFTs = userNFTs ? userNFTs: "nothing";
-
-//   const { address: account } = useAccount(); 
-//   const currentUserAddress = account ? account : ""
-//   console.log("currentUseraddress: ", currentUserAddress)
-
-//   const tokensResponse = async(args) => {
-//     const response = Object.entries(await (await zdk.tokens(args)).tokens.nodes)
-//     console.log("response", response)
-//     console.log("userNFTs: ", userNFTs)
-//     setUserNFTs(response)
-//   }
-
-//   const tokensArgs = {
-//     where: {
-//       ownerAddresses: [currentUserAddress]
-//     },
-//     pagination: {
-//       limit: 10
-//     },
-//     includeFullDetails: false
-//   }
-
-//   useEffect(() => {
-//     tokensResponse(tokensArgs)
-//     },
-//     []
-//   )
-
-//   useEffect(() => {
-//     if(!!userNFTs) {
-//     tokensResponse(tokensArgs)
-//     }},
-//     [currentUserAddress]
-//   )
-
-
-//   return (
-//     <div className='flex flex-col justify-center h-screen min-h-screen'>
-//       <Header />
-//       <main className="flex flex-col items-center">        
-//         <h1 className="text-white">
-//           {`<<< ${currentUserNFTs} >>>`}
-//         </h1>
-//         <NFTCard nfts={currentUserNFTs} />
-//         {/* <NFTCard nfts={currentUserNFTs} /> */}
-//         {/* <NFTPreview
-//           contract=`${userNFTs[0].token.collectionAddress}`
-//           id=`${userNFTs[0].token.tokenId}`
-//         /> */}
-//       </main>
-//     </div>
-//   )
-// }
-
-// export default Protocol

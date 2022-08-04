@@ -1,11 +1,7 @@
-import { Header } from "../Header";
-import { useContractRead, useAccount } from "wagmi";
-import { AsksV1_1Interface } from "@zoralabs/v3/dist/typechain/AsksV1_1"
+import { useContractRead } from "wagmi";
 import * as mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/1.json"
 import { abi } from "@zoralabs/v3/dist/artifacts/ReserveAuctionCoreEth.sol/ReserveAuctionCoreEth.json"
 //// ^ should be pointing to ReserveAuctionFindersEth but that doesnt work for some reason
-import { useState, useEffect } from "react";
-import { ReadContractResult } from "@wagmi/core";
 import { BigNumber, utils } from "ethers";
 
 export const AuctionForNFT = (nft) => {

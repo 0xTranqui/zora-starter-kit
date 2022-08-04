@@ -15,9 +15,8 @@ import {
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 
-
 const { chains, provider } = configureChains(
-  [chain.mainnet],
+  [chain.mainnet, chain.rinkeby],
   [
     // alchemyProvider({ alchemyId: process.env.NEXT_PUBLIC_ALCHMEY_ID }),
     publicProvider()
