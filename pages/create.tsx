@@ -7,6 +7,8 @@ import { utils } from "ethers"
 const ZoraNFTCreatorProxy_ABI = require("../node_modules/@zoralabs/nft-drop-contracts/dist/artifacts/ZoraNFTCreatorV1.sol/ZoraNFTCreatorV1.json")
 const ZoraNFTCreatorProxy_ADDRESS_RINKEBY = "0x2d2acD205bd6d9D0B3E79990e093768375AD3a30"
 const ZoraNFTCreatorProxy_ADDRESS_MAINNET = "0xF74B146ce44CC162b601deC3BE331784DB111DC1"
+const ZoraNFTCreatorProxy_ADDRESS_GOERLI = "0xb9583D05Ba9ba8f7F14CCEe3Da10D2bc0A72f519";
+
 
 const Create: NextPage = () => {
 
@@ -54,9 +56,9 @@ const Create: NextPage = () => {
   const { chain } = useNetwork()
 
   // connect to network and call create drop flow (for when no wallet previously connected)
-  const { connectAsync: connectToRinkeby } = useConnect({
+  const { connectAsync: connectToGoerli } = useConnect({
     connector: new InjectedConnector,
-    chainId: 4,
+    chainId: 5,
     onSettled(data, error, variables, context) {
       console.log("connect to mainnet settled: ", data)
     },
@@ -70,9 +72,9 @@ const Create: NextPage = () => {
     },
   })
 
-  const connectToRinkebyAndDrop = async () => {
-    await connectToRinkeby()
-    rinkebyDropWrite()
+  const connectToGoerliAndDrop = async () => {
+    await connectToGoerli()
+    goerliDropWrite()
   }
   
   const connectToMainnetAndDrop = async () => {
@@ -81,10 +83,10 @@ const Create: NextPage = () => {
   }
 
   // switch network and call create drop flow (for when wallet already connected but to incorrect network)
-  const { data: rinkebyChainData, switchNetworkAsync: switchToRinkeby } = useSwitchNetwork({
-    chainId: 4,
-    onSuccess(rinkebyChainData) {
-      console.log("Success", rinkebyChainData)
+  const { data: goerliChainData, switchNetworkAsync: switchToGoerli } = useSwitchNetwork({
+    chainId: 5,
+    onSuccess(goerliChainData) {
+      console.log("Success", goerliChainData)
     }
   })
 
@@ -95,9 +97,9 @@ const Create: NextPage = () => {
     }
   })
 
-  const switchToRinkebyAndDrop = async () => {
-    await switchToRinkeby()
-    rinkebyDropWrite()
+  const switchToGoerliAndDrop = async () => {
+    await switchToGoerli()
+    goerliDropWrite()
   }
 
   const switchToMainnetAndDrop = async () => {
@@ -106,15 +108,15 @@ const Create: NextPage = () => {
   }  
 
   // createDrop function used in button
-  const createDropRinkeby = () => {
+  const createDropGoerli = () => {
     if (!chain ) {
-      connectToRinkebyAndDrop()
+      connectToGoerliAndDrop()
       return
-    } else if (chain && chain.id !== 4) {
-      switchToRinkebyAndDrop()
+    } else if (chain && chain.id !== 5) {
+      switchToGoerliAndDrop()
       return
     }
-    rinkebyDropWrite()
+    goerliDropWrite()
   }
 
   const createDropMainnet = () => {
@@ -130,37 +132,37 @@ const Create: NextPage = () => {
 
 
   // connect to network and call create edition flow (for when no wallet previously connected)
-  const connectToRinkebyAndEdition = async () => {
-    await connectToRinkeby()
-    rinkebyDropWrite()
+  const connectToGoerliAndEdition = async () => {
+    await connectToGoerli()
+    goerliEditionWrite()
   }
 
   const connectToMainnetAndEdition = async () => {
     await connectToMainnet()
-    mainnetDropWrite()
+    mainnetEditionWrite()
   }
 
   // switch network and call edition drop flow (for when wallet already connected but to incorrect network)
-  const switchToRinkebyAndEdition = async () => {
-    await switchToRinkeby()
-    rinkebyDropWrite()
+  const switchToGoerliAndEdition = async () => {
+    await switchToGoerli()
+    goerliEditionWrite()
   }
 
   const switchToMainnetAndEdition = async () => {
     await switchToMainnet()
-    mainnetDropWrite()
+    mainnetEditionWrite()
   }
 
   // createEdition function used in button  
-  const createEditionRinkeby = () => {
+  const createEditionGoerli = () => {
     if (!chain ) {
-      connectToRinkebyAndEdition()
+      connectToGoerliAndEdition()
       return
     } else if (chain && chain.id !== 4) {
-      switchToRinkebyAndEdition()
+      switchToGoerliAndEdition()
       return
     }
-    rinkebyEditionWrite()
+    goerliEditionWrite()
   }
 
   const createEditionMainnet = () => {
@@ -183,8 +185,8 @@ const Create: NextPage = () => {
 
   // createDrop functions
 
-  const { data: rinkebyDropData, isError: rinkebyDropError, isLoading: rinkebyDropLoading, write: rinkebyDropWrite } = useContractWrite({
-    addressOrName: ZoraNFTCreatorProxy_ADDRESS_RINKEBY,
+  const { data: goerliDropData, isError: goerliDropError, isLoading: goerliDropLoading, write: goerliDropWrite } = useContractWrite({
+    addressOrName: ZoraNFTCreatorProxy_ADDRESS_GOERLI,
     contractInterface: ZoraNFTCreatorProxy_ABI.abi,
     functionName: 'createDrop',
     args: [
@@ -235,8 +237,8 @@ const Create: NextPage = () => {
 
   // createEdition functions
 
-  const { data: rinkebyEditionData, isError: rinkebyEditionError, isLoading: rinkebyEditionLoading, write: rinkebyEditionWrite } = useContractWrite({
-    addressOrName: ZoraNFTCreatorProxy_ADDRESS_RINKEBY,
+  const { data: goerliEditionData, isError: goerliEditionError, isLoading: goerliEditionLoading, write: goerliEditionWrite } = useContractWrite({
+    addressOrName: ZoraNFTCreatorProxy_ADDRESS_GOERLI,
     contractInterface: ZoraNFTCreatorProxy_ABI.abi,
     functionName: 'createEdition',
     args: [
@@ -258,7 +260,7 @@ const Create: NextPage = () => {
       editionInputs.editionDescription,
       editionInputs.metadataAnimationURI,
       editionInputs.metadataImageURI
-    ]
+    ],
   })
 
   const { data: mainnetEditionData, isError: mainnetEditionError, isLoading: mainnetEditionLoading, write: mainnetEditionWrite } = useContractWrite({
@@ -755,9 +757,9 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
             <button
               className="border-2 hover:bg-white hover:text-black border-solid border-red-500 py-1 flex flex-row w-full justify-center"
-              onClick={() => createDropRinkeby()}
+              onClick={() => createDropGoerli()}
             >
-              DEPLOY TO RINKEBY
+              DEPLOY TO GOERLI
             </button>
             <button
               className="border-2 border-l-0 hover:bg-white hover:text-black border-solid border-red-500 py-1  flex flex-row w-full justify-center"
@@ -1243,9 +1245,9 @@ const Create: NextPage = () => {
           <div className="flex flex-row justify-center w-full h-fit border-2 border-blue-500 border-solid">
             <button
               className="border-2 hover:bg-white hover:text-black border-solid border-blue-500 py-1 flex flex-row w-full justify-center"
-              onClick={() => createEditionRinkeby()}
+              onClick={() => createEditionGoerli()}
             >
-              DEPLOY TO RINKEBY
+              DEPLOY TO GOERLI
             </button>
             <button
               className="border-2 border-l-0 hover:bg-white hover:text-black border-solid border-blue-500 py-1  flex flex-row w-full justify-center"
