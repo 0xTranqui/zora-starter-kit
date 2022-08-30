@@ -1,14 +1,10 @@
-import { Header } from "../Header";
-import { useContractRead, useAccount, useContractWrite } from "wagmi";
-import { AsksV1_1Interface } from "@zoralabs/v3/dist/typechain/AsksV1_1"
+import { useContractWrite } from "wagmi";
 import * as mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/1.json"
 import { abi } from "@zoralabs/v3/dist/artifacts/ReserveAuctionFindersEth.sol/ReserveAuctionFindersEth.json"
-import { useState, useEffect } from "react";
-import { ReadContractResult } from "@wagmi/core";
-import { BigNumber, ethers, utils } from "ethers";
+import { useState } from "react";
+import { ethers } from "ethers";
 
 export const SetAuctionReservePrice = (nft) => {
-
 
     // this file is integrated with the ReserveAuctionFindersEth module
     // so no currency is specified (since it only works for ETH)

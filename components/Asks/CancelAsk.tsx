@@ -1,11 +1,7 @@
-import { Header } from "../Header";
-import { useContractRead, useAccount, useContractWrite } from "wagmi";
-import { AsksV1_1Interface } from "@zoralabs/v3/dist/typechain/AsksV1_1"
+import { useContractWrite } from "wagmi";
 import * as asksAddresses from "@zoralabs/v3/dist/addresses/1.json"
 import { abi } from "@zoralabs/v3/dist/artifacts/AsksV1_1.sol/AsksV1_1.json"
-import { useState, useEffect } from "react";
-import { ReadContractResult } from "@wagmi/core";
-import { BigNumber, utils } from "ethers";
+import { useState } from "react";
 
 export const CancelAsk = (nft) => {
 

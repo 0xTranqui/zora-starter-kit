@@ -2,7 +2,6 @@ import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/solid'
 import { AuctionForNFT } from './AuctionForNFT'
 
-
 export default function AuctionRead_disclosure(nft) {
 
     return (

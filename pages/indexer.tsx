@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import { ZDK, ZDKNetwork, ZDKChain } from "@zoralabs/zdk";
 import { Networks, Strategies } from "@zoralabs/nft-hooks"
@@ -19,7 +18,6 @@ const zdkArgs = {
 } 
 
 const zdk = new ZDK(zdkArgs) 
-
 
 const appendContractName = (arr, address) => {
   

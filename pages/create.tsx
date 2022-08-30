@@ -1,14 +1,14 @@
 import { NextPage } from "next"
 import { Header } from "../components/Header"
 import { useState, useEffect } from "react"
-import { useContractWrite, useSwitchNetwork, useNetwork, useAccount, useConnect } from "wagmi"
+import { useContractWrite, useSwitchNetwork, useNetwork, useConnect } from "wagmi"
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { utils } from "ethers"
-
 const ZoraNFTCreatorProxy_ABI = require("../node_modules/@zoralabs/nft-drop-contracts/dist/artifacts/ZoraNFTCreatorV1.sol/ZoraNFTCreatorV1.json")
-
 const ZoraNFTCreatorProxy_ADDRESS_RINKEBY = "0x2d2acD205bd6d9D0B3E79990e093768375AD3a30"
 const ZoraNFTCreatorProxy_ADDRESS_MAINNET = "0xF74B146ce44CC162b601deC3BE331784DB111DC1"
+const ZoraNFTCreatorProxy_ADDRESS_GOERLI = "0xb9583D05Ba9ba8f7F14CCEe3Da10D2bc0A72f519";
+
 
 const Create: NextPage = () => {
 
@@ -23,7 +23,7 @@ const Create: NextPage = () => {
       priceEther: "0.001",
       perWalletMintCap: "5",
       publicSaleStart: "0", // makes it so edition will be live to start 
-      publicSaleEnd: "50000000000", // makes it so edition will be live to start
+      publicSaleEnd: "5000000000000", // makes it so edition will be live to start
       presaleStart: "0",
       presaleEnd: "0",
       presaleMerkleRoot: "0x0000000000000000000000000000000000000000000000000000000000000000"
@@ -43,7 +43,7 @@ const Create: NextPage = () => {
       priceEther: "0.001",
       perWalletMintCap: "5",
       publicSaleStart: "0", // makes it so edition will be live to start
-      publicSaleEnd: "50000000000", // makes it so edition will be live to start
+      publicSaleEnd: "5000000000000", // makes it so edition will be live to start
       presaleStart: "0",
       presaleEnd: "0",
       presaleMerkleRoot: "0x0000000000000000000000000000000000000000000000000000000000000000"
@@ -55,14 +55,10 @@ const Create: NextPage = () => {
 
   const { chain } = useNetwork()
 
-
-
-
-
   // connect to network and call create drop flow (for when no wallet previously connected)
-  const { connectAsync: connectToRinkeby } = useConnect({
+  const { connectAsync: connectToGoerli } = useConnect({
     connector: new InjectedConnector,
-    chainId: 4,
+    chainId: 5,
     onSettled(data, error, variables, context) {
       console.log("connect to mainnet settled: ", data)
     },
@@ -76,9 +72,9 @@ const Create: NextPage = () => {
     },
   })
 
-  const connectToRinkebyAndDrop = async () => {
-    await connectToRinkeby()
-    rinkebyDropWrite()
+  const connectToGoerliAndDrop = async () => {
+    await connectToGoerli()
+    goerliDropWrite()
   }
   
   const connectToMainnetAndDrop = async () => {
@@ -87,10 +83,10 @@ const Create: NextPage = () => {
   }
 
   // switch network and call create drop flow (for when wallet already connected but to incorrect network)
-  const { data: rinkebyChainData, switchNetworkAsync: switchToRinkeby } = useSwitchNetwork({
-    chainId: 4,
-    onSuccess(rinkebyChainData) {
-      console.log("Success", rinkebyChainData)
+  const { data: goerliChainData, switchNetworkAsync: switchToGoerli } = useSwitchNetwork({
+    chainId: 5,
+    onSuccess(goerliChainData) {
+      console.log("Success", goerliChainData)
     }
   })
 
@@ -101,9 +97,9 @@ const Create: NextPage = () => {
     }
   })
 
-  const switchToRinkebyAndDrop = async () => {
-    await switchToRinkeby()
-    rinkebyDropWrite()
+  const switchToGoerliAndDrop = async () => {
+    await switchToGoerli()
+    goerliDropWrite()
   }
 
   const switchToMainnetAndDrop = async () => {
@@ -112,15 +108,15 @@ const Create: NextPage = () => {
   }  
 
   // createDrop function used in button
-  const createDropRinkeby = () => {
+  const createDropGoerli = () => {
     if (!chain ) {
-      connectToRinkebyAndDrop()
+      connectToGoerliAndDrop()
       return
-    } else if (chain && chain.id !== 4) {
-      switchToRinkebyAndDrop()
+    } else if (chain && chain.id !== 5) {
+      switchToGoerliAndDrop()
       return
     }
-    rinkebyDropWrite()
+    goerliDropWrite()
   }
 
   const createDropMainnet = () => {
@@ -136,37 +132,37 @@ const Create: NextPage = () => {
 
 
   // connect to network and call create edition flow (for when no wallet previously connected)
-  const connectToRinkebyAndEdition = async () => {
-    await connectToRinkeby()
-    rinkebyDropWrite()
+  const connectToGoerliAndEdition = async () => {
+    await connectToGoerli()
+    goerliEditionWrite()
   }
 
   const connectToMainnetAndEdition = async () => {
     await connectToMainnet()
-    mainnetDropWrite()
+    mainnetEditionWrite()
   }
 
   // switch network and call edition drop flow (for when wallet already connected but to incorrect network)
-  const switchToRinkebyAndEdition = async () => {
-    await switchToRinkeby()
-    rinkebyDropWrite()
+  const switchToGoerliAndEdition = async () => {
+    await switchToGoerli()
+    goerliEditionWrite()
   }
 
   const switchToMainnetAndEdition = async () => {
     await switchToMainnet()
-    mainnetDropWrite()
+    mainnetEditionWrite()
   }
 
   // createEdition function used in button  
-  const createEditionRinkeby = () => {
+  const createEditionGoerli = () => {
     if (!chain ) {
-      connectToRinkebyAndEdition()
+      connectToGoerliAndEdition()
       return
     } else if (chain && chain.id !== 4) {
-      switchToRinkebyAndEdition()
+      switchToGoerliAndEdition()
       return
     }
-    rinkebyEditionWrite()
+    goerliEditionWrite()
   }
 
   const createEditionMainnet = () => {
@@ -180,9 +176,6 @@ const Create: NextPage = () => {
     mainnetEditionWrite()
   }
 
-
-
-
   const dealWithEther = (price) => {
     if (price === "") {
       return 0
@@ -192,8 +185,8 @@ const Create: NextPage = () => {
 
   // createDrop functions
 
-  const { data: rinkebyDropData, isError: rinkebyDropError, isLoading: rinkebyDropLoading, write: rinkebyDropWrite } = useContractWrite({
-    addressOrName: ZoraNFTCreatorProxy_ADDRESS_RINKEBY,
+  const { data: goerliDropData, isError: goerliDropError, isLoading: goerliDropLoading, write: goerliDropWrite } = useContractWrite({
+    addressOrName: ZoraNFTCreatorProxy_ADDRESS_GOERLI,
     contractInterface: ZoraNFTCreatorProxy_ABI.abi,
     functionName: 'createDrop',
     args: [
@@ -244,8 +237,8 @@ const Create: NextPage = () => {
 
   // createEdition functions
 
-  const { data: rinkebyEditionData, isError: rinkebyEditionError, isLoading: rinkebyEditionLoading, write: rinkebyEditionWrite } = useContractWrite({
-    addressOrName: ZoraNFTCreatorProxy_ADDRESS_RINKEBY,
+  const { data: goerliEditionData, isError: goerliEditionError, isLoading: goerliEditionLoading, write: goerliEditionWrite } = useContractWrite({
+    addressOrName: ZoraNFTCreatorProxy_ADDRESS_GOERLI,
     contractInterface: ZoraNFTCreatorProxy_ABI.abi,
     functionName: 'createEdition',
     args: [
@@ -267,7 +260,7 @@ const Create: NextPage = () => {
       editionInputs.editionDescription,
       editionInputs.metadataAnimationURI,
       editionInputs.metadataImageURI
-    ]
+    ],
   })
 
   const { data: mainnetEditionData, isError: mainnetEditionError, isLoading: mainnetEditionLoading, write: mainnetEditionWrite } = useContractWrite({
@@ -305,19 +298,14 @@ const Create: NextPage = () => {
     [chain]
   )
 
-
   return (
     <div className="mt-2 sm:0 min-h-screen h-screen">
       <Header />
       <main className="text-white h-full flex sm:flex-col flex-row flex-wrap">
-
         <div className=" sm:w-6/12 sm:h-full w-full h-6/12 flex flex-row flex-wrap content-start">
           <div className="mt-20 sm:mt-10 flex flex-row justify-center h-fit w-full border-2 border-solid border-red-500 ">
             CREATE DROP
-          </div>
-          
-          
-          
+          </div>                
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center ">
@@ -346,7 +334,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -375,7 +362,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -404,7 +390,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -432,8 +417,7 @@ const Create: NextPage = () => {
                 HOVER FOR INFO
               </button>
             </div>            
-          </div>          
-          
+          </div>                    
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -462,7 +446,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -491,7 +474,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -523,7 +505,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -555,7 +536,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -587,7 +567,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -619,7 +598,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -651,7 +629,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>                 
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -683,7 +660,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -715,7 +691,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>                                                                                                                     
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -744,7 +719,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -773,7 +747,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className=" grid grid-cols-3">
               <div className=" text-center col-start-2 col-end-3">
@@ -781,13 +754,12 @@ const Create: NextPage = () => {
               </div>
             </div>
           </div>          
-          
           <div className="flex flex-row justify-center w-full h-fit border-2 border-red-500 border-solid">
             <button
               className="border-2 hover:bg-white hover:text-black border-solid border-red-500 py-1 flex flex-row w-full justify-center"
-              onClick={() => createDropRinkeby()}
+              onClick={() => createDropGoerli()}
             >
-              DEPLOY TO RINKEBY
+              DEPLOY TO GOERLI
             </button>
             <button
               className="border-2 border-l-0 hover:bg-white hover:text-black border-solid border-red-500 py-1  flex flex-row w-full justify-center"
@@ -796,53 +768,6 @@ const Create: NextPage = () => {
               DEPLOY TO MAINNET
             </button>              
           </div>                   
-
-          {/* <div className="text-sm text-white w-full">
-            {"Contract Name: " + dropInputs.contractName}
-          </div>
-          <div className="text-sm text-white w-full">
-            {"Contract Symbol: " + dropInputs.contractSymbol}
-          </div>
-          <div className="text-sm text-white w-full">
-            {"Contract Admin: " + dropInputs.contractAdmin}
-          </div>
-          <div className="text-sm text-white w-full">
-            {"Contract MaxSupply: " + dropInputs.contractMaxSupply}
-          </div>          
-          <div className="text-sm text-white w-full">
-            {"Royalties: " + dropInputs.secondaryRoyalties}
-          </div>
-          <div className="text-sm text-white w-full">
-            {"fundsRecipient: " + dropInputs.fundsRecipient}
-          </div>
-          <div className="text-sm text-white w-full">
-            {"salesConfig Price Ether (in wei): " + dealWithEther(dropInputs.salesConfig.priceEther)}
-          </div>
-          <div className="text-sm text-white w-full">
-            {"salesConfig wallet cap: " + dropInputs.salesConfig.perWalletMintCap}
-          </div>
-          <div className="text-sm text-white w-full">
-            {"salesConfig pub sale start: " + dropInputs.salesConfig.publicSaleStart}
-          </div>
-          <div className="text-sm text-white w-full">
-            {"salesConfig pub sale end: " + dropInputs.salesConfig.publicSaleEnd}
-          </div>
-          <div className="text-sm text-white w-full">
-            {"salesConfig presale start: " + dropInputs.salesConfig.presaleStart}
-          </div>
-          <div className="text-sm text-white w-full">
-            {"salesConfig presale end: " + dropInputs.salesConfig.presaleEnd}
-          </div>
-          <div className="text-sm text-white w-full">
-            {"salesConfig persale merkle root: " + dropInputs.salesConfig.presaleMerkleRoot}
-          </div>                              
-          <div className="text-sm text-white w-full">
-            {"uriBase " + dropInputs.metadataURIBase}
-          </div> 
-          <div className="text-sm text-white w-full">
-            {"contractURI " + dropInputs.metadtaContractURI}
-          </div>  */}
-
         </div>
         <div className=" sm:w-6/12 sm:h-full w-full h-6/12 flex flex-row flex-wrap content-start">
           <div className="mt-20 sm:mt-10 flex flex-row justify-center h-fit w-full border-2 border-solid border-blue-500 ">
@@ -876,7 +801,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -905,7 +829,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -934,7 +857,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>                
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -963,7 +885,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -992,7 +913,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -1021,7 +941,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>          
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -1053,7 +972,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -1085,7 +1003,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -1117,7 +1034,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -1149,7 +1065,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -1181,7 +1096,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>                 
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -1213,7 +1127,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -1245,7 +1158,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>                                                                                                                     
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -1274,7 +1186,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -1303,7 +1214,6 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>
-
           <div className="flex flex-row justify-center w-full h-fit border-2 border-white border-solid">
             <div className="flex flex-row w-full justify-center grid grid-cols-3">
               <div className="text-center">
@@ -1332,13 +1242,12 @@ const Create: NextPage = () => {
               </button>
             </div>            
           </div>          
-          
           <div className="flex flex-row justify-center w-full h-fit border-2 border-blue-500 border-solid">
             <button
               className="border-2 hover:bg-white hover:text-black border-solid border-blue-500 py-1 flex flex-row w-full justify-center"
-              onClick={() => createEditionRinkeby()}
+              onClick={() => createEditionGoerli()}
             >
-              DEPLOY TO RINKEBY
+              DEPLOY TO GOERLI
             </button>
             <button
               className="border-2 border-l-0 hover:bg-white hover:text-black border-solid border-blue-500 py-1  flex flex-row w-full justify-center"
@@ -1346,57 +1255,7 @@ const Create: NextPage = () => {
             >
               DEPLOY TO MAINNET
             </button>              
-          </div>                       
-                                                                                  
-          {/* <div className="text-sm text-white w-full">
-            {"Contract Name: " + editionInputs.contractName}
-          </div>
-          <div className="text-sm  text-white w-full">
-            {"Contract Symbol: " + editionInputs.contractSymbol}
-          </div>
-          <div className="text-sm  text-white w-full">
-            {"Contract MaxSupply: " + editionInputs.contractMaxSupply}
-          </div>        
-          <div className="text-sm  text-white w-full">
-            {"Royalties: " + editionInputs.secondaryRoyalties}
-          </div>
-          <div className="text-sm  text-white w-full">
-            {"fundsRecipient: " + editionInputs.fundsRecipient}
-          </div>
-          <div className="text-sm  text-white w-full">
-            {"Contract Admin: " + editionInputs.contractAdmin}
-          </div>          
-          <div className="text-sm  text-white w-full">
-            {"salesConfig Price Ether (in wei): " + dealWithEther(editionInputs.salesConfig.priceEther)}
-          </div>
-          <div className="text-sm  text-white w-full">
-            {"salesConfig wallet cap: " + editionInputs.salesConfig.perWalletMintCap}
-          </div>
-          <div className="text-sm text-white w-full">
-            {"salesConfig pub sale start: " + editionInputs.salesConfig.publicSaleStart}
-          </div>
-          <div className="text-sm text-white w-full">
-            {"salesConfig pub sale end: " + editionInputs.salesConfig.publicSaleEnd}
-          </div>
-          <div className="text-sm text-white w-full">
-            {"salesConfig presale start: " + editionInputs.salesConfig.presaleStart}
-          </div>
-          <div className="text-sm text-white w-full">
-            {"salesConfig presale end: " + editionInputs.salesConfig.presaleEnd}
-          </div>
-          <div className="text-sm text-white w-full">
-            {"salesConfig persale merkle root: " + editionInputs.salesConfig.presaleMerkleRoot}
-          </div>                              
-          <div className="text-sm text-white w-full">
-            {"Edition Description " + editionInputs.editionDescription}
-          </div> 
-          <div className="text-sm text-white w-full">
-            {"Animation URI " + editionInputs.metadataAnimationURI}
-          </div> 
-          <div className="text-sm text-white w-full">
-            {"Image URI URI " + editionInputs.metadataImageURI}
-          </div> */}
-
+          </div>                                                                                                
         </div>
       </main>
     </div>

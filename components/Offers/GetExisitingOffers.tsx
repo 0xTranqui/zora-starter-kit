@@ -1,9 +1,7 @@
-import { Header } from "../Header";
-import { useContractRead, useAccount } from "wagmi";
+import { useContractRead } from "wagmi";
 import * as mainnetZoraAddresses from "@zoralabs/v3/dist/addresses/1.json"
 import { abi } from "@zoralabs/v3/dist/artifacts/OffersV1.sol/OffersV1.json"
 import { useState, useEffect } from "react";
-import { ReadContractResult } from "@wagmi/core";
 import { BigNumber, utils } from "ethers";
 
 export const GetExistingOffers = (nft) => {
