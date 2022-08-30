@@ -16,17 +16,52 @@ export const SetOfferAmount = (nft) => {
         currency: any, 
         amount: any,
     }
+
+    const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";   //To check if offer currency is ETH
     
     const [setOffer, setSetOffer] = useState<setOfferCall>({
         "tokenContract": nft.nft.nft.contractAddress,
         "tokenId": nft.nft.nft.tokenId,
-        "offerId": "",
+        "offerId": "0",
         "currency": "0x0000000000000000000000000000000000000000",
         "amount": ""
     })
 
     const offerTokenId = nft ? nft.nft.nft.tokenId : setOffer.tokenId
     const offerContractAddress = nft ? nft.nft.nft.contractAddress : setOffer.tokenContract
+
+    // OffersV1 offers read call
+    const { data: offersData, isLoading: offersLoading, isSuccess: offersSuccess, isFetching: offersFetching } = useContractRead({
+        addressOrName: mainnetZoraAddresses.OffersV1,
+        contractInterface: abi,
+        functionName: 'offers',
+        args: [
+            nft.nft.nft.contractAddress,
+            nft.nft.nft.tokenId,
+            setOffer.offerId
+        ],
+        watch: true,
+        onError(error) {
+            console.log("error: ", error)
+        },
+        onSuccess(data) {
+            console.log("success! --> ", offersData)
+            console.log("specific offer info", offersData)
+        }
+    })
+
+    const currentReadData = offersData ? offersData : ""
+    let existingOffer, ethValueToSend;
+    if (currentReadData[1] === ZERO_ADDRESS) {      //Need to compute ETH value sent only if currency is ETH
+        existingOffer = ethers.utils.formatEther(BigNumber.from(currentReadData[3]).toNumber())
+        console.log(`Existing offer: ${existingOffer}`)
+        console.log(`Update offer amount: ${setOffer.amount}`)
+        const differenceToBePaid = setOffer.amount - existingOffer
+        console.log(`Difference to be paid ${differenceToBePaid}`)
+        ethValueToSend = setOffer.amount ? ethers.utils.parseEther((differenceToBePaid < 0? 0: differenceToBePaid).toString()) : ""
+    } else {
+        ethValueToSend = setOffer.amount ? ethers.utils.parseEther("0") : ""
+    }
 
     // OffersV1 setOfferAmount call
     const offerPrice = setOffer.amount ? ethers.utils.parseEther(setOffer.amount) : ""
@@ -43,7 +78,7 @@ export const SetOfferAmount = (nft) => {
             offerPrice,
         ],
         overrides: {
-            value: offerPrice
+            value: ethValueToSend
         },
         onError(error, variables, context) {
             console.log("error", error)
